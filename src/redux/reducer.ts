@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import { ActionType, NoteType, RoutineType, TagType, TodoType, } from '../types';
 import { deleteByKey, replaceByKey } from '../utils/arrayFn';
 import { ADD_NOTE, ADD_ROUTINE, ADD_TAG, ADD_TODO, DELETE_NOTE, DELETE_ROUTINE, DELETE_TAG, DELETE_TODO, EDIT_NOTE, EDIT_ROUTINE, EDIT_TAG, EDIT_TODO } from './action';
