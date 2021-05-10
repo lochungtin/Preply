@@ -1,0 +1,25 @@
+import React from 'react';
+import { View } from 'react-native';
+import { connect } from 'react-redux';
+
+import { SettingsType } from '../types';
+
+interface ReduxProps {
+	settings: SettingsType,
+}
+
+class Screen extends React.Component<ReduxProps> {
+	render() {
+		return (
+			<View>
+
+			</View>
+		);
+	}
+}
+
+const mapStateToProps = (state: ReduxProps) => ({
+    settings: state.settings
+});
+
+export default connect(mapStateToProps)(Screen);

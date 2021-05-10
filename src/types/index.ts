@@ -43,3 +43,8 @@ export interface ActionType {
     type: string,
     payload?: any
 }
+
+// settings config
+export interface SettingsType {
+    darkmode: boolean,
+}

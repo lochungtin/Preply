@@ -77,8 +77,8 @@ const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
 }
 
 export default combineReducers({
-    note: updateNotes,
-    routine: updateRoutines,
-    tag: updateTags,
-    todo: updateTodos,
+    notes: updateNotes,
+    routines: updateRoutines,
+    tags: updateTags,
+    todos: updateTodos,
 });
