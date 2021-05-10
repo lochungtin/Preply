@@ -19,39 +19,50 @@ interface ReduxProps {
 }
 
 const RootNav = createDrawerNavigator();
-const customContent = (props: any) => {
+const drawerContent = (props: any) => {
 	return (
 		<DrawerContentScrollView {...props}>
 			<Text>
 				Preply
 			</Text>
 			<DrawerItem
+				icon={props => <Icon color={props.color} name='format-list-checks' size={props.size} />}
 				label="To-Dos"
 				onPress={() => props.navigation.navigate('todos')}
 			/>
 			<DrawerItem
+				icon={props => <Icon color={props.color} name='text-box-outline' size={props.size} />}
 				label="Notes"
 				onPress={() => props.navigation.navigate('notes')}
 			/>
 			<DrawerItem
+				icon={props => <Icon color={props.color} name='clock-outline' size={props.size} />}
 				label="Routines"
 				onPress={() => props.navigation.navigate('routines')}
 			/>
-			<Text>Utilities</Text>
+			<Text>
+				Utilities
+			</Text>
 			<DrawerItem
+				icon={props => <Icon color={props.color} name='calculator-variant' size={props.size} />}
 				label="Calculator"
 				onPress={() => props.navigation.navigate('calculator')}
 			/>
 			<DrawerItem
+				icon={props => <Icon color={props.color} name='swap-horizontal' size={props.size} />}
 				label="Unit Converter"
 				onPress={() => props.navigation.navigate('converter')}
 			/>
-			<Text>Others</Text>
+			<Text>
+				Others
+			</Text>
 			<DrawerItem
+				icon={props => <Icon color={props.color} name='account' size={props.size} />}
 				label="Account"
 				onPress={() => props.navigation.navigate('account')}
 			/>
 			<DrawerItem
+				icon={props => <Icon color={props.color} name='cog' size={props.size} />}
 				label="Settings"
 				onPress={() => props.navigation.navigate('settings')}
 			/>
@@ -64,42 +75,14 @@ class AppNav extends React.Component<ReduxProps> {
 		return (
 			<NavigationContainer>
 				<StatusBar backgroundColor='#0e0e0e' />
-				<RootNav.Navigator drawerContent={customContent}>
-					<RootNav.Screen
-						component={TodoScreen}
-						name='todos'
-						options={{}}
-					/>
-					<RootNav.Screen
-						component={NoteScreen}
-						name='notes'
-						options={{}}
-					/>
-					<RootNav.Screen
-						component={RoutineScreen}
-						name='routines'
-						options={{}}
-					/>
-					<RootNav.Screen
-						component={CalculatorScreen}
-						name='calculator'
-						options={{}}
-					/>
-					<RootNav.Screen
-						component={ConverterScreen}
-						name='converter'
-						options={{}}
-					/>
-					<RootNav.Screen
-						component={AccountScreen}
-						name='account'
-						options={{}}
-					/>
-					<RootNav.Screen
-						component={SettingsScreen}
-						name='settings'
-						options={{}}
-					/>
+				<RootNav.Navigator drawerContent={drawerContent}>
+					<RootNav.Screen component={TodoScreen} name='todos' />
+					<RootNav.Screen component={NoteScreen} name='notes' />
+					<RootNav.Screen component={RoutineScreen} name='routines' />
+					<RootNav.Screen component={CalculatorScreen} name='calculator' />
+					<RootNav.Screen component={ConverterScreen} name='converter' />
+					<RootNav.Screen component={AccountScreen} name='account' />
+					<RootNav.Screen component={SettingsScreen} name='settings' />
 				</RootNav.Navigator>
 			</NavigationContainer>
 		);
