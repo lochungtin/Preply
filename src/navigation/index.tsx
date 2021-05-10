@@ -2,6 +2,7 @@ import React from 'react';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import { SettingsType } from '../types';
@@ -19,7 +20,6 @@ interface ReduxProps {
 
 const RootNav = createDrawerNavigator();
 const customContent = (props: any) => {
-	console.log(props.descriptors);
 	return (
 		<DrawerContentScrollView {...props}>
 			<Text>

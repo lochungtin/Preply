@@ -12,6 +12,8 @@ target 'Preply' do
     :hermes_enabled => false
   )
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'PreplyTests' do
     inherit! :complete
     # Pods for testing

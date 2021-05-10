@@ -8,11 +8,10 @@ interface ReduxProps {
     todos: Array<TodoType>,
 }
 
-class AppNav extends React.Component<ReduxProps> {
+class Screen extends React.Component<ReduxProps> {
 	render() {
 		return (
 			<View>
-
 			</View>
 		);
 	}
@@ -22,4 +21,4 @@ const mapStateToProps = (state: ReduxProps) => ({
     todos: state.todos,
 });
 
-export default connect(mapStateToProps)(AppNav);
+export default connect(mapStateToProps)(Screen);
