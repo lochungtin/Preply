@@ -46,11 +46,27 @@ export interface ActionType {
 
 // settings config
 export interface SettingsType {
-    darkmode: boolean,
+    colorScheme: ColorSchemeType,
+    darkMode: boolean,
 }
 
 // numpad config
 export interface NumpadConfigType {
     name: string,
     onPress: () => void,
+}
+
+// color scheme
+export interface ColorModeType {
+    backgroundC: string,
+    textC: string,
+    lowContrast: string,
+    highContrast: string,
+    midTone: string
+}
+
+export interface ColorSchemeType {
+    backgroundC: string,
+    textC: string,
+    separatorLines: string,
 }

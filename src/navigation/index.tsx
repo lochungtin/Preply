@@ -72,7 +72,7 @@ class AppNav extends React.Component<ReduxProps> {
 	render() {
 		return (
 			<NavigationContainer>
-				<StatusBar backgroundColor='#0e0e0e' />
+				<StatusBar backgroundColor={this.props.settings.colorScheme.backgroundC} />
 				<RootNav.Navigator drawerContent={this.drawerContent}>
 					<RootNav.Screen component={TodoScreen} name='todos' />
 					<RootNav.Screen component={NoteScreen} name='notes' />

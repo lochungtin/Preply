@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
+import { darkModeColorScheme } from '../data/colors';
 
-import { ActionType, NoteType, RoutineType, TagType, TodoType, } from '../types';
+import { ActionType, NoteType, RoutineType, SettingsType, TagType, TodoType, } from '../types';
 import { deleteByKey, replaceByKey } from '../utils/arrayFn';
-import { ADD_NOTE, ADD_ROUTINE, ADD_TAG, ADD_TODO, DELETE_NOTE, DELETE_ROUTINE, DELETE_TAG, DELETE_TODO, EDIT_NOTE, EDIT_ROUTINE, EDIT_TAG, EDIT_TODO } from './action';
+import { ADD_NOTE, ADD_ROUTINE, ADD_TAG, ADD_TODO, DELETE_NOTE, DELETE_ROUTINE, DELETE_TAG, DELETE_TODO, EDIT_NOTE, EDIT_ROUTINE, EDIT_TAG, EDIT_TODO, RESET_SETTINGS, SET_SETTINGS } from './action';
 
 const defaultNoteState: Array<NoteType> = [];
 const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
-    let update = noteState;
+    let update = [...noteState];
     switch (action.type) {
         case ADD_NOTE:
             update.push(action.payload);
@@ -24,7 +25,7 @@ const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
 
 const defaultRoutineState: Array<RoutineType> = [];
 const updateRoutines = (routineState = defaultRoutineState, action: ActionType) => {
-    let update = routineState;
+    let update = [...routineState];
     switch (action.type) {
         case ADD_ROUTINE:
             update.push(action.payload);
@@ -42,7 +43,7 @@ const updateRoutines = (routineState = defaultRoutineState, action: ActionType) 
 
 const defaultTagState: Array<TagType> = [];
 const updateTags = (tagState = defaultTagState, action: ActionType) => {
-    let update = tagState;
+    let update = [...tagState];
     switch (action.type) {
         case ADD_TAG:
             update.push(action.payload);
@@ -60,7 +61,7 @@ const updateTags = (tagState = defaultTagState, action: ActionType) => {
 
 const defaultTodoState: Array<TodoType> = [];
 const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
-    let update = todoState;
+    let update = [...todoState];
     switch (action.type) {
         case ADD_TODO:
             update.push(action.payload);
@@ -76,9 +77,25 @@ const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
     }
 }
 
+const defaultSettingsState: SettingsType = {
+    colorScheme: darkModeColorScheme,
+    darkMode: true,
+}
+const updateSettings = (settingsState = defaultSettingsState, action: ActionType) => {
+    switch (action.type) {
+        case SET_SETTINGS:
+            return action.payload;
+        case RESET_SETTINGS:
+            return defaultSettingsState;
+        default:
+            return settingsState;
+    }
+}
+
 export default combineReducers({
     notes: updateNotes,
     routines: updateRoutines,
+    settings: updateSettings,
     tags: updateTags,
     todos: updateTodos,
 });
