@@ -9,13 +9,12 @@ const precMap: PrecMapType = {
     '/': 2,
 }
 
-const isOp = (op: string): boolean => ['+', '-', '*', '/'].indexOf(op) !== -1;
+export const isOp = (op: string): boolean => ['+', '-', '*', '/'].indexOf(op) !== -1;
 const isPa = (op: string): boolean => op === '(' || op === ')';
 
-const convert = (equation: string): Array<string> => {
+const convert = (splt: Array<string>): Array<string> => {
     let outStack: Array<string> = [];
     let opStack: Array<string> = [];
-    let splt: Array<string> = equation.split(' ');
 
     while (splt.length > 0) {
         let head: string = splt.splice(0, 1)[0];
@@ -68,4 +67,21 @@ const evaluate = (rpn: Array<string>, stack: Array<number> = []): number => {
     }
 }
 
-export const compute = (equation: string): number => evaluate(convert(equation));
+export const compute = (equation: Array<string>): number => evaluate(convert(equation));
+
+export const validate = (splt: Array<string>): boolean => {
+    let stack: Array<string> = [];
+    
+    splt.forEach(token => {
+        if (token === '(')
+            stack.push('(');
+        if (token === ')') {
+            if (stack.length === 0)
+                return 0;
+            
+            stack.pop();
+        }
+    });
+
+    return stack.length === 0;
+}

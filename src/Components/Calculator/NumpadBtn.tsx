@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import { NumpadConfigType, SettingsType } from '../../types';
 
+import { calculatorStyles } from './styles';
+
 interface ReduxProps {
 	settings: SettingsType,
 }
@@ -14,11 +16,12 @@ class NumpadBtn extends React.Component<ReduxProps & NumpadConfigType> {
 		return (
 			<TouchableOpacity
 				onPress={this.props.onPress}
+				style={calculatorStyles.cellContainer}
 			>
                 <Icon
-					color="#000000"
+					color={this.props.settings.colorScheme.textC}
 					name={this.props.name}
-					size={20}
+					size={40}
 				/>
 			</TouchableOpacity>
 		);

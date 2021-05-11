@@ -2,17 +2,20 @@ import React from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 
+import Calculator from '../Components/Calculator';
 import { SettingsType } from '../types';
+
+import { screenStyles } from './styles';
 
 interface ReduxProps {
 	settings: SettingsType,
 }
 
-class Calculator extends React.Component<ReduxProps> {
+class Screen extends React.Component<ReduxProps> {
 	render() {
 		return (
-			<View>
-                
+			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
+                <Calculator />
 			</View>
 		);
 	}
@@ -22,4 +25,4 @@ const mapStateToProps = (state: ReduxProps) => ({
     settings: state.settings
 });
 
-export default connect(mapStateToProps)(Calculator);
+export default connect(mapStateToProps)(Screen);
