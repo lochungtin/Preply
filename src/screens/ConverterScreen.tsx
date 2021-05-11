@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { SettingsType } from '../types';
 
+import { screenStyles } from './styles';
+
 interface ReduxProps {
 	settings: SettingsType,
 }
@@ -11,7 +13,7 @@ interface ReduxProps {
 class Screen extends React.Component<ReduxProps> {
 	render() {
 		return (
-			<View>
+			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
 
 			</View>
 		);

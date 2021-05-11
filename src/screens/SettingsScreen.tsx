@@ -7,6 +7,8 @@ import { store } from '../redux/store';
 
 import { SettingsType } from '../types';
 
+import { screenStyles } from './styles';
+
 interface ReduxProps {
 	settings: SettingsType,
 }
@@ -14,13 +16,13 @@ interface ReduxProps {
 class Screen extends React.Component<ReduxProps> {
 	render() {
 		return (
-			<View>
+			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
 				<Switch
 					value={this.props.settings.darkMode}
 					onValueChange={value => store.dispatch(setSettings({
 						...this.props.settings, 
 						darkMode: value, 
-						colorScheme: value ? darkModeColorScheme : lightModeColorScheme
+						colorScheme: value ? darkModeColorScheme : lightModeColorScheme,
 					}))}
 				/>
 			</View>
