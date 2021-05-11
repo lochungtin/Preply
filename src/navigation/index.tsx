@@ -19,8 +19,9 @@ interface ReduxProps {
 }
 
 const RootNav = createDrawerNavigator();
-const drawerContent = (props: any) => {
-	return (
+
+class AppNav extends React.Component<ReduxProps> {
+	drawerContent = (props: any) =>
 		<DrawerContentScrollView {...props}>
 			<Text>
 				Preply
@@ -67,15 +68,12 @@ const drawerContent = (props: any) => {
 				onPress={() => props.navigation.navigate('settings')}
 			/>
 		</DrawerContentScrollView>
-	);
-}
 
-class AppNav extends React.Component<ReduxProps> {
 	render() {
 		return (
 			<NavigationContainer>
 				<StatusBar backgroundColor='#0e0e0e' />
-				<RootNav.Navigator drawerContent={drawerContent}>
+				<RootNav.Navigator drawerContent={this.drawerContent}>
 					<RootNav.Screen component={TodoScreen} name='todos' />
 					<RootNav.Screen component={NoteScreen} name='notes' />
 					<RootNav.Screen component={RoutineScreen} name='routines' />

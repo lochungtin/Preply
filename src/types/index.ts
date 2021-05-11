@@ -48,3 +48,9 @@ export interface ActionType {
 export interface SettingsType {
     darkmode: boolean,
 }
+
+// numpad config
+export interface NumpadConfigType {
+    name: string,
+    onPress: () => void,
+}
