@@ -68,5 +68,6 @@ export interface ColorModeType {
 export interface ColorSchemeType {
     backgroundC: string,
     textC: string,
-    separatorLines: string,
+    separatorLineC: string,
+    headerC: string,
 }

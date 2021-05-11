@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { NumpadConfigType, SettingsType, } from '../../types';
 import { compute, isOp, validate, } from '../../utils/rpn';
+import SeparatorLine from '../SeparatorLine';
 import NumpadBtn from './NumpadBtn';
 
 import { calculatorStyles } from './styles';
@@ -121,16 +122,17 @@ class Calculator extends React.Component<ReduxProps> {
 
 		return (
 			<View style={calculatorStyles.rootContainer}>
-				<View>
+				<View style={calculatorStyles.equationContainer}>
 					<Text>
 						{this.state.equation}
 					</Text>
 				</View>
-				<View>
+				<View style={calculatorStyles.resultContainer}>
 					<Text>
 						{this.state.result}
 					</Text>
 				</View>
+				<SeparatorLine width={Dimensions.get('screen').width * 0.9} />
 				<View style={calculatorStyles.numpadContainer}>
 					{keypos.map((row, index) => {
 						return (

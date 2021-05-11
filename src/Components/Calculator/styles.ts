@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, } from 'react-native';
+
+const screenWidth = Dimensions.get('screen').width;
 
 export const calculatorStyles = StyleSheet.create({
     cellContainer: {
@@ -7,10 +9,24 @@ export const calculatorStyles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
+    equationContainer: {
+        height: '12%',
+        borderColor: '#FFF',
+        borderWidth: 2,
+        width: screenWidth * 0.9
+    },
     numpadContainer: {
-        height: '55%',
+        height: '50%',
+        width: screenWidth * 0.95,
+    },
+    resultContainer: {
+        height: '12%',
+        borderColor: '#FFF',
+        borderWidth: 2,
+        width: screenWidth * 0.9
     },
     rootContainer: {
+        alignItems: 'center',
         display: 'flex',
         flex: 1,
         justifyContent: 'space-between',
