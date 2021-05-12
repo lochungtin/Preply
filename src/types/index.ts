@@ -67,7 +67,9 @@ export interface ColorModeType {
 
 export interface ColorSchemeType {
     backgroundC: string,
-    textC: string,
-    separatorLineC: string,
+    drawerBgC: string,
+    drawerIconC: string,
     headerC: string,
+    separatorLineC: string,
+    textC: string,
 }

@@ -10,6 +10,7 @@ interface ReduxProps {
 
 interface BarProps {
 	width: number,
+	style?: any,
 }
 
 class SeparatorLine extends React.Component<ReduxProps & BarProps> {
@@ -17,6 +18,7 @@ class SeparatorLine extends React.Component<ReduxProps & BarProps> {
 		return (
 			<View 
 				style={{
+					...this.props.style,
 					backgroundColor: this.props.settings.colorScheme.separatorLineC,
 					height: 2,
 					width: this.props.width,
