@@ -10,7 +10,7 @@ const precMap: PrecMapType = {
 }
 
 export const isOp = (op: string): boolean => ['+', '-', '*', '/'].indexOf(op) !== -1;
-const isPa = (op: string): boolean => op === '(' || op === ')';
+export const isPa = (op: string): boolean => op === '(' || op === ')';
 
 const convert = (splt: Array<string>): Array<string> => {
     let outStack: Array<string> = [];
@@ -24,13 +24,13 @@ const convert = (splt: Array<string>): Array<string> => {
                     opStack.push(head);
                 else {
                     while (opStack[opStack.length - 1] !== '(')
-                        outStack.push(opStack.pop() || "");
+                        outStack.push(opStack.pop() || '');
                     opStack.pop();
                 }
                 break;
             case isOp(head):
                 while (opStack.length > 0 && precMap[opStack[opStack.length - 1]] > precMap[head])
-                    outStack.push(opStack.pop() || "");
+                    outStack.push(opStack.pop() || '');
                 opStack.push(head);
                 break;
             default:
@@ -39,7 +39,7 @@ const convert = (splt: Array<string>): Array<string> => {
     }
 
     while (opStack.length > 0)
-        outStack.push(opStack.pop() || "");
+        outStack.push(opStack.pop() || '');
 
     return outStack;
 }
@@ -67,8 +67,34 @@ const evaluate = (rpn: Array<string>, stack: Array<number> = []): number => {
     }
 }
 
+// tokenize string to equation array
+export const tokenize = (equation: string): Array<string> => {
+    let res: Array<string> = [];
+    let term: string = '';
+
+    equation.split('').forEach(ch => {
+        if (ch === '!')
+            term = '-';
+        else if ((isOp(ch) || isPa(ch))) {
+            if (term !== '')
+                res.push(term);
+            res.push(ch);
+            term = '';
+        }
+        else
+            term += ch;
+    });
+
+    if (term !== '')
+        res.push(term);
+
+    return res;
+}
+
+// compute equation array
 export const compute = (equation: Array<string>): number => evaluate(convert(equation));
 
+// validate equation array - check for parentheses matching
 export const validate = (splt: Array<string>): boolean => {
     let stack: Array<string> = [];
     

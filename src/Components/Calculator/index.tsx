@@ -3,7 +3,7 @@ import { Dimensions, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { NumpadConfigType, SettingsType, } from '../../types';
-import { compute, isOp, validate, } from '../../utils/rpn';
+import { compute, isOp, isPa, tokenize, validate, } from '../../utils/rpn';
 import SeparatorLine from '../SeparatorLine';
 import NumpadBtn from './NumpadBtn';
 
@@ -16,73 +16,92 @@ interface ReduxProps {
 class Calculator extends React.Component<ReduxProps> {
 
 	state = {
-		equation: [""],
+		equation: '',
 		memory: [],
-		result: "",
+		result: '',
 	}
 
-	onPressBackspace = () => {
-		let equation: Array<string> = [...this.state.equation];
-		equation.splice(equation.length - 1, 1);
-		this.setState({ equation });
-	}
+	onPressBackspace = () => this.setState({ equation: this.state.equation.slice(0, -1) });
 
-	onPressClear = () => this.setState({ equation: [], result: 0 });
+	onPressClear = () => this.setState({ equation: '', memory: [], result: '' });
 
 	onPressDecimal = () => {
-		let equation: Array<string> = this.state.equation;
-		let lastIndex: number = equation.length - 1;
-		if (equation[lastIndex] === "")
-			equation[lastIndex] = "0.";
+		let equation: string = this.state.equation;
+		let lastChar: string = equation[equation.length - 1];
+
+		if (isOp(lastChar) || isPa(lastChar))
+			equation += '0.';
 		else
-			equation[lastIndex] += ".";
+			equation += '.';
 
 		this.setState({ equation });
 	}
 
 	onPressEval = () => {
-		if (validate(this.state.equation))
-			this.setState({ result: compute(this.state.equation) });
+		let tokenized: Array<string> = tokenize(this.state.equation);
+		if (validate(tokenized))
+			this.setState({ equation: '', result: compute(tokenized) });
 	}
 
 	onPressMem = () => { }
 
 	onPressNumeric = (num: number) => {
-		let equation: Array<string> = this.state.equation;
-		equation[equation.length - 1] += num.toString();
+		let equation: string = this.state.equation;
+		if (equation[equation.length - 1] === ')')
+			equation += `*${num}`;
+		else
+			equation += num;
+
 		this.setState({ equation });
 	}
 
-	onPressOperator = (op: string) => this.setState({ equation: [...this.state.equation, op, ""] });
+	onPressOperator = (op: string) => {
+		let equation: string = this.state.equation;
+		let lastChar: string = equation[equation.length - 1];
+		if (equation === '')
+			equation += '!';
+		else if (isOp(lastChar))
+			if (op === '-')
+				equation += '!';
+			else
+				equation = equation.slice(0, -1) + op;
+		else if (lastChar === '(') {
+			if (op === '-')
+				equation += '!';
+		}
+		else
+			equation += op;
+
+		this.setState({ equation });
+	}
 
 	onPressParentheses = () => {
-		let equation: Array<string> = this.state.equation;
-		let lastIndex: number = equation.length - 1;
+		let equation: string = this.state.equation;
+		let lastChar: string = equation[equation.length - 1];
+		let valid: boolean = validate(tokenize(equation));
 
 		// empty
-		if (equation[0] === '')
-			this.setState({ equation: ['('] });
-		// directly after number
-		else if (!isNaN(parseFloat(equation[lastIndex]))) {
-			if (validate(equation))
-				this.setState({ equation: [...equation, ")", ""] });
-			else
-				this.setState({ equation: [...equation, "*", "(", ""] });
-		}
+		if (equation.length === 0)
+			this.setState({ equation: '(' });
 		// directly after operator
-		else {
-			equation.splice(lastIndex, 1);
-			let op: string = equation[lastIndex - 1];
-			// directly after operator or open parenthesis
-			if (isOp(op) || op === "(")
-				this.setState({ equation: [...equation, "(", ""] });
+		else if (isOp(lastChar) || isPa(lastChar)) {
 			// directly after close parenthesis
+			if (lastChar === ")")
+				this.setState({ equation: equation + '(' });
+			// directly after operator or open parenthesis
 			else {
-				if (validate(equation))
-					this.setState({ equation: [...equation, ")", ""] });
+				if (valid)
+					this.setState({ equation: equation + '*(' });
 				else
-					this.setState({ equation: [...equation, "*", "(", ""] });
+					this.setState({ equation: equation + ')' });
 			}
+		}
+		// directly after number
+		else {
+			if (valid)
+				this.setState({ equation: equation + '*(' });
+			else
+				this.setState({ equation: equation + ')' });
 		}
 	}
 
@@ -123,12 +142,12 @@ class Calculator extends React.Component<ReduxProps> {
 		return (
 			<View style={calculatorStyles.rootContainer}>
 				<View style={calculatorStyles.equationContainer}>
-					<Text style={{...calculatorStyles.equation, color: this.props.settings.colorScheme.textC}}>
-						{this.state.equation}
+					<Text style={{ ...calculatorStyles.equation, color: this.props.settings.colorScheme.textC }}>
+						{this.state.equation.replace(/!/g, '-')}
 					</Text>
 				</View>
 				<View style={calculatorStyles.resultContainer}>
-					<Text style={{...calculatorStyles.result, color: this.props.settings.colorScheme.textC}}>
+					<Text style={{ ...calculatorStyles.result, color: this.props.settings.colorScheme.textC }}>
 						{this.state.result}
 					</Text>
 				</View>
