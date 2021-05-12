@@ -4,9 +4,9 @@ import { Text, TouchableOpacity, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { SettingsType } from '../../types';
-
 import { HeaderStyles } from './styles';
+
+import { SettingsType } from '../../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>

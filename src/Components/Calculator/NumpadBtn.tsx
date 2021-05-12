@@ -3,9 +3,9 @@ import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { NumpadConfigType, SettingsType } from '../../types';
-
 import { calculatorStyles } from './styles';
+
+import { NumpadConfigType, SettingsType } from '../../types';
 
 interface ReduxProps {
 	settings: SettingsType,

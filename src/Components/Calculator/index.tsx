@@ -1,19 +1,25 @@
-import React, { memo } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { NumpadConfigType, SettingsType, } from '../../types';
 import { compute, isOp, isPa, tokenize, validate, } from '../../utils/rpn';
-import SeparatorLine from '../SeparatorLine';
 import NumpadBtn from './NumpadBtn';
 
 import { calculatorStyles } from './styles';
+
+import { NumpadConfigType, SettingsType, } from '../../types';
 
 interface ReduxProps {
 	settings: SettingsType,
 }
 
-class Calculator extends React.Component<ReduxProps> {
+interface FunctionProps {
+	onClear: () => void,
+	onResult: (result: number) => void,
+	onUpdate: (equation: string) => void,
+}
+
+class Calculator extends React.Component<ReduxProps & FunctionProps> {
 
 	state = {
 		equation: '',
@@ -21,9 +27,16 @@ class Calculator extends React.Component<ReduxProps> {
 		result: '',
 	}
 
-	onPressBackspace = () => this.setState({ equation: this.state.equation.slice(0, -1) });
+	onPressBackspace = () => {
+		let equation: string = this.state.equation.slice(0, -1);
+		this.setState({ equation });
+		this.props.onUpdate(equation);
+	}
 
-	onPressClear = () => this.setState({ equation: '', memory: 0, result: '' });
+	onPressClear = () => {
+		this.setState({ equation: '', memory: 0, result: '' });
+		this.props.onClear();
+	}
 
 	onPressDecimal = () => {
 		let equation: string = this.state.equation;
@@ -35,6 +48,7 @@ class Calculator extends React.Component<ReduxProps> {
 			equation += '.';
 
 		this.setState({ equation });
+		this.props.onUpdate(equation);
 	}
 
 	onPressEval = () => {
@@ -46,6 +60,8 @@ class Calculator extends React.Component<ReduxProps> {
 				memory = result.toFixed(3);
 
 			this.setState({ equation: '', result, memory });
+			this.props.onUpdate('');
+			this.props.onResult(result);
 		}
 	}
 
@@ -57,6 +73,7 @@ class Calculator extends React.Component<ReduxProps> {
 			equation += this.state.memory;
 
 		this.setState({ equation });
+		this.props.onUpdate(equation);
 	}
 
 	onPressNumeric = (num: number) => {
@@ -67,6 +84,7 @@ class Calculator extends React.Component<ReduxProps> {
 			equation += num;
 
 		this.setState({ equation });
+		this.props.onUpdate(equation);
 	}
 
 	onPressOperator = (op: string) => {
@@ -89,6 +107,7 @@ class Calculator extends React.Component<ReduxProps> {
 			equation += op;
 
 		this.setState({ equation });
+		this.props.onUpdate(equation);
 	}
 
 	onPressParentheses = () => {
@@ -98,27 +117,22 @@ class Calculator extends React.Component<ReduxProps> {
 
 		// empty
 		if (equation.length === 0)
-			this.setState({ equation: '(' });
+			equation = '(';
 		// directly after operator
 		else if (isOp(lastChar) || isPa(lastChar)) {
 			// directly after close parenthesis
-			if (lastChar === ")") {
-				if (valid)
-					this.setState({ equation: equation + '*(' });
-				else
-					this.setState({ equation: equation + ')' });
-			}
+			if (lastChar === ")")
+				equation += (valid ? '*(' : ')');
 			// directly after operator or open parenthesis
 			else
-				this.setState({ equation: equation + '(' });
+				equation += '(';
 		}
 		// directly after number
-		else {
-			if (valid)
-				this.setState({ equation: equation + '*(' });
-			else
-				this.setState({ equation: equation + ')' });
-		}
+		else
+			equation += (valid ? '*(' : ')');
+
+		this.setState({ equation });
+		this.props.onUpdate(equation);
 	}
 
 	render() {
@@ -156,27 +170,14 @@ class Calculator extends React.Component<ReduxProps> {
 		];
 
 		return (
-			<View style={calculatorStyles.rootContainer}>
-				<View style={calculatorStyles.equationContainer}>
-					<Text style={{ ...calculatorStyles.equation, color: this.props.settings.colorScheme.textC }}>
-						{this.state.equation.replace(/!/g, '-')}
-					</Text>
-				</View>
-				<View style={calculatorStyles.resultContainer}>
-					<Text style={{ ...calculatorStyles.result, color: this.props.settings.colorScheme.textC }}>
-						{this.state.result}
-					</Text>
-				</View>
-				<SeparatorLine width={Dimensions.get('screen').width * 0.9} />
-				<View style={calculatorStyles.numpadContainer}>
-					{keypos.map((row, index) => {
-						return (
-							<View key={index} style={calculatorStyles.rowContainer}>
-								{row.map(key => <NumpadBtn {...key} key={key.name} />)}
-							</View>
-						);
-					})}
-				</View>
+			<View style={calculatorStyles.numpadContainer}>
+				{keypos.map((row, index) => {
+					return (
+						<View key={index} style={calculatorStyles.rowContainer}>
+							{row.map(key => <NumpadBtn {...key} key={key.name} />)}
+						</View>
+					);
+				})}
 			</View>
 		);
 	}
