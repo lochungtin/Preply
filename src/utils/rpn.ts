@@ -103,8 +103,7 @@ export const validate = (splt: Array<string>): boolean => {
             stack.push('(');
         if (token === ')') {
             if (stack.length === 0)
-                return 0;
-            
+                return 0;            
             stack.pop();
         }
     });

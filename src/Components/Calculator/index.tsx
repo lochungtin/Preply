@@ -17,7 +17,7 @@ class Calculator extends React.Component<ReduxProps> {
 
 	state = {
 		equation: '',
-		memory: [],
+		memory: 0,
 		result: '',
 	}
 
@@ -39,11 +39,21 @@ class Calculator extends React.Component<ReduxProps> {
 
 	onPressEval = () => {
 		let tokenized: Array<string> = tokenize(this.state.equation);
-		if (validate(tokenized))
-			this.setState({ equation: '', result: compute(tokenized) });
+		if (validate(tokenized)) {
+			let res: number = compute(tokenized);
+			this.setState({ equation: '', result: res, memory: res.toFixed(3) });
+		}
 	}
 
-	onPressMem = () => { }
+	onPressMem = () => {
+		let equation: string = this.state.equation;
+		if (equation[equation.length - 1] === ')')
+			equation += `*${this.state.memory}`;
+		else
+			equation += this.state.memory;
+
+		this.setState({ equation });
+	}
 
 	onPressNumeric = (num: number) => {
 		let equation: string = this.state.equation;
@@ -86,15 +96,15 @@ class Calculator extends React.Component<ReduxProps> {
 		// directly after operator
 		else if (isOp(lastChar) || isPa(lastChar)) {
 			// directly after close parenthesis
-			if (lastChar === ")")
-				this.setState({ equation: equation + '(' });
-			// directly after operator or open parenthesis
-			else {
+			if (lastChar === ")") {
 				if (valid)
 					this.setState({ equation: equation + '*(' });
 				else
 					this.setState({ equation: equation + ')' });
 			}
+			// directly after operator or open parenthesis
+			else
+				this.setState({ equation: equation + '(' });
 		}
 		// directly after number
 		else {
