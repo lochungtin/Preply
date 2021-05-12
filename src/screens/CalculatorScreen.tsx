@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 
 import Calculator from '../Components/Calculator';
 import Header from '../Components/Header';
-import { SettingsType } from '../types';
 
 import { screenStyles } from './styles';
+
+import { SettingsType } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,

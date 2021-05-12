@@ -1,24 +1,36 @@
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { View, } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
-import { TodoType } from '../types';
+import Header from '../Components/Header';
 
-interface ReduxProps {
-    todos: Array<TodoType>,
+import { screenStyles } from './styles';
+
+import { SettingsType, TodoType } from '../types';
+
+interface NavProps {
+	navigation: DrawerNavigationProp<any, any>,
 }
 
-class Screen extends React.Component<ReduxProps> {
+interface ReduxProps {
+	settings: SettingsType,
+	todos: Array<TodoType>,
+}
+
+class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
-			<View>
+			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
+				<Header navigation={this.props.navigation} title={"To Dos"} />
 			</View>
 		);
 	}
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
-    todos: state.todos,
+    settings: state.settings,
+	todo: state.todos,
 });
 
 export default connect(mapStateToProps)(Screen);
