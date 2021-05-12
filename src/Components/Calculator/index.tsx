@@ -123,12 +123,12 @@ class Calculator extends React.Component<ReduxProps> {
 		return (
 			<View style={calculatorStyles.rootContainer}>
 				<View style={calculatorStyles.equationContainer}>
-					<Text>
+					<Text style={{...calculatorStyles.equation, color: this.props.settings.colorScheme.textC}}>
 						{this.state.equation}
 					</Text>
 				</View>
 				<View style={calculatorStyles.resultContainer}>
-					<Text>
+					<Text style={{...calculatorStyles.result, color: this.props.settings.colorScheme.textC}}>
 						{this.state.result}
 					</Text>
 				</View>

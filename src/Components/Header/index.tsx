@@ -22,8 +22,6 @@ interface BarProps {
 
 class SeparatorLine extends React.Component<NavProps & ReduxProps & BarProps> {
 	render() {
-		console.log(this.props);
-
 		return (
 			<View style={{ ...HeaderStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.headerC }}>
 				<TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
