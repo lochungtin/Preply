@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -23,7 +23,7 @@ class Calculator extends React.Component<ReduxProps> {
 
 	onPressBackspace = () => this.setState({ equation: this.state.equation.slice(0, -1) });
 
-	onPressClear = () => this.setState({ equation: '', memory: [], result: '' });
+	onPressClear = () => this.setState({ equation: '', memory: 0, result: '' });
 
 	onPressDecimal = () => {
 		let equation: string = this.state.equation;
@@ -40,8 +40,12 @@ class Calculator extends React.Component<ReduxProps> {
 	onPressEval = () => {
 		let tokenized: Array<string> = tokenize(this.state.equation);
 		if (validate(tokenized)) {
-			let res: number = compute(tokenized);
-			this.setState({ equation: '', result: res, memory: res.toFixed(3) });
+			let result: number = compute(tokenized);
+			let memory = result.toString();
+			if (memory.includes('.'))
+				memory = result.toFixed(3);
+
+			this.setState({ equation: '', result, memory });
 		}
 	}
 
@@ -68,8 +72,10 @@ class Calculator extends React.Component<ReduxProps> {
 	onPressOperator = (op: string) => {
 		let equation: string = this.state.equation;
 		let lastChar: string = equation[equation.length - 1];
-		if (equation === '')
-			equation += '!';
+		if (equation === '') {
+			if (op === '-')
+				equation += '!';
+		}
 		else if (isOp(lastChar))
 			if (op === '-')
 				equation += '!';
