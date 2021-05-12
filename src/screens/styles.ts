@@ -11,6 +11,13 @@ export const screenStyles = StyleSheet.create({
 });
 
 export const calculatorScreenStyles = StyleSheet.create({
+    displayContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        height: '45%',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
     equation: {
         fontSize: 40,
         paddingHorizontal: 15,
@@ -21,7 +28,7 @@ export const calculatorScreenStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
-        height: '15%',
+        minHeight: '15%',
         marginBottom: 20,
         marginTop: 5,
         width: screenWidth * 0.9
@@ -34,7 +41,7 @@ export const calculatorScreenStyles = StyleSheet.create({
     },
     resultContainer: {
         alignItems: 'center',
-        height: '12%',
+        minHeight: '12%',
         display: 'flex',
         flexDirection: 'row',
         marginBottom: 20,

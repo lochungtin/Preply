@@ -67,10 +67,13 @@ class Calculator extends React.Component<ReduxProps & FunctionProps> {
 
 	onPressMem = () => {
 		let equation: string = this.state.equation;
+		let memory: string = this.state.memory.toString();
+		memory = memory.replace('-', '!');
+
 		if (equation[equation.length - 1] === ')')
-			equation += `*${this.state.memory}`;
+			equation += `*${memory}`;
 		else
-			equation += this.state.memory;
+			equation += memory;
 
 		this.setState({ equation });
 		this.props.onUpdate(equation);

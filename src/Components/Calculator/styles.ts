@@ -7,6 +7,7 @@ export const calculatorStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flex: 1,
+        height: '100%',
         justifyContent: 'center',
     },
     numpadContainer: {

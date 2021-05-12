@@ -37,17 +37,19 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			<View style={{ ...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
 				<Header navigation={this.props.navigation} title='Calculator' />
 				<View style={calculatorScreenStyles.rootContainer}>
-					<View style={calculatorScreenStyles.equationContainer}>
-						<Text style={{ ...calculatorScreenStyles.equation, color: this.props.settings.colorScheme.textC }}>
-							{this.state.equation.replace(/!/g, '-')}
-						</Text>
+					<View style={calculatorScreenStyles.displayContainer}>
+						<View style={calculatorScreenStyles.equationContainer}>
+							<Text style={{ ...calculatorScreenStyles.equation, color: this.props.settings.colorScheme.textC }}>
+								{this.state.equation.replace(/!/g, '-')}
+							</Text>
+						</View>
+						<View style={calculatorScreenStyles.resultContainer}>
+							<Text style={{ ...calculatorScreenStyles.result, color: this.props.settings.colorScheme.textC }}>
+								{this.state.result}
+							</Text>
+						</View>
+						<SeparatorLine width={screenWidth * 0.9} />
 					</View>
-					<View style={calculatorScreenStyles.resultContainer}>
-						<Text style={{ ...calculatorScreenStyles.result, color: this.props.settings.colorScheme.textC }}>
-							{this.state.result}
-						</Text>
-					</View>
-					<SeparatorLine width={screenWidth * 0.9} />
 					<Calculator
 						onClear={this.onClear}
 						onResult={this.onResult}
