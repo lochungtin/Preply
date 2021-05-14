@@ -16,7 +16,6 @@ interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
-
 interface ReduxProps {
 	settings: SettingsType,
 }
@@ -25,7 +24,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
 			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
-				<Header navigation={this.props.navigation} title={"Settings"} />
+				<Header nav={this.props.navigation} title={"Settings"} />
 				<Switch
 					value={this.props.settings.darkMode}
 					onValueChange={value => store.dispatch(setSettings({

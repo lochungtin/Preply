@@ -9,7 +9,7 @@ import { HeaderStyles } from './styles';
 import { SettingsType } from '../../types';
 
 interface NavProps {
-	navigation: DrawerNavigationProp<any, any>
+	nav: DrawerNavigationProp<any, any>
 }
 
 interface ReduxProps {
@@ -20,11 +20,11 @@ interface BarProps {
 	title: string,
 }
 
-class SeparatorLine extends React.Component<NavProps & ReduxProps & BarProps> {
+class Header extends React.Component<NavProps & ReduxProps & BarProps> {
 	render() {
 		return (
 			<View style={{ ...HeaderStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.headerC }}>
-				<TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+				<TouchableOpacity onPress={this.props.nav.openDrawer}>
 					<Icon
 						color={this.props.settings.colorScheme.textC}
 						name='menu-open'
@@ -43,4 +43,4 @@ const mapStateToProps = (state: ReduxProps) => ({
 	settings: state.settings
 });
 
-export default connect(mapStateToProps)(SeparatorLine);
+export default connect(mapStateToProps)(Header);

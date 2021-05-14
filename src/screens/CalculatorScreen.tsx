@@ -35,7 +35,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
 			<View style={{ ...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
-				<Header navigation={this.props.navigation} title='Calculator' />
+				<Header nav={this.props.navigation} title='Calculator' />
 				<View style={calculatorScreenStyles.rootContainer}>
 					<View style={calculatorScreenStyles.displayContainer}>
 						<View style={calculatorScreenStyles.equationContainer}>

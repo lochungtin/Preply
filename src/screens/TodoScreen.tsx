@@ -1,9 +1,10 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Header from '../Components/Header';
+import RecordHandler from '../Components/RecordHandler';
 
 import { screenStyles } from './styles';
 
@@ -21,15 +22,19 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
-			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
-				<Header navigation={this.props.navigation} title={"To Dos"} />
+			<View style={{ ...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+				<Header nav={this.props.navigation} title={'To Dos'} />
+				<RecordHandler nav={this.props.navigation} type='Todo'/>
+				<ScrollView>
+					
+				</ScrollView>
 			</View>
 		);
 	}
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
+	settings: state.settings,
 	todo: state.todos,
 });
 

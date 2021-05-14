@@ -1,13 +1,14 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { View, } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Header from '../Components/Header';
-
-import { SettingsType, NoteType, } from '../types';
+import RecordHandler from '../Components/RecordHandler';
 
 import { screenStyles } from './styles';
+
+import { NoteType, SettingsType, } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -18,11 +19,12 @@ interface ReduxProps {
 	settings: SettingsType
 }
 
-class AppNav extends React.Component<NavProps & ReduxProps> {
+class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
 			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
-				<Header navigation={this.props.navigation} title={"Notes"} />
+				<Header nav={this.props.navigation} title={"Notes"} />
+				<RecordHandler nav={this.props.navigation} type='Note'/>
 			</View>
 		);
 	}
@@ -33,4 +35,4 @@ const mapStateToProps = (state: ReduxProps) => ({
 	settings: state.settings,
 });
 
-export default connect(mapStateToProps)(AppNav);
+export default connect(mapStateToProps)(Screen);
