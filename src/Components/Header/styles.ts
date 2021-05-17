@@ -11,7 +11,7 @@ export const HeaderStyles = StyleSheet.create({
         height: 50,
         justifyContent: 'space-around',
         marginTop: 10,
-        marginBottom: 30,
+        marginBottom: 10,
         width: screenWidth,
     },
     title: {

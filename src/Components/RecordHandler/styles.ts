@@ -9,7 +9,6 @@ export const RecordHandlerStyles = StyleSheet.create({
         flexDirection: 'row',
         height: 40,
         justifyContent: 'space-around',
-        marginBottom: 30,
         width: screenWidth * 0.9,
     },
     addRecordContainer: {
