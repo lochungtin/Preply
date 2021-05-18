@@ -10,6 +10,7 @@ import { screenStyles } from './styles';
 
 import { SettingsType, TodoType } from '../types';
 import RecordItem from '../Components/RecordItem';
+import RecordInputModal from '../Components/RecordInputModal';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -21,11 +22,19 @@ interface ReduxProps {
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
+
+	state = {
+		inputModalOpen: false
+	}
+
 	render() {
 		return (
 			<View style={{ ...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
 				<Header nav={this.props.navigation} title={'To Dos'} />
-				<RecordHandler nav={this.props.navigation} type='Todo'/>
+				<RecordHandler
+					onAdd={() => this.setState({ inputModalOpen: true })}
+					type='Todo' 
+				/>
 				<ScrollView>
 					<RecordItem />
 					<RecordItem />
@@ -33,6 +42,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					<RecordItem />
 					<RecordItem />
 				</ScrollView>
+				<RecordInputModal
+					onClose={() => this.setState({ inputModalOpen: false })}
+					onSave={() => this.setState({ inputModalOpen: false })}
+					open={this.state.inputModalOpen}
+					routine
+				/>
 			</View>
 		);
 	}

@@ -71,6 +71,7 @@ export interface ColorSchemeType {
     drawerBgC: string,
     drawerIconC: string,
     headerC: string,
+    modalBgC: string,
     recordBgC: string,
     recordBtnC: string,
     separatorLineC: string,

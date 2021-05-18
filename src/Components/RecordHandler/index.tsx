@@ -1,4 +1,3 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,23 +7,20 @@ import { RecordHandlerStyles } from './styles';
 
 import { SettingsType } from '../../types';
 
-interface NavProps {
-    nav: DrawerNavigationProp<any, any>,
-}
-
 interface ReduxProps {
     settings: SettingsType,
 }
 
 interface HandlerProps {
+    onAdd: () => void,
     type: string,
 }
 
-class RecordHandler extends React.Component<NavProps & ReduxProps & HandlerProps> {
+class RecordHandler extends React.Component<ReduxProps & HandlerProps> {
     render() {
         return (
             <View style={RecordHandlerStyles.rootContainer}>
-                <TouchableOpacity onPress={() => this.props.nav.navigate('input', { type: this.props.type })} style={RecordHandlerStyles.addRecordContainer}>
+                <TouchableOpacity onPress={this.props.onAdd} style={RecordHandlerStyles.addRecordContainer}>
                     <Icon
                         color={this.props.settings.colorScheme.textC}
                         name='plus'

@@ -16,7 +16,7 @@ class Screen extends React.Component<ReduxProps> {
     render() {
         return (
             <TouchableOpacity style={{ ...RecordItemStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.recordBgC }}>
-                <View style={{ ...RecordItemStyles.colorIndicator, backgroundColor: '#' + Math.floor(Math.random() * 16777215).toString(16) }} />
+                <View style={{ ...RecordItemStyles.colorIndicator, backgroundColor: '#6E6EAF' }} />
                 <Text style={{ ...RecordItemStyles.titleText, color: this.props.settings.colorScheme.textC }}>
                     Some Text
                 </Text>

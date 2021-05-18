@@ -26,9 +26,10 @@ export const darkModeColorScheme: ColorSchemeType = {
     drawerBgC: black,
     drawerIconC: darkMode.highContrast,
     headerC: darkMode.lowContrast,
+    modalBgC: darkMode.secondaryBgC,
     recordBgC: darkMode.secondaryBgC,
     recordBtnC: darkMode.midTone,
-    separatorLineC: darkMode.lowContrast,
+    separatorLineC: darkMode.midTone,
     textC: darkMode.textC,    
 }
 
@@ -37,6 +38,7 @@ export const lightModeColorScheme: ColorSchemeType = {
     drawerBgC: white,
     drawerIconC: lightMode.highContrast,
     headerC: lightMode.lowContrast,
+    modalBgC: lightMode.secondaryBgC,
     recordBgC: lightMode.secondaryBgC,
     recordBtnC: lightMode.lowContrast,
     separatorLineC: lightMode.lowContrast,
