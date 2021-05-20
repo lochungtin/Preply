@@ -38,7 +38,7 @@ export interface RoutineType {
     content: string,
 }
 
-// other types
+// redux types
 export interface ActionType {
     type: string,
     payload?: any
@@ -76,4 +76,10 @@ export interface ColorSchemeType {
     recordBtnC: string,
     separatorLineC: string,
     textC: string,
+}
+
+// calendar types
+export interface CalendarDateType {
+    date: number
+    month: number
 }
