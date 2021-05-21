@@ -14,14 +14,29 @@ export const getDateNo = (year: number, month: number): number => {
         return isOddMonth(month) ? 31 : 30;
 }
 
+interface CalendarUpdatePair {
+    month: number,
+    year: number,
+}
+
+export const getPrevMonth = (year: number, month: number): CalendarUpdatePair => ({
+    month: Math.floor(1 / month) * 12 + month - 1,
+    year: year - Math.floor(1 / month),
+});
+
+export const getNextMonth = (year: number, month: number): CalendarUpdatePair => ({
+    month: month % 12 + 1,
+    year: year + Math.floor(month / 12),
+});
+
 export const genCalendar = (year: number, month: number): Array<Array<CalendarDateType>> => {
     let startDay: number = moment(`${year}-${insertZeros(month.toString(), 2)}-01`).weekday();
     let dayCount: number = getDateNo(year, month);
     let cellCount: number = Math.ceil((startDay + dayCount) / 7) * 7;
 
-    let prevMonth: number = Math.floor(1 / month) * 12 + month - 1;
-    let nextMonth: number = 0;
-    let gridStart: number = getDateNo(year, prevMonth) - startDay + 1;
+    let prevMonth: CalendarUpdatePair = getPrevMonth(year, month);
+    let nextMonth: CalendarUpdatePair = getNextMonth(year, month);
+    let gridStart: number = getDateNo(year, prevMonth.month) - startDay + 1;
 
     let grid: Array<Array<CalendarDateType>> = [];
 
@@ -31,11 +46,11 @@ export const genCalendar = (year: number, month: number): Array<Array<CalendarDa
 
         let obj: CalendarDateType;
         if (row == 0 && i < startDay)
-            obj = {date: gridStart++, month: prevMonth};
+            obj = {date: gridStart++, month: prevMonth.month, year: prevMonth.year};
         else if (i < startDay + dayCount)
-            obj = {date: i - startDay + 1, month: month};
+            obj = {date: i - startDay + 1, month, year};
         else
-            obj = {date: i - (startDay + dayCount) + 1, month: nextMonth}
+            obj = {date: i - (startDay + dayCount) + 1, month: nextMonth.month, year: nextMonth.year}
         
         if (grid[row] === undefined)
             grid[row] = [];
@@ -43,3 +58,6 @@ export const genCalendar = (year: number, month: number): Array<Array<CalendarDa
     }
     return grid;
 }
+
+export const getName = (month: number): string => 
+    ['January', 'February', 'March', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'][month - 1];

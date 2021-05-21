@@ -7,16 +7,27 @@ export const CalendarStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
-        height: 300,
-        justifyContent: 'center',
+        height: 350,
+        justifyContent: 'flex-start',
         width: 350,
+    },
+    navContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'space-between',
+        width: 350,
+    },
+    monthLabel: {
+        fontSize: 17
     },
     tableContainer: {
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
         height: 300,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         width: 350,
     },
     rowContainer: {

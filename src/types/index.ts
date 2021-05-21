@@ -82,6 +82,7 @@ export interface ColorSchemeType {
 
 // calendar types
 export interface CalendarDateType {
-    date: number
-    month: number
+    date: number,
+    month: number,
+    year: number,
 }
