@@ -58,6 +58,7 @@ export interface NumpadConfigType {
 
 // color scheme
 export interface ColorModeType {
+    accent: string,
     backgroundC: string,
     secondaryBgC: string,
     dTextC: string,
@@ -68,8 +69,8 @@ export interface ColorModeType {
 }
 
 export interface ColorSchemeType {
+    accent: string,
     backgroundC: string,
-    drawerBgC: string,
     drawerIconC: string,
     dTextC: string,
     headerC: string,

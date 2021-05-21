@@ -61,3 +61,6 @@ export const genCalendar = (year: number, month: number): Array<Array<CalendarDa
 
 export const getName = (month: number): string => 
     ['January', 'February', 'March', 'April', 'May', 'Jun', 'July', 'August', 'September', 'October', 'November', 'December'][month - 1];
+
+export const format = (date: CalendarDateType): string => 
+    `${insertZeros(date.date.toString(), 2)}-${insertZeros(date.month.toString(), 2)}-${date.year}`;

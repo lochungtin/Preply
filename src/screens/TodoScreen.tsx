@@ -36,8 +36,9 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					onAdd={() => this.setState({ inputModalOpen: true })}
 					type='Todo' 
 				/>
+				<Calendar />
 				<ScrollView>
-					<Calendar />
+					<RecordItem />
 				</ScrollView>
 				<RecordInputModal
 					onClose={() => this.setState({ inputModalOpen: false })}

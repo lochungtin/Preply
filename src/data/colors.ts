@@ -1,9 +1,7 @@
 import { ColorModeType, ColorSchemeType } from "../types";
 
-const black = "#000000";
-const white = "#FFFFFF";
-
 const darkMode: ColorModeType = {
+    accent: '#1E8F71',
     backgroundC: '#1A1B25',
     secondaryBgC: '#2A2B35',
     dTextC: '#A0A0C0',
@@ -14,6 +12,7 @@ const darkMode: ColorModeType = {
 }
 
 const lightMode: ColorModeType = {
+    accent: '#99E8D4',
     backgroundC: '#F0F0FE',
     secondaryBgC: '#F5F5FF',
     dTextC: '#7A7B90',
@@ -24,8 +23,8 @@ const lightMode: ColorModeType = {
 }
 
 export const darkModeColorScheme: ColorSchemeType = {
+    accent: darkMode.accent,
     backgroundC: darkMode.backgroundC,
-    drawerBgC: black,
     drawerIconC: darkMode.highContrast,
     dTextC: darkMode.dTextC,
     headerC: darkMode.lowContrast,
@@ -37,8 +36,8 @@ export const darkModeColorScheme: ColorSchemeType = {
 }
 
 export const lightModeColorScheme: ColorSchemeType = {
+    accent: lightMode.accent,
     backgroundC: lightMode.backgroundC,
-    drawerBgC: white,
     drawerIconC: lightMode.highContrast,
     dTextC: lightMode.dTextC,
     headerC: lightMode.lowContrast,

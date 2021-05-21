@@ -48,7 +48,7 @@ const routine = () =>
 
 class AppNav extends React.Component<ReduxProps> {
 	drawerContent = (props: any) =>
-		<DrawerContentScrollView {...props} style={{ backgroundColor: this.props.settings.colorScheme.drawerBgC }}>
+		<DrawerContentScrollView {...props} style={{ backgroundColor: this.props.settings.colorScheme.backgroundC }}>
 			<View style={{ height: 20 }} />
 			<Text style={{ ...NavStyles.main, color: this.props.settings.colorScheme.textC }}>
 				Preply

@@ -7,7 +7,6 @@ import { RecordItemStyles } from './styles';
 import { SettingsType } from '../../types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
 interface ReduxProps {
     settings: SettingsType,
 }
@@ -16,7 +15,7 @@ class Screen extends React.Component<ReduxProps> {
     render() {
         return (
             <TouchableOpacity style={{ ...RecordItemStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.recordBgC }}>
-                <View style={{ ...RecordItemStyles.colorIndicator, backgroundColor: '#6E6EAF' }} />
+                <View style={{ ...RecordItemStyles.colorIndicator, backgroundColor: this.props.settings.colorScheme.accent }} />
                 <Text style={{ ...RecordItemStyles.titleText, color: this.props.settings.colorScheme.textC }}>
                     Some Text
                 </Text>
