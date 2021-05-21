@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { calculatorStyles } from './styles';
+import { CalculatorStyles } from './styles';
 
 import { NumpadConfigType, SettingsType } from '../../types';
 
@@ -16,7 +16,7 @@ class NumpadBtn extends React.Component<ReduxProps & NumpadConfigType> {
 		return (
 			<TouchableOpacity
 				onPress={this.props.onPress}
-				style={calculatorStyles.cellContainer}
+				style={CalculatorStyles.cellContainer}
 			>
                 <Icon
 					color={this.props.settings.colorScheme.textC}

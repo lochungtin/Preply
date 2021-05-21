@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { SettingsType } from '../types';
 
-import { screenStyles } from './styles';
+import { ScreenStyles } from './styles';
 
 interface NavProps {
     navigation: DrawerNavigationProp<any, any>,
@@ -19,7 +19,7 @@ interface ReduxProps {
 class AppNav extends React.Component<NavProps & ReduxProps> {
     render() {
         return (
-            <View style={{ ...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+            <View style={{ ...ScreenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
                 <TouchableOpacity onPress={this.props.navigation.goBack}>
                     <Icon 
                         color={this.props.settings.colorScheme.textC}

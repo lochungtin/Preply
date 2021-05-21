@@ -7,7 +7,7 @@ import Calculator from '../Components/Calculator';
 import Header from '../Components/Header';
 import SeparatorLine from '../Components/SeparatorLine';
 
-import { calculatorScreenStyles, screenStyles, screenWidth, } from './styles';
+import { calculatorScreenStyles, ScreenStyles, screenWidth, } from './styles';
 
 import { SettingsType } from '../types';
 
@@ -34,7 +34,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	render() {
 		return (
-			<View style={{ ...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+			<View style={{ ...ScreenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
 				<Header nav={this.props.navigation} title={"Unit Converter"} />
 				<View style={calculatorScreenStyles.rootContainer}>
 					<View style={calculatorScreenStyles.displayContainer}>

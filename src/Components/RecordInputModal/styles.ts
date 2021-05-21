@@ -39,7 +39,7 @@ export const RecordInputModalStyles = StyleSheet.create({
         width: screenWidth,
     },
     titleTextInput: {
-        fontSize: 23,
+        fontSize: 30,
         padding: 0,
         width: screenWidth * 0.75
     },
@@ -47,8 +47,9 @@ export const RecordInputModalStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
-        height: 30,
+        minHeight: 30,
         justifyContent: 'space-between',
+        paddingRight: 10,
         width: screenWidth * 0.75
     },
     labelText: {

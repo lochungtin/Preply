@@ -60,6 +60,7 @@ export interface NumpadConfigType {
 export interface ColorModeType {
     backgroundC: string,
     secondaryBgC: string,
+    dTextC: string,
     textC: string,
     lowContrast: string,
     highContrast: string,
@@ -70,6 +71,7 @@ export interface ColorSchemeType {
     backgroundC: string,
     drawerBgC: string,
     drawerIconC: string,
+    dTextC: string,
     headerC: string,
     modalBgC: string,
     recordBgC: string,

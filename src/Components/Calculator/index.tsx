@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { compute, isOp, isPa, tokenize, validate, } from '../../utils/rpn';
 import NumpadBtn from './NumpadBtn';
 
-import { calculatorStyles } from './styles';
+import { CalculatorStyles } from './styles';
 
 import { NumpadConfigType, SettingsType, } from '../../types';
 
@@ -173,10 +173,10 @@ class Calculator extends React.Component<ReduxProps & FunctionProps> {
 		];
 
 		return (
-			<View style={calculatorStyles.numpadContainer}>
+			<View style={CalculatorStyles.numpadContainer}>
 				{keypos.map((row, index) => {
 					return (
-						<View key={index} style={calculatorStyles.rowContainer}>
+						<View key={index} style={CalculatorStyles.rowContainer}>
 							{row.map(key => <NumpadBtn {...key} key={key.name} />)}
 						</View>
 					);

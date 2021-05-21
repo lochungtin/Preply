@@ -20,35 +20,26 @@ export const genCalendar = (year: number, month: number): Array<Array<CalendarDa
     let cellCount: number = Math.ceil((startDay + dayCount) / 7) * 7;
 
     let prevMonth: number = Math.floor(1 / month) * 12 + month - 1;
+    let nextMonth: number = 0;
     let gridStart: number = getDateNo(year, prevMonth) - startDay + 1;
 
     let grid: Array<Array<CalendarDateType>> = [];
-    let row: Array<CalendarDateType> = [];
-    let dayCounter: number = 0;
 
     for (let i = 0; i < cellCount; ++i) {
-        if (i % 7 == 0 && i != 0) {
-            grid.push(row);
-            row = [];
-        }
+        let row = Math.floor(i / 7);
+        let col = i % 7;
 
-        if (i < startDay)
-            row.push({
-                date: gridStart++,
-                month: prevMonth,
-            });
-        else {
-            row.push({
-                date: ++dayCounter,
-                month,
-            });
-
-            if (dayCounter >= dayCount) {
-                dayCounter = 0;
-                month = month % 12 + 1;
-            }
-        }
+        let obj: CalendarDateType;
+        if (row == 0 && i < startDay)
+            obj = {date: gridStart++, month: prevMonth};
+        else if (i < startDay + dayCount)
+            obj = {date: i - startDay + 1, month: month};
+        else
+            obj = {date: i - (startDay + dayCount) + 1, month: nextMonth}
+        
+        if (grid[row] === undefined)
+            grid[row] = [];
+        grid[row][col] = obj;
     }
-    grid.push(row);
     return grid;
 }

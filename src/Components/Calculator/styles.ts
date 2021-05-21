@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet, } from 'react-native';
 
 export const screenWidth = Dimensions.get('screen').width;
 
-export const calculatorStyles = StyleSheet.create({
+export const CalculatorStyles = StyleSheet.create({
     cellContainer: {
         alignItems: 'center',
         display: 'flex',

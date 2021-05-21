@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
+import Calendar from '../Calendar';
 import SeparatorLine from '../SeparatorLine';
 import InputRow from './row';
 
@@ -23,6 +24,11 @@ interface ModalProps {
 }
 
 class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
+
+    state = {
+        allDay: false,
+    }
+
     render() {
         return (
             <Modal
@@ -62,16 +68,14 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                 All Day
                                 </Text>
                             <Switch
-                                value={true}
+                                onValueChange={allDay => this.setState({ allDay })}
+                                value={this.state.allDay}
                             />
                         </InputRow>
-                        {true && <InputRow iconName='blank'>
+                        {!this.state.allDay && <InputRow iconName='blank'>
                             <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
                                 All Day
                             </Text>
-                            <Switch
-                                value={true}
-                            />
                         </InputRow>}
                         {this.props.routine && <>
                             <InputRow iconName='sync'>
@@ -94,7 +98,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='card-text-outline'>
-                            <TextInput 
+                            <TextInput
                                 multiline
                             />
                         </InputRow>

@@ -10,7 +10,7 @@ import { store } from '../redux/store';
 import { SettingsType } from '../types';
 
 import { darkModeColorScheme, lightModeColorScheme, } from '../data/colors';
-import { screenStyles } from './styles';
+import { ScreenStyles } from './styles';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -23,7 +23,7 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
-			<View style={{...screenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
+			<View style={{...ScreenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
 				<Header nav={this.props.navigation} title={"Settings"} />
 				<Switch
 					value={this.props.settings.darkMode}

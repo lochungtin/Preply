@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet, } from 'react-native';
 
 export const screenWidth = Dimensions.get('screen').width;
 
-export const screenStyles = StyleSheet.create({
+export const ScreenStyles = StyleSheet.create({
     screenD: {
         alignItems: 'center',
         display: 'flex',
