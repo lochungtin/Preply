@@ -24,7 +24,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		return (
 			<View style={{...ScreenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
 				<Header nav={this.props.navigation} title={"Notes"} />
-				<RecordHandler nav={this.props.navigation} type='Note'/>
+				
 			</View>
 		);
 	}

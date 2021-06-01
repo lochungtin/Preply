@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -12,7 +12,13 @@ interface ReduxProps {
 }
 
 interface HandlerProps {
+    isSorting: boolean,
+    isFiltering: boolean,
+    isCalendarOpen: boolean,
     onAdd: () => void,
+    toggleCalendar: () => void,
+    toggleFilter: () => void,
+    toggleSort: () => void,
     type: string,
 }
 
@@ -26,21 +32,25 @@ class RecordHandler extends React.Component<ReduxProps & HandlerProps> {
                         name='plus'
                         size={30}
                     />
-                    <Text style={{ ...RecordHandlerStyles.addRecordText, color: this.props.settings.colorScheme.textC }}>
-                        {`New ${this.props.type}`}
-                    </Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.toggleSort}>
                     <Icon
-                        color={this.props.settings.colorScheme.textC}
+                        color={this.props.isSorting ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
                         name='sort-ascending'
                         size={25}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.toggleFilter}>
                     <Icon
-                        color={this.props.settings.colorScheme.textC}
+                        color={this.props.isFiltering ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
                         name='filter-variant'
+                        size={25}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.props.toggleCalendar}>
+                    <Icon
+                        color={this.props.isCalendarOpen ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
+                        name='calendar-outline'
                         size={25}
                     />
                 </TouchableOpacity>

@@ -97,16 +97,17 @@ export const compute = (equation: Array<string>): number => evaluate(convert(equ
 // validate equation array - check for parentheses matching
 export const validate = (splt: Array<string>): boolean => {
     let stack: Array<string> = [];
-    
-    splt.forEach(token => {
+
+    for (let i = 0; i < splt.length; ++i) {
+        let token: string = splt[i];
         if (token === '(')
             stack.push('(');
         if (token === ')') {
             if (stack.length === 0)
-                return 0;            
+                return false;
             stack.pop();
         }
-    });
+    }
 
     return stack.length === 0;
 }

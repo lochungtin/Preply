@@ -3,15 +3,16 @@ import React from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 
+import Calendar from '../Components/Calendar';
 import Header from '../Components/Header';
 import RecordHandler from '../Components/RecordHandler';
+import RecordInputModal from '../Components/RecordInputModal';
+import RecordItem from '../Components/RecordItem';
+import SeparatorLine from '../Components/SeparatorLine';
 
-import { ScreenStyles } from './styles';
+import { ScreenStyles, screenWidth } from './styles';
 
 import { SettingsType, TodoType } from '../types';
-import RecordItem from '../Components/RecordItem';
-import RecordInputModal from '../Components/RecordInputModal';
-import Calendar from '../Components/Calendar';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -25,7 +26,10 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = {
-		inputModalOpen: false
+		calendarExpand: true,
+		inputModalOpen: false,
+		filtering: false,
+		sorting: false,
 	}
 
 	render() {
@@ -33,11 +37,22 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
 				<Header nav={this.props.navigation} title={'To Dos'} />
 				<RecordHandler
+					isCalendarOpen={this.state.calendarExpand}
+					isFiltering={this.state.filtering}
+					isSorting={this.state.sorting}
 					onAdd={() => this.setState({ inputModalOpen: true })}
-					type='Todo' 
+					toggleCalendar={() => this.setState({ calendarExpand: !this.state.calendarExpand })}
+					toggleFilter={() => this.setState({ filtering: !this.state.filtering })}
+					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
+					type='Todo'
 				/>
-				<Calendar />
+				<Calendar expand={this.state.calendarExpand} toggleExpand={() => this.setState({ calendarExpand: !this.state.calendarExpand })} />
+				<SeparatorLine width={screenWidth * 0.95}/>
 				<ScrollView>
+					<RecordItem />
+					<RecordItem />
+					<RecordItem />
+					<RecordItem />
 					<RecordItem />
 				</ScrollView>
 				<RecordInputModal

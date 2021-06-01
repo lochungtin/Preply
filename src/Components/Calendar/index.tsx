@@ -16,12 +16,17 @@ interface ReduxProps {
     settings: SettingsType,
 }
 
+interface CalendarProps {
+    expand: boolean,
+    toggleExpand: () => void,
+}
+
 interface CalendarStates {
     month: number,
     year: number,
 }
 
-class Calendar extends React.Component<ReduxProps, CalendarStates> {
+class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarStates> {
 
     constructor(props: any) {
         super(props);
@@ -37,9 +42,31 @@ class Calendar extends React.Component<ReduxProps, CalendarStates> {
     prevMonth = () => this.setState(getPrevMonth(this.state.year, this.state.month));
 
     render() {
+        let grid = genCalendar(this.state.year, this.state.month);
+
+        if (!this.props.expand) {
+            let now = moment();
+            let row = grid.filter(row => row.findIndex(date => date.month === now.get('month') + 1 && date.date === now.get('date')) !== -1)[0];
+
+            return (
+                <View style={CalendarStyles.rowContainer}>
+                    {row.map(date => {
+                        return (
+                            <DateBtn
+                                key={keygen()}
+                                active={date.month === this.state.month}
+                                date={date}
+                                onPress={() => { }}
+                            />
+                        );
+                    })}
+                </View>
+            );
+        }
+
         return (
             <View style={CalendarStyles.rootContainer}>
-                <View style={CalendarStyles.navContainer}>
+                <TouchableOpacity style={CalendarStyles.navContainer}>
                     <TouchableOpacity onPress={this.prevMonth} style={CalendarStyles.btnContainer}>
                         <Icon
                             color={this.props.settings.colorScheme.dTextC}
@@ -57,9 +84,20 @@ class Calendar extends React.Component<ReduxProps, CalendarStates> {
                             size={30}
                         />
                     </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
                 <View style={CalendarStyles.tableContainer}>
-                    {genCalendar(this.state.year, this.state.month).map(row => {
+                    <View style={CalendarStyles.rowContainer}>
+                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(label => {
+                            return (
+                                <View key={keygen()} style={CalendarStyles.btnContainer}>
+                                    <Text style={{ ...CalendarStyles.btnText, color: this.props.settings.colorScheme.accent }}>
+                                        {label}
+                                    </Text>
+                                </View>
+                            );
+                        })}
+                    </View>
+                    {grid.map(row => {
                         return (
                             <View key={keygen()} style={CalendarStyles.rowContainer}>
                                 {row.map(date => {
