@@ -10,9 +10,9 @@ import RecordInputModal from '../Components/RecordInputModal';
 import RecordItem from '../Components/RecordItem';
 import SeparatorLine from '../Components/SeparatorLine';
 
-import { ScreenStyles, screenWidth } from './styles';
+import { ScreenStyles, screenWidth, } from './styles';
 
-import { SettingsType, TodoType } from '../types';
+import { SettingsType, TodoType, } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,

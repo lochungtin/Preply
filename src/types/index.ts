@@ -1,4 +1,5 @@
 import { repeatType } from './routineTypes';
+import { DistanceUnits, TemperatureUnits, WeightUnits, } from './unitTypes';
 
 // data types
 export interface DateType {
@@ -86,4 +87,10 @@ export interface CalendarDateType {
     date: number,
     month: number,
     year: number,
+}
+
+// unit matrix type
+export interface UnitMatrixType {
+    labels: Array<DistanceUnits | TemperatureUnits | WeightUnits>,
+    matrix: Array<Array<(arg: number) => number>>,
 }
