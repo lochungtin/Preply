@@ -8,7 +8,7 @@ import DateBtn from './DateBtn';
 import { CalendarStyles } from './styles';
 
 import { SettingsType } from '../../types';
-import { genCalendar, getDateNo, getName, getNextMonth, getPrevMonth } from '../../utils/date';
+import { format, genCalendar, getDateNo, getName, getNextMonth, getPrevMonth } from '../../utils/date';
 import { keygen } from '../../utils/keygen';
 import moment from 'moment';
 
@@ -19,6 +19,7 @@ interface ReduxProps {
 interface CalendarProps {
     expand: boolean,
     onDatePress: (dateString: string) => void,
+    selected: string,
     toggleExpand: () => void,
 }
 
@@ -58,6 +59,7 @@ class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarState
                                 active={date.month === this.state.month}
                                 date={date}
                                 onPress={this.props.onDatePress}
+                                selected={format(date) === this.props.selected}
                             />
                         );
                     })}
@@ -108,6 +110,7 @@ class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarState
                                             active={date.month === this.state.month}
                                             date={date}
                                             onPress={this.props.onDatePress}
+                                            selected={format(date) === this.props.selected}
                                         />
                                     );
                                 })}

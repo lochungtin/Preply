@@ -16,7 +16,9 @@ interface ReduxProps {
 interface DatePickerProps {
     children: any,
     open: boolean,
+    onClose: () => void,
     onDatePress: (dateString: string) => void,
+    selected: string,
 }
 
 class DatePicker extends React.Component<ReduxProps & DatePickerProps> {
@@ -25,7 +27,10 @@ class DatePicker extends React.Component<ReduxProps & DatePickerProps> {
             <>
                 {this.props.children}
                 <Modal
-                    isVisible={this.props.open}   
+                    isVisible={this.props.open}  
+                    onBackButtonPress={this.props.onClose}
+                    onBackdropPress={this.props.onClose}
+                    onSwipeComplete={this.props.onClose} 
                 >
                     <View
                         style={{...PickerStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC}}
@@ -34,6 +39,7 @@ class DatePicker extends React.Component<ReduxProps & DatePickerProps> {
                             expand={true}
                             onDatePress={this.props.onDatePress}
                             toggleExpand={() => {}}
+                            selected={this.props.selected}
                         />
                     </View>
                 </Modal>

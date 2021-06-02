@@ -70,7 +70,9 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         <InputRow iconName='calendar-text'>
                             <DatePicker
                                 open={this.state.openDatePicker}
+                                onClose={() => this.setState({ openDatePicker: false })}
                                 onDatePress={this.datePickerOnSelect}
+                                selected={this.state.dateString}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openDatePicker: true })}>
                                     <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>

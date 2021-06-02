@@ -40,10 +40,11 @@ export const CalendarStyles = StyleSheet.create({
     },
     btnContainer: {
         alignItems: 'center',
+        borderRadius: 10,
         display: 'flex',
-        height: 50,
+        height: 40,
         justifyContent: 'center',
-        width: 50,
+        width: 40,
     },
     btnText: {
 
