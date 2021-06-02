@@ -22,15 +22,16 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = {
-		equation: '',
-		result: '',
+		from: '',
+		input: 0,
+		output: 0,
+		to: '',
+		type: ','
 	}
 
 	onClear = () => this.setState({ equation: '', result: '' });
 
 	onResult = (result: number) => this.setState({ result });
-
-	onUpdate = (equation: string) => this.setState({ equation });
 
 	render() {
 		return (
@@ -38,12 +39,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<Header nav={this.props.navigation} title={"Unit Converter"} />
 				<View style={calculatorScreenStyles.rootContainer}>
 					<View style={calculatorScreenStyles.displayContainer}>
-
+						
 					</View>
 					<Calculator
 						onClear={this.onClear}
 						onResult={this.onResult}
-						onUpdate={this.onUpdate}
+						onUpdate={eq => {}}
 					/>
 				</View>
 			</View>

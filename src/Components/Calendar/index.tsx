@@ -18,6 +18,7 @@ interface ReduxProps {
 
 interface CalendarProps {
     expand: boolean,
+    onDatePress: (dateString: string) => void,
     toggleExpand: () => void,
 }
 
@@ -56,7 +57,7 @@ class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarState
                                 key={keygen()}
                                 active={date.month === this.state.month}
                                 date={date}
-                                onPress={() => { }}
+                                onPress={this.props.onDatePress}
                             />
                         );
                     })}
@@ -106,7 +107,7 @@ class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarState
                                             key={keygen()}
                                             active={date.month === this.state.month}
                                             date={date}
-                                            onPress={() => { }}
+                                            onPress={this.props.onDatePress}
                                         />
                                     );
                                 })}

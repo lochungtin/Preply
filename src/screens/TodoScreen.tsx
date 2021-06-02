@@ -46,8 +46,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
 					type='Todo'
 				/>
-				<Calendar expand={this.state.calendarExpand} toggleExpand={() => this.setState({ calendarExpand: !this.state.calendarExpand })} />
-				<SeparatorLine width={screenWidth * 0.95}/>
+				<Calendar
+					expand={this.state.calendarExpand}
+					onDatePress={date => console.log(date)}
+					toggleExpand={() => this.setState({ calendarExpand: !this.state.calendarExpand })}
+				/>
+				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>
 					<RecordItem />
 					<RecordItem />

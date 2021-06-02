@@ -1,11 +1,12 @@
+import moment from 'moment';
 import React from 'react';
-import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import Calendar from '../Calendar';
 import SeparatorLine from '../SeparatorLine';
+import DatePicker from '../Pickers/Date';
 import InputRow from './row';
 
 import { RecordInputModalStyles, screenWidth } from './styles';
@@ -27,6 +28,14 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
 
     state = {
         allDay: false,
+        dateString: moment().format('DD-MM-YYYY'),
+        notif: true,
+        openDatePicker: false,
+    }
+
+    datePickerOnSelect = (dateString: string) => {
+        console.log(dateString);
+        this.setState({ dateString, openDatePicker: false });
     }
 
     render() {
@@ -59,14 +68,21 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='calendar-text'>
-                            <Text>
-                                DD/MM/YYYY
-                            </Text>
+                            <DatePicker
+                                open={this.state.openDatePicker}
+                                onDatePress={this.datePickerOnSelect}
+                            >
+                                <TouchableOpacity onPress={() => this.setState({ openDatePicker: true })}>
+                                    <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                        {this.state.dateString}
+                                    </Text>
+                                </TouchableOpacity>
+                            </DatePicker>
                         </InputRow>
                         <InputRow iconName='clock-outline'>
                             <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
                                 All Day
-                                </Text>
+                            </Text>
                             <Switch
                                 onValueChange={allDay => this.setState({ allDay })}
                                 value={this.state.allDay}
@@ -87,6 +103,16 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
 
                             </InputRow>
                         </>}
+                        <SeparatorLine width={screenWidth * 0.9} />
+                        <InputRow iconName='bell-outline'>
+                            <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                Notifications
+                            </Text>
+                            <Switch
+                                onValueChange={notif => this.setState({ notif })}
+                                value={this.state.notif}
+                            />
+                        </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='tag-outline'>
                             <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>

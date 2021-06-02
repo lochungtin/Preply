@@ -15,17 +15,18 @@ interface ReduxProps {
 interface BtnProps {
     active: boolean,
     date: CalendarDateType
-    onPress: () => void,
+    onPress: (dateString: string) => void,
 }
 
 class DateBtn extends React.Component<ReduxProps & BtnProps> {
     render() {
         let color: string = this.props.active ? this.props.settings.colorScheme.textC : this.props.settings.colorScheme.dTextC;
-        if (moment().format('DD-MM-YYYY') === format(this.props.date))
+        let formattedDate = format(this.props.date);
+        if (moment().format('DD-MM-YYYY') === formattedDate)
             color = this.props.settings.colorScheme.accent;
 
         return (
-            <TouchableOpacity onPress={this.props.onPress} style={CalendarStyles.btnContainer}>
+            <TouchableOpacity onPress={() => this.props.onPress(formattedDate)} style={CalendarStyles.btnContainer}>
                 <Text style={{ ...CalendarStyles.btnText, color }}>
                     {this.props.date.date}
                 </Text>
