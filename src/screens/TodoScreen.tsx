@@ -50,6 +50,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					expand={this.state.calendarExpand}
 					onDatePress={date => console.log(date)}
 					toggleExpand={() => this.setState({ calendarExpand: !this.state.calendarExpand })}
+					selected={''}
 				/>
 				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>

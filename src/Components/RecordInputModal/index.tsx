@@ -87,6 +87,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                             </Text>
                             <Switch
                                 onValueChange={allDay => this.setState({ allDay })}
+                                thumbColor={this.state.allDay ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
                                 value={this.state.allDay}
                             />
                         </InputRow>
@@ -112,6 +113,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                             </Text>
                             <Switch
                                 onValueChange={notif => this.setState({ notif })}
+                                thumbColor={this.state.notif ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
                                 value={this.state.notif}
                             />
                         </InputRow>
