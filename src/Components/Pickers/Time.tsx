@@ -20,6 +20,7 @@ interface TimePickerProps {
     open: boolean,
     onClose: () => void,
     onTimePress: (timeString: string) => void,
+    pm: boolean,
 }
 
 class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
@@ -32,9 +33,10 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
     }
 
     onPress = (rt: string) => {
-        if (this.state.minMode) {
-            this.setState({});
-        }
+        if (this.state.minMode)
+            this.props.onTimePress(`${this.state.hr}:${rt} ${this.state.pm ? 'PM' : 'AM'}`);
+        else 
+            this.setState({ minMode: true, hr: rt });
     }
 
     render() {
@@ -51,6 +53,7 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
                     onBackButtonPress={this.props.onClose}
                     onBackdropPress={this.props.onClose}
                     onSwipeComplete={this.props.onClose}
+                    onModalShow={() => this.setState({ hr: this.props.hr, min: this.props.min, minMode: false, pm: this.props.pm, })}
                 >
                     <View style={{ ...PickerStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
                         <Clock
@@ -63,7 +66,7 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
                                 <View style={PickerStyles.timePickerLabelContainer}>
                                     <TouchableOpacity onPress={() => this.setState({ minMode: false })}>
                                         <Text style={{ ...PickerStyles.timePickerLabel, borderColor: this.props.settings.colorScheme.accent, borderBottomWidth: this.state.minMode ? 0 : 2, color: this.props.settings.colorScheme.textC }}>
-                                            {this.props.hr}
+                                            {this.state.hr}
                                         </Text>
                                     </TouchableOpacity>
                                     <Text style={{ ...PickerStyles.timePickerLabel, color: this.props.settings.colorScheme.textC }}>
@@ -71,7 +74,7 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
                                     </Text>
                                     <TouchableOpacity onPress={() => this.setState({ minMode: true })}>
                                         <Text style={{ ...PickerStyles.timePickerLabel, borderColor: this.props.settings.colorScheme.accent, borderBottomWidth: this.state.minMode ? 2 : 0, color: this.props.settings.colorScheme.textC }}>
-                                            {this.props.min}
+                                            {this.state.min}
                                         </Text>
                                     </TouchableOpacity>
                                 </View>

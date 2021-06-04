@@ -33,7 +33,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
         notif: true,
         openDatePicker: false,
         openTimePicker: false,
-        timeString: moment().format('HH:mm'),
+        timeString: '12:00 PM',
     }
 
     datePickerOnSelect = (dateString: string) => {
@@ -101,11 +101,12 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         </InputRow>
                         {!this.state.allDay && <InputRow iconName='blank'>
                             <TimePicker
-                                hr={'12'}
-                                min={'00'}
+                                hr={this.state.timeString.split(':')[0]}
+                                min={this.state.timeString.split(':')[1].substring(0, 2)}
                                 open={this.state.openTimePicker}
                                 onClose={() => this.setState({ openTimePicker: false })}
                                 onTimePress={this.timePickerOnSelect}
+                                pm={this.state.timeString.split(' ')[1] === 'PM'}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openTimePicker: true })}>
                                     <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
