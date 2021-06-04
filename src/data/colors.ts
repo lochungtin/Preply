@@ -1,7 +1,7 @@
 import { ColorModeType, ColorSchemeType } from "../types";
 
 const darkMode: ColorModeType = {
-    accent: '#1E8F71',
+    accent: '#99E8D4',
     backgroundC: '#1A1B25',
     secondaryBgC: '#2A2B35',
     dTextC: '#A0A0C0',
@@ -12,7 +12,7 @@ const darkMode: ColorModeType = {
 }
 
 const lightMode: ColorModeType = {
-    accent: '#99E8D4',
+    accent: '#1E8F71',
     backgroundC: '#F0F0FE',
     secondaryBgC: '#F5F5FF',
     dTextC: '#7A7B90',

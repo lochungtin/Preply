@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 import SeparatorLine from '../SeparatorLine';
 import DatePicker from '../Pickers/Date';
+import TimePicker from '../Pickers/Time';
 import InputRow from './row';
 
 import { RecordInputModalStyles, screenWidth } from './styles';
@@ -31,11 +32,18 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
         dateString: moment().format('DD-MM-YYYY'),
         notif: true,
         openDatePicker: false,
+        openTimePicker: false,
+        timeString: moment().format('HH:mm'),
     }
 
     datePickerOnSelect = (dateString: string) => {
         console.log(dateString);
         this.setState({ dateString, openDatePicker: false });
+    }
+
+    timePickerOnSelect = (timeString: string) => {
+        console.log(timeString);
+        this.setState({ timeString, openTimePicker: false });
     }
 
     render() {
@@ -92,9 +100,19 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                             />
                         </InputRow>
                         {!this.state.allDay && <InputRow iconName='blank'>
-                            <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
-                                All Day
-                            </Text>
+                            <TimePicker
+                                hr={'12'}
+                                min={'00'}
+                                open={this.state.openTimePicker}
+                                onClose={() => this.setState({ openTimePicker: false })}
+                                onTimePress={this.timePickerOnSelect}
+                            >
+                                <TouchableOpacity onPress={() => this.setState({ openTimePicker: true })}>
+                                    <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                        {this.state.timeString}
+                                    </Text>
+                                </TouchableOpacity>
+                            </TimePicker>
                         </InputRow>}
                         {this.props.routine && <>
                             <InputRow iconName='sync'>

@@ -39,7 +39,7 @@ export interface RoutineType {
     content: string,
 }
 
-// redux types
+// redux type
 export interface ActionType {
     type: string,
     payload?: any
@@ -82,11 +82,18 @@ export interface ColorSchemeType {
     textC: string,
 }
 
-// calendar types
+// calendar type
 export interface CalendarDateType {
     date: number,
     month: number,
     year: number,
+}
+
+// clock btn config
+export interface ClockConfigType {
+    height: number,
+    values: Array<string>,
+    width: number
 }
 
 // unit matrix type
