@@ -13,22 +13,28 @@ interface ReduxProps {
 }
 
 interface ModalProps {
+    children: any,
+    items: Array<any>,
     open: boolean,
     onClose: () => void,
+    onTagPress: (key: string) => void,
 }
 
 class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
 
     render() {
         return (
-            <Modal
-                isVisible={this.props.open}
-                onBackButtonPress={this.props.onClose}
-                onBackdropPress={this.props.onClose}
-                onSwipeComplete={this.props.onClose}
-            >
-
-            </Modal>
+            <>
+                {this.props.children}
+                <Modal
+                    isVisible={this.props.open}
+                    onBackButtonPress={this.props.onClose}
+                    onBackdropPress={this.props.onClose}
+                    onSwipeComplete={this.props.onClose}
+                >
+                    {this.props.items}
+                </Modal>
+            </>
         );
     }
 }

@@ -14,6 +14,7 @@ import { RecordInputModalStyles, screenWidth, } from './styles';
 
 import { SettingsType } from '../../types';
 import Tag from '../Tag';
+import MultiSelectModal from '../MultiSelectModal';
 
 interface ReduxProps {
     settings: SettingsType,
@@ -33,7 +34,9 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
         dateString: moment().format('DD-MM-YYYY'),
         notif: true,
         openDatePicker: false,
+        openTagPicker: false,
         openTimePicker: false,
+        tagKey: 'tag:default',
         timeString: '12:00 PM',
         title: '',
     }
@@ -41,6 +44,11 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
     datePickerOnSelect = (dateString: string) => {
         console.log(dateString);
         this.setState({ dateString, openDatePicker: false });
+    }
+
+    tagPickerOnSelect = (tagKey: string) => {
+        console.log(tagKey);
+        this.setState({ tagKey });
     }
 
     timePickerOnSelect = (timeString: string) => {
@@ -145,7 +153,20 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                             <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
                                 Tag
                             </Text>
-                            <Tag color={this.props.settings.colorScheme.accent} name='Default' />
+                            <MultiSelectModal
+                                items={[
+                                    <Tag color={this.props.settings.colorScheme.accent} name='Default' />,
+                                    <Tag color={this.props.settings.colorScheme.accent} name='Default' />,
+                                    <Tag color={this.props.settings.colorScheme.accent} name='Default' />,
+                                ]}
+                                open={this.state.openTagPicker}
+                                onClose={() => this.setState({ openTagPicker: false })}
+                                onTagPress={this.tagPickerOnSelect}
+                            >
+                                <TouchableOpacity onPress={() => this.setState({ openTagPicker: true })}>
+                                    <Tag color={this.props.settings.colorScheme.accent} name='Default' />
+                                </TouchableOpacity>
+                            </MultiSelectModal>
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='card-text-outline'>
