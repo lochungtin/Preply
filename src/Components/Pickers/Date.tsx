@@ -32,9 +32,7 @@ class DatePicker extends React.Component<ReduxProps & DatePickerProps> {
                     onBackdropPress={this.props.onClose}
                     onSwipeComplete={this.props.onClose} 
                 >
-                    <View
-                        style={{...PickerStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC}}
-                    >
+                    <View style={{...PickerStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
                         <Calendar
                             expand={true}
                             onDatePress={this.props.onDatePress}

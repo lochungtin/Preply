@@ -41,5 +41,5 @@ export const PickerStyles = StyleSheet.create({
     },
     timePickerSwitchLabel: {
         fontSize: 20,
-    }
+    },
 });

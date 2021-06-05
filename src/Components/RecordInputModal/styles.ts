@@ -54,5 +54,9 @@ export const RecordInputModalStyles = StyleSheet.create({
     },
     labelText: {
         fontSize: 17,
-    }
+    },
+    descriptionInput: {
+        fontSize: 15,
+        padding: 0,
+    },
 });

@@ -26,7 +26,7 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = {
-		calendarExpand: true,
+		calendarExpand: false,
 		inputModalOpen: false,
 		filtering: false,
 		sorting: false,

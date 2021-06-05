@@ -10,9 +10,10 @@ import DatePicker from '../Pickers/Date';
 import TimePicker from '../Pickers/Time';
 import InputRow from './row';
 
-import { RecordInputModalStyles, screenWidth } from './styles';
+import { RecordInputModalStyles, screenWidth, } from './styles';
 
 import { SettingsType } from '../../types';
+import Tag from '../Tag';
 
 interface ReduxProps {
     settings: SettingsType,
@@ -34,6 +35,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
         openDatePicker: false,
         openTimePicker: false,
         timeString: '12:00 PM',
+        title: '',
     }
 
     datePickerOnSelect = (dateString: string) => {
@@ -70,8 +72,10 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='blank'>
                             <TextInput
+                                onChangeText={title => this.setState({ title })}
                                 placeholder='title'
                                 style={RecordInputModalStyles.titleTextInput}
+                                value={this.state.title || undefined}
                             />
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
@@ -141,14 +145,14 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                             <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
                                 Tag
                             </Text>
-                        </InputRow>
-                        <InputRow iconName='blank'>
-
+                            <Tag color={this.props.settings.colorScheme.accent} name='Default' />
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='card-text-outline'>
                             <TextInput
                                 multiline
+                                placeholder='Description ...'
+                                style={RecordInputModalStyles.descriptionInput}
                             />
                         </InputRow>
                     </View>
