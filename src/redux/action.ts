@@ -1,24 +1,4 @@
-import { NoteType, TagType, TodoType, } from '../types';
-
-// tag actions
-export const ADD_TAG = 'ADD_TAG';
-export const addTag = (payload: TagType) => ({
-    type: ADD_TAG,
-    payload,
-});
-
-export const DELETE_TAG = 'DELETE_TAG';
-export const deleteTag = (payload: TagType) => ({
-    type: DELETE_TAG,
-    payload,
-});
-
-export const EDIT_TAG = 'EDIT_TAG';
-export const editTag = (payload: string) => ({
-    type: EDIT_TAG,
-    payload,
-});
-
+import { NoteType, TodoType, } from '../types';
 
 // note actions
 export const ADD_NOTE = 'ADD_NOTE';

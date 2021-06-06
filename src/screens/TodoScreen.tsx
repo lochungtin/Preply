@@ -1,14 +1,14 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, View, } from 'react-native';
 import { connect } from 'react-redux';
 
 import Calendar from '../Components/Calendar';
 import Header from '../Components/Header';
+import InputModal from '../Components/InputModal';
 import RecordHandler from '../Components/RecordHandler';
-import RecordInputModal from '../Components/RecordInputModal';
-import TodoItem from '../Components/TodoItem';
 import SeparatorLine from '../Components/SeparatorLine';
+import TodoItem from '../Components/TodoItem';
 
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth, } from './styles';
@@ -55,9 +55,8 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<ScrollView>
 					{this.props.todos.map(todo => <TodoItem />)}
 				</ScrollView>
-				<RecordInputModal
+				<InputModal
 					onClose={() => this.setState({ inputModalOpen: false })}
-					onSave={() => this.setState({ inputModalOpen: false })}
 					open={this.state.inputModalOpen}
 				/>
 			</View>

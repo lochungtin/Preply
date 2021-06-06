@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import { ActionType, NoteType, TagType, TodoType, } from '../types';
+import { ActionType, NoteType, TodoType, } from '../types';
 import { deleteByKey, replaceByKey } from '../utils/arrayFn';
-import { ADD_NOTE, ADD_TAG, ADD_TODO, DELETE_NOTE, DELETE_TAG, DELETE_TODO, EDIT_NOTE, EDIT_TAG, EDIT_TODO, } from './action';
+import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, } from './action';
 
 const defaultNoteState: Array<NoteType> = [];
 const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
@@ -19,24 +19,6 @@ const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
             return update;
         default:
             return noteState;
-    }
-}
-
-const defaultTagState: Array<TagType> = [];
-const updateTags = (tagState = defaultTagState, action: ActionType) => {
-    let update = [...tagState];
-    switch (action.type) {
-        case ADD_TAG:
-            update.push(action.payload);
-            return update;
-        case DELETE_TAG:
-            deleteByKey(update, action.payload);
-            return update;
-        case EDIT_TAG:
-            replaceByKey(update, action.payload);
-            return update;
-        default:
-            return tagState;
     }
 }
 
@@ -60,6 +42,5 @@ const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
 
 export default combineReducers({
     notes: updateNotes,
-    tags: updateTags,
     todos: updateTodos,
 });

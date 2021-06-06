@@ -13,12 +13,15 @@ export interface RepeatType {
 }
 
 export interface TodoType {
+    allDay: boolean,
     content: string,
     date: string,
     key: string,
+    notif: boolean,
     repeatKey: string,
     tagKey: string,
     title: string,
+    time: string,
 }
 
 export interface NoteType {

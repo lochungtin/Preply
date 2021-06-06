@@ -16,17 +16,20 @@ import { RecordInputModalStyles, screenWidth, } from './styles';
 
 import { tags } from '../../data/tags';
 import { repeats } from '../../data/repeats';
+import { store } from '../../redux/store';
+import { addTodo } from '../../redux/action';
+import { keygen } from '../../utils/keygen';
 
 interface ModalProps {
     onClose: () => void,
-    onSave: (obj: any) => void,
     open: boolean,
 }
 
-export default class RecordInputModal extends React.Component<ModalProps> {
+export default class InputModal extends React.Component<ModalProps> {
 
     state = {
         allDay: false,
+        content: '',
         dateString: moment().format('DD-MM-YYYY'),
         notif: true,
         openDatePicker: false,
@@ -41,15 +44,28 @@ export default class RecordInputModal extends React.Component<ModalProps> {
 
     refresh = () => this.setState({
         allDay: false,
+        content: '',
         dateString: moment().format('DD-MM-YYYY'),
         notif: true,
+        repeatKey: 'rep:0',
         tagKey: 'tag:0',
         timeString: '12:00 PM',
         title: '',
     });
 
     save = () => {
-
+        store.dispatch(addTodo({
+            allDay: this.state.allDay,
+            content: this.state.content,
+            date: this.state.dateString,
+            key: keygen(),
+            notif: this.state.notif,
+            repeatKey: this.state.repeatKey,
+            tagKey: this.state.tagKey,
+            title: this.state.title || 'untitled',
+            time: this.state.timeString,
+        }));
+        this.props.onClose();
     }
 
     render() {
@@ -181,7 +197,7 @@ export default class RecordInputModal extends React.Component<ModalProps> {
                         <InputRow iconName='card-text-outline'>
                             <TextInput
                                 multiline
-                                onChangeText={text => console.log(text)}
+                                onChangeText={content => this.setState({ content })}
                                 placeholder='Description ...'
                                 style={RecordInputModalStyles.descriptionInput}
                             />
