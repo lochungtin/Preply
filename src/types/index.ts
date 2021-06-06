@@ -101,3 +101,10 @@ export interface UnitMatrixType {
     labels: Array<DistanceUnits | TemperatureUnits | WeightUnits>,
     matrix: Array<Array<(arg: number) => number>>,
 }
+
+// tag config
+export interface TagType {
+    color: string,
+    key: string,
+    name: string,
+}

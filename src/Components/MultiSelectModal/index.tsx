@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { MSMStyles, screenWidth, } from './styles';
 
 import { SettingsType } from '../../types';
+import { keygen } from '../../utils/keygen';
 
 interface ReduxProps {
     settings: SettingsType,
@@ -18,6 +19,7 @@ interface ModalProps {
     open: boolean,
     onClose: () => void,
     onTagPress: (key: string) => void,
+    selected: number,
 }
 
 class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
@@ -31,8 +33,29 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                     onBackButtonPress={this.props.onClose}
                     onBackdropPress={this.props.onClose}
                     onSwipeComplete={this.props.onClose}
+                    style={{ alignItems: 'center', display: 'flex' }}
                 >
-                    {this.props.items}
+                    <View style={{ ...MSMStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+                        {this.props.items.map((item, index) => {
+                            return (
+                                <View key={keygen()} style={MSMStyles.itemContainer}>
+                                    <Icon
+                                        color={this.props.selected === index ? this.props.settings.colorScheme.textC : 'transparent'}
+                                        name={'chevron-right'}
+                                        size={30}
+                                    />
+                                    <TouchableOpacity onPress={() => this.props.onTagPress(`tag:${index}`)} style={MSMStyles.itemWrapper}>
+                                        {item}
+                                    </TouchableOpacity>
+                                    <Icon
+                                        color={this.props.selected === index ? this.props.settings.colorScheme.textC : 'transparent'}
+                                        name={'chevron-left'}
+                                        size={30}
+                                    />
+                                </View>
+                            );
+                        })}
+                    </View>
                 </Modal>
             </>
         );

@@ -12,7 +12,7 @@ const darkMode: ColorModeType = {
 }
 
 const lightMode: ColorModeType = {
-    accent: '#1E8F71',
+    accent: '#99E8D4',
     backgroundC: '#F0F0FE',
     secondaryBgC: '#F5F5FF',
     dTextC: '#7A7B90',
