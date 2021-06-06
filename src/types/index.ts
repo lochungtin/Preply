@@ -2,40 +2,33 @@ import { repeatType } from './routineTypes';
 import { DistanceUnits, TemperatureUnits, WeightUnits, } from './unitTypes';
 
 // data types
-export interface DateType {
-    creation: string,
-    modified: string,
-}
-
 export interface TagType {
+    color: string,
     key: string,
     name: string,
-    color: string,
+}
+
+export interface RepeatType {
+    key: string,
+    name: string,
 }
 
 export interface TodoType {
-    key: string,
-    title: string,
-    date: DateType,
-    tags: Array<TagType>,
     content: string,
+    date: string,
+    key: string,
+    repeatKey: string,
+    tagKey: string,
+    title: string,
 }
 
 export interface NoteType {
     key: string,
     title: string,
-    date: DateType,
-    tags: Array<TagType>,
-    content: string,
-}
-
-export interface RoutineType {
-    key: string,
-    title: string,
-    date: string,
-    time: string,
-    repeatType: repeatType,
-    tags: Array<TagType>,
+    date: {
+        creation: string,
+        modified: string,
+    },
     content: string,
 }
 
@@ -100,17 +93,4 @@ export interface ClockConfigType {
 export interface UnitMatrixType {
     labels: Array<DistanceUnits | TemperatureUnits | WeightUnits>,
     matrix: Array<Array<(arg: number) => number>>,
-}
-
-// tag config
-export interface TagType {
-    color: string,
-    key: string,
-    name: string,
-}
-
-// repeat config
-export interface RepeatType {
-    key: string,
-    name: string,
 }

@@ -12,7 +12,6 @@ import CalculatorScreen from '../screens/CalculatorScreen';
 import ConverterScreen from '../screens/ConverterScreen';
 import NoteScreen from '../screens/NoteScreen';
 import NoteEditScreen from '../screens/NoteEditScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import TodoScreen from '../screens/TodoScreen';
 
 import { NavStyles } from './styles';
@@ -119,7 +118,6 @@ class AppNav extends React.Component<ReduxProps> {
 					<RootNav.Screen component={CalculatorScreen} name='calculator' />
 					<RootNav.Screen component={ConverterScreen} name='converter' />
 					<RootNav.Screen component={AccountScreen} name='account' />
-					<RootNav.Screen component={SettingsScreen} name='settings' />
 				</RootNav.Navigator>
 			</NavigationContainer>
 		);
