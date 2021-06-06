@@ -186,7 +186,7 @@ export default class InputModal extends React.Component<ModalProps> {
                                     );
                                 })}
                                 onClose={() => this.setState({ openTagPicker: false })}
-                                onItemPress={tagKey => this.setState({ tagKey: 'tag' + tagKey, openDatePicker: false })}
+                                onItemPress={tagKey => this.setState({ tagKey: 'tag:' + tagKey, openTagPicker: false })}
                                 open={this.state.openTagPicker}
                                 selected={parseInt(this.state.tagKey.substring(4))}
                             >

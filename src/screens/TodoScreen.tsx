@@ -55,7 +55,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<ScrollView>
 					{this.props.todos.map(todo => {
 						return (
-							<TodoItem {...todo} onPress={recordKey => console.log(recordKey)}/>
+							<TodoItem onPress={recordKey => console.log(recordKey)} record={todo}/>
 						);
 					})}
 				</ScrollView>

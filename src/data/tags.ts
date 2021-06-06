@@ -53,12 +53,12 @@ export const tags: Array<TagType> = [
     },
     {
         color: '#422e99',
-        key: 'tag:a',
+        key: 'tag:10',
         name: 'Violet',
     },
     {
         color: '#4371b5',
-        key: 'tag:b',
+        key: 'tag:12',
         name: 'Blue',
     },
 ];
