@@ -22,7 +22,7 @@ const NoteNav = createStackNavigator();
 const note = () =>
 	<NoteNav.Navigator screenOptions={{ headerShown: false }}>
 		<NoteNav.Screen component={NoteScreen} name='notes' />
-		<NoteNav.Screen component={NoteEditScreen} name='input' />
+		<NoteNav.Screen component={NoteEditScreen} name='noteEdit' />
 	</NoteNav.Navigator>
 
 export default class AppNav extends React.Component {

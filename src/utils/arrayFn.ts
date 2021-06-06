@@ -5,5 +5,5 @@ export const deleteByKey = (arr: Array<any>, key: string) => {
 
 export const replaceByKey = (arr: Array<any>, payload: any) => {
     let index = arr.findIndex(elem => elem.key === payload.key);
-    arr[index] = payload;
+    arr.splice(index, 1, payload);
 }

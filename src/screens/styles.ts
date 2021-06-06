@@ -55,3 +55,38 @@ export const calculatorScreenStyles = StyleSheet.create({
         justifyContent: 'space-between',
     },
 });
+
+export const NoteScreenStyles = StyleSheet.create({
+    titleRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 60,
+        justifyContent: 'space-between',
+        marginTop: 20,
+        width: screenWidth * 0.9,
+    },
+    titleInput: {
+        fontSize: 25,
+        width: screenWidth * 0.6
+    },
+    infoRow: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'space-between',
+        width: screenWidth * 0.9,
+    },
+    dateText: {
+        fontSize: 15,
+    },
+    textInput: {
+        flex: 1,
+        fontSize: 15,
+        marginVertical: 10,
+        padding: 0,
+        textAlignVertical: 'top',
+        width: screenWidth * 0.9,
+    },
+});

@@ -15,7 +15,7 @@ export const deleteNote = (payload: string) => ({
 
 export const EDIT_NOTE = 'EDIT_NOTE';
 export const editNote = (payload: NoteType) => ({
-    type: ADD_NOTE,
+    type: EDIT_NOTE,
     payload,
 });
 

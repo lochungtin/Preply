@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { ScrollView, View, } from 'react-native';
@@ -13,7 +14,8 @@ import { ScreenStyles, screenWidth } from './styles';
 
 import { NoteType } from '../types';
 import { store } from '../redux/store';
-import { deleteNote } from '../redux/action';
+import { addNote, deleteNote } from '../redux/action';
+import { keygen } from '../utils/keygen';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -30,6 +32,20 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		sorting: false,
 	}
 
+	createEmptyNote = () => {
+		let now = moment().format('DD-MM-YYYY');
+		store.dispatch(addNote({
+			content: '',
+			date: {
+				creation: now,
+				modified: now,
+			},
+			key: keygen(),
+			tagKey: 'tag:0',
+			title: 'New Note',
+		}));
+	}
+
 	render() {
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
@@ -37,7 +53,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<RecordHandler
 					isFiltering={this.state.filtering}
 					isSorting={this.state.sorting}
-					onAdd={() => this.setState({ inputModalOpen: true })}
+					onAdd={this.createEmptyNote}
 					toggleFilter={() => this.setState({ filtering: !this.state.filtering })}
 					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
 				/>
@@ -48,8 +64,13 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 							<RecordItem
 								key={note.key}
 								onIconPress={recordKey => store.dispatch(deleteNote(recordKey))}
-								onPress={recordKey => console.log(recordKey)}								
+								onPress={recordKey => {
+									console.log(recordKey);
+									console.log(note.key);
+									this.props.navigation.navigate('noteEdit', note)}
+								}								
 								record={note}
+								trash
 							/>
 						);
 					})}

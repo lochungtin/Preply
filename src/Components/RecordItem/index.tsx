@@ -18,7 +18,7 @@ interface RecordProps {
 export default class RecordItem extends React.Component<RecordProps> {
     render() {
         return (
-            <TouchableOpacity onPress={() => this.props.onPress(this.props.record.tagKey)} style={{ ...RecordItemStyles.rootContainer, backgroundColor: theme.recordBgC }}>
+            <TouchableOpacity onPress={() => this.props.onPress(this.props.record.key)} style={{ ...RecordItemStyles.rootContainer, backgroundColor: theme.recordBgC }}>
                 <View style={{ ...RecordItemStyles.colorIndicator, backgroundColor: tags.find(tag => tag.key === this.props.record.tagKey)?.color }} />
                 <Text style={{ ...RecordItemStyles.titleText, color: theme.textC }}>
                     {this.props.record.title}

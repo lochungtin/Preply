@@ -6,6 +6,7 @@ import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, } f
 
 const defaultNoteState: Array<NoteType> = [];
 const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
+    console.log(action.payload);
     let update = [...noteState];
     switch (action.type) {
         case ADD_NOTE:
