@@ -3,6 +3,10 @@ import { Dimensions, StyleSheet, } from 'react-native';
 export const screenWidth = Dimensions.get('screen').width;
 
 export const PickerStyles = StyleSheet.create({
+    modalStyle: {
+        alignItems: 'center',
+        display: 'flex',
+    },
     rootContainer: {
         alignItems: 'center',
         borderRadius: 10,

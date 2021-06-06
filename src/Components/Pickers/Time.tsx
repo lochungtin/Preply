@@ -54,6 +54,7 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
                     onBackdropPress={this.props.onClose}
                     onSwipeComplete={this.props.onClose}
                     onModalShow={() => this.setState({ hr: this.props.hr, min: this.props.min, minMode: false, pm: this.props.pm, })}
+                    style={PickerStyles.modalStyle} 
                 >
                     <View style={{ ...PickerStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
                         <Clock
