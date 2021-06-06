@@ -1,17 +1,13 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
+import { theme } from '../../data/colors';
 import { CalculatorStyles } from './styles';
 
-import { NumpadConfigType, SettingsType } from '../../types';
+import { NumpadConfigType } from '../../types';
 
-interface ReduxProps {
-	settings: SettingsType,
-}
-
-class NumpadBtn extends React.Component<ReduxProps & NumpadConfigType> {
+export default class NumpadBtn extends React.Component<NumpadConfigType> {
 	render() {
 		return (
 			<TouchableOpacity
@@ -19,7 +15,7 @@ class NumpadBtn extends React.Component<ReduxProps & NumpadConfigType> {
 				style={CalculatorStyles.cellContainer}
 			>
                 <Icon
-					color={this.props.settings.colorScheme.textC}
+					color={theme.textC}
 					name={this.props.name}
 					size={40}
 				/>
@@ -27,9 +23,3 @@ class NumpadBtn extends React.Component<ReduxProps & NumpadConfigType> {
 		);
 	}
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings
-});
-
-export default connect(mapStateToProps)(NumpadBtn);

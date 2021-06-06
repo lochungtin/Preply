@@ -1,4 +1,4 @@
-import { NoteType, RoutineType, SettingsType, TagType, TodoType } from '../types';
+import { NoteType, TagType, TodoType, } from '../types';
 
 // tag actions
 export const ADD_TAG = 'ADD_TAG';
@@ -39,25 +39,6 @@ export const editNote = (payload: NoteType) => ({
     payload,
 });
 
-// routine actions
-export const ADD_ROUTINE = 'ADD_ROUTINE';
-export const addRoutine = (payload: RoutineType) => ({
-    type: ADD_ROUTINE,
-    payload,
-});
-
-export const DELETE_ROUTINE = 'DELETE_ROUTINE';
-export const deleteRoutine = (payload: string) => ({
-    type: DELETE_ROUTINE,
-    payload,
-});
-
-export const EDIT_ROUTINE = 'EDIT_ROUTINE';
-export const editRoutine = (payload: RoutineType) => ({
-    type: EDIT_ROUTINE,
-    payload,
-});
-
 // todo actions
 export const ADD_TODO = 'ADD_TODO';
 export const addTodo = (payload: TodoType) => ({
@@ -75,16 +56,4 @@ export const EDIT_TODO = 'EDIT_TODO';
 export const editTodo = (payload: TodoType) => ({
     type: EDIT_TODO,
     payload,
-});
-
-// settings actions
-export const SET_SETTINGS = 'SET_SETTINGS';
-export const setSettings = (payload: SettingsType) => ({
-    type: SET_SETTINGS,
-    payload,
-});
-
-export const RESET_SETTINGS = 'RESET_SETTINGS';
-export const resetSettings = () => ({
-    type: RESET_SETTINGS,
 });

@@ -1,15 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
+import { theme } from '../../data/colors';
 import { RecordHandlerStyles } from './styles';
-
-import { SettingsType } from '../../types';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface HandlerProps {
     isSorting: boolean,
@@ -22,34 +16,34 @@ interface HandlerProps {
     type: string,
 }
 
-class RecordHandler extends React.Component<ReduxProps & HandlerProps> {
+export default class RecordHandler extends React.Component<HandlerProps> {
     render() {
         return (
             <View style={RecordHandlerStyles.rootContainer}>
                 <TouchableOpacity onPress={this.props.onAdd} style={RecordHandlerStyles.addRecordContainer}>
                     <Icon
-                        color={this.props.settings.colorScheme.textC}
+                        color={theme.textC}
                         name='plus'
                         size={30}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.props.toggleSort}>
                     <Icon
-                        color={this.props.isSorting ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
+                        color={this.props.isSorting ? theme.accent : theme.textC}
                         name='sort-ascending'
                         size={25}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.props.toggleFilter}>
                     <Icon
-                        color={this.props.isFiltering ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
+                        color={this.props.isFiltering ? theme.accent : theme.textC}
                         name='filter-variant'
                         size={25}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.props.toggleCalendar}>
                     <Icon
-                        color={this.props.isCalendarOpen ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
+                        color={this.props.isCalendarOpen ? theme.accent : theme.textC}
                         name='calendar-outline'
                         size={25}
                     />
@@ -58,9 +52,3 @@ class RecordHandler extends React.Component<ReduxProps & HandlerProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
-});
-
-export default connect(mapStateToProps)(RecordHandler);

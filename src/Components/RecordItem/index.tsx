@@ -1,27 +1,21 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
-
-import { RecordItemStyles } from './styles';
-
-import { SettingsType } from '../../types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-interface ReduxProps {
-    settings: SettingsType,
-}
+import { theme } from '../../data/colors';
+import { RecordItemStyles } from './styles';
 
-class Screen extends React.Component<ReduxProps> {
+export default class RecordItem extends React.Component {
     render() {
         return (
-            <TouchableOpacity style={{ ...RecordItemStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.recordBgC }}>
-                <View style={{ ...RecordItemStyles.colorIndicator, backgroundColor: this.props.settings.colorScheme.accent }} />
-                <Text style={{ ...RecordItemStyles.titleText, color: this.props.settings.colorScheme.textC }}>
+            <TouchableOpacity style={{ ...RecordItemStyles.rootContainer, backgroundColor: theme.recordBgC }}>
+                <View style={{ ...RecordItemStyles.colorIndicator, backgroundColor: theme.accent }} />
+                <Text style={{ ...RecordItemStyles.titleText, color: theme.textC }}>
                     Some Text
                 </Text>
                 <TouchableOpacity style={RecordItemStyles.checkbox}>
                     <Icon
-                        color={this.props.settings.colorScheme.recordBtnC}
+                        color={theme.recordBtnC}
                         name='check-circle-outline'
                         size={35}
                     />
@@ -30,9 +24,3 @@ class Screen extends React.Component<ReduxProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
-});
-
-export default connect(mapStateToProps)(Screen);

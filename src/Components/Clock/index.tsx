@@ -1,17 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { connect } from 'react-redux';
 
 import ClockBtn from './ClockBtn';
 
 import { ClockStyles } from './styles';
 
-import { ClockConfigType, SettingsType, } from '../../types';
+import { ClockConfigType } from '../../types';
 import { keygen } from '../../utils/keygen';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface ClockProps {
     children?: any,
@@ -21,7 +16,7 @@ interface ClockProps {
     size: number,
 }
 
-class Clock extends React.Component<ReduxProps & ClockProps> {
+export default class Clock extends React.Component<ClockProps> {
 
     render() {
         const r = this.props.size / 2;
@@ -67,9 +62,3 @@ class Clock extends React.Component<ReduxProps & ClockProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings
-});
-
-export default connect(mapStateToProps)(Clock);

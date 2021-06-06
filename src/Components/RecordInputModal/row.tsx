@@ -1,27 +1,21 @@
-import React, { Children, ReactElement } from 'react';
-import { Text, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
+import { theme } from '../../data/colors';
 import { RecordInputModalStyles } from './styles';
 
-import { SettingsType } from '../../types';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
-
 interface RowProps {
-    children: Array<ReactElement> | ReactElement,
+    children: any,
     iconName: string,
 }
 
-class InputRow extends React.Component<ReduxProps & RowProps> {
+export default class InputRow extends React.Component<RowProps> {
     render() {
         return (
             <View style={RecordInputModalStyles.inputFieldRow}>
                 <Icon
-                    color={this.props.iconName === 'blank' ? 'transparent' : this.props.settings.colorScheme.textC}
+                    color={this.props.iconName === 'blank' ? 'transparent' : theme.textC}
                     name={this.props.iconName}
                     size={30}
                 />
@@ -32,9 +26,3 @@ class InputRow extends React.Component<ReduxProps & RowProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
-});
-
-export default connect(mapStateToProps)(InputRow);

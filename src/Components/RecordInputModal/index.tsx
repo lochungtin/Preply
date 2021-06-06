@@ -3,7 +3,6 @@ import React from 'react';
 import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
 import MultiSelectModal from '../MultiSelectModal';
 import DatePicker from '../Pickers/Date';
@@ -12,15 +11,11 @@ import InputRow from './row';
 import SeparatorLine from '../SeparatorLine';
 import Tag from '../Tag';
 
+import { theme } from '../../data/colors';
 import { RecordInputModalStyles, screenWidth, } from './styles';
 
 import { tags } from '../../data/tags';
-import { SettingsType } from '../../types';
 import { repeats } from '../../data/repeats';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface ModalProps {
     onClose: () => void,
@@ -28,7 +23,7 @@ interface ModalProps {
     open: boolean,
 }
 
-class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
+export default class RecordInputModal extends React.Component<ModalProps> {
 
     state = {
         allDay: false,
@@ -54,7 +49,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
     });
 
     save = () => {
-        
+
     }
 
     render() {
@@ -71,10 +66,10 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                 swipeDirection='down'
             >
                 <ScrollView>
-                    <View style={{ ...RecordInputModalStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.modalBgC }}>
+                    <View style={{ ...RecordInputModalStyles.rootContainer, backgroundColor: theme.modalBgC }}>
                         <TouchableOpacity onPress={this.props.onClose} style={RecordInputModalStyles.closeBtn}>
                             <Icon
-                                color={this.props.settings.colorScheme.textC}
+                                color={theme.textC}
                                 name='chevron-down'
                                 size={30}
                             />
@@ -97,19 +92,19 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                 selected={this.state.dateString}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openDatePicker: true })}>
-                                    <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                    <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                         {this.state.dateString}
                                     </Text>
                                 </TouchableOpacity>
                             </DatePicker>
                         </InputRow>
                         <InputRow iconName='clock-outline'>
-                            <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                            <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                 All Day
                             </Text>
                             <Switch
                                 onValueChange={allDay => this.setState({ allDay })}
-                                thumbColor={this.state.allDay ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
+                                thumbColor={this.state.allDay ? theme.accent : theme.textC}
                                 value={this.state.allDay}
                             />
                         </InputRow>
@@ -123,7 +118,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                 pm={this.state.timeString.split(' ')[1] === 'PM'}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openTimePicker: true })}>
-                                    <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                    <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                         {this.state.timeString}
                                     </Text>
                                 </TouchableOpacity>
@@ -133,7 +128,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                             <MultiSelectModal
                                 items={repeats.map(rep => {
                                     return (
-                                        <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                        <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                             {rep.name}
                                         </Text>
                                     );
@@ -144,7 +139,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                 selected={parseInt(this.state.repeatKey.substring(4))}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openRepeatPicker: true })}>
-                                    <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                    <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                         {repeats[parseInt(this.state.repeatKey.substring(4))].name}
                                     </Text>
                                 </TouchableOpacity>
@@ -152,18 +147,18 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='bell-outline'>
-                            <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                            <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                 Notifications
                             </Text>
                             <Switch
                                 onValueChange={notif => this.setState({ notif })}
-                                thumbColor={this.state.notif ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
+                                thumbColor={this.state.notif ? theme.accent : theme.textC}
                                 value={this.state.notif}
                             />
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='tag-outline'>
-                            <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                            <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                 Tag
                             </Text>
                             <MultiSelectModal
@@ -197,9 +192,3 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
-});
-
-export default connect(mapStateToProps)(RecordInputModal);

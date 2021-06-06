@@ -1,17 +1,12 @@
 import React from 'react';
-import { ScrollView, TouchableOpacity, View, } from 'react-native';
+import { TouchableOpacity, View, } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
-import { MSMStyles, screenWidth, } from './styles';
+import { theme } from '../../data/colors';
+import { MSMStyles } from './styles';
 
-import { SettingsType } from '../../types';
 import { keygen } from '../../utils/keygen';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface ModalProps {
     children: any,
@@ -22,7 +17,7 @@ interface ModalProps {
     selected: number,
 }
 
-class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
+export default class RecordInputModal extends React.Component<ModalProps> {
 
     render() {
         return (
@@ -35,12 +30,12 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                     onSwipeComplete={this.props.onClose}
                     style={{ alignItems: 'center', display: 'flex' }}
                 >
-                    <View style={{ ...MSMStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+                    <View style={{ ...MSMStyles.rootContainer, backgroundColor: theme.backgroundC }}>
                         {this.props.items.map((item, index) => {
                             return (
                                 <View key={keygen()} style={MSMStyles.itemContainer}>
                                     <Icon
-                                        color={this.props.selected === index ? this.props.settings.colorScheme.textC : 'transparent'}
+                                        color={this.props.selected === index ? theme.textC : 'transparent'}
                                         name={'chevron-right'}
                                         size={30}
                                     />
@@ -48,7 +43,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                         {item}
                                     </TouchableOpacity>
                                     <Icon
-                                        color={this.props.selected === index ? this.props.settings.colorScheme.textC : 'transparent'}
+                                        color={this.props.selected === index ? theme.textC : 'transparent'}
                                         name={'chevron-left'}
                                         size={30}
                                     />
@@ -61,9 +56,3 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
-});
-
-export default connect(mapStateToProps)(RecordInputModal);

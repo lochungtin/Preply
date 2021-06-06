@@ -4,7 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
 import SeparatorLine from '../Components/SeparatorLine';
 import AccountScreen from '../screens/AccountScreen';
@@ -14,13 +13,8 @@ import NoteScreen from '../screens/NoteScreen';
 import NoteEditScreen from '../screens/NoteEditScreen';
 import TodoScreen from '../screens/TodoScreen';
 
+import { theme } from '../data/colors';
 import { NavStyles } from './styles';
-
-import { SettingsType } from '../types';
-	
-interface ReduxProps {
-	settings: SettingsType,
-}
 
 const RootNav = createDrawerNavigator();
 const NoteNav = createStackNavigator();
@@ -31,87 +25,77 @@ const note = () =>
 		<NoteNav.Screen component={NoteEditScreen} name='input' />
 	</NoteNav.Navigator>
 
-class AppNav extends React.Component<ReduxProps> {
+export default class AppNav extends React.Component {
 	drawerContent = (props: any) =>
-		<DrawerContentScrollView {...props} style={{ backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+		<DrawerContentScrollView {...props} style={{ backgroundColor: theme.backgroundC }}>
 			<View style={{ height: 20 }} />
-			<Text style={{ ...NavStyles.main, color: this.props.settings.colorScheme.textC }}>
+			<Text style={{ ...NavStyles.main, color: theme.textC }}>
 				Preply
 			</Text>
 			<SeparatorLine width={240} style={{ marginLeft: 15 }} />
 			<DrawerItem
 				icon={props => <Icon
-					color={this.props.settings.colorScheme.drawerIconC}
+					color={theme.drawerIconC}
 					name='format-list-checks'
 					size={props.size}
 				/>}
 				label="To-Dos"
-				labelStyle={{ color: this.props.settings.colorScheme.textC }}
+				labelStyle={{ color: theme.textC }}
 				onPress={() => props.navigation.navigate('todos')}
 			/>
 			<DrawerItem
 				icon={props => <Icon
-					color={this.props.settings.colorScheme.drawerIconC}
+					color={theme.drawerIconC}
 					name='text-box-outline'
 					size={props.size}
 				/>}
 				label="Notes"
-				labelStyle={{ color: this.props.settings.colorScheme.textC }}
+				labelStyle={{ color: theme.textC }}
 				onPress={() => props.navigation.navigate('notes')}
 			/>
-			<Text style={{ ...NavStyles.title, color: this.props.settings.colorScheme.textC }}>
+			<Text style={{ ...NavStyles.title, color: theme.textC }}>
 				Utilities
 			</Text>
 			<SeparatorLine width={240} style={{ marginLeft: 15 }} />
 			<DrawerItem
 				icon={props => <Icon
-					color={this.props.settings.colorScheme.drawerIconC}
+					color={theme.drawerIconC}
 					name='calculator-variant'
 					size={props.size}
 				/>}
 				label="Calculator"
-				labelStyle={{ color: this.props.settings.colorScheme.textC }}
+				labelStyle={{ color: theme.textC }}
 				onPress={() => props.navigation.navigate('calculator')}
 			/>
 			<DrawerItem
 				icon={props => <Icon
-					color={this.props.settings.colorScheme.drawerIconC}
+					color={theme.drawerIconC}
 					name='swap-horizontal'
 					size={props.size} />}
 				label="Unit Converter"
-				labelStyle={{ color: this.props.settings.colorScheme.textC }}
+				labelStyle={{ color: theme.textC }}
 				onPress={() => props.navigation.navigate('converter')}
 			/>
-			<Text style={{ ...NavStyles.title, color: this.props.settings.colorScheme.textC }}>
-				Settings
+			<Text style={{ ...NavStyles.title, color: theme.textC }}>
+				Account
 			</Text>
 			<SeparatorLine width={240} style={{ marginLeft: 15 }} />
 			<DrawerItem
 				icon={props => <Icon
-					color={this.props.settings.colorScheme.drawerIconC}
+					color={theme.drawerIconC}
 					name='account'
 					size={props.size}
 				/>}
 				label="Account"
-				labelStyle={{ color: this.props.settings.colorScheme.textC }}
+				labelStyle={{ color: theme.textC }}
 				onPress={() => props.navigation.navigate('account')}
-			/>
-			<DrawerItem
-				icon={props => <Icon
-					color={this.props.settings.colorScheme.drawerIconC}
-					name='cog'
-					size={props.size}
-				/>}
-				label="Settings"
-				labelStyle={{ color: this.props.settings.colorScheme.textC }}
-				onPress={() => props.navigation.navigate('settings')}
 			/>
 		</DrawerContentScrollView>
 
 	render() {
 		return (
 			<NavigationContainer>
-				<StatusBar backgroundColor={this.props.settings.colorScheme.backgroundC} />
+				<StatusBar backgroundColor={theme.backgroundC} />
 				<RootNav.Navigator drawerContent={this.drawerContent}>
 					<RootNav.Screen component={TodoScreen} name='todos' />
 					<RootNav.Screen component={note} name='notes' />
@@ -123,9 +107,3 @@ class AppNav extends React.Component<ReduxProps> {
 		);
 	}
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-	settings: state.settings,
-});
-
-export default connect(mapStateToProps)(AppNav);

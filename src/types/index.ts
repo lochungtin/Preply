@@ -1,4 +1,3 @@
-import { repeatType } from './routineTypes';
 import { DistanceUnits, TemperatureUnits, WeightUnits, } from './unitTypes';
 
 // data types
@@ -38,12 +37,6 @@ export interface ActionType {
     payload?: any
 }
 
-// settings config
-export interface SettingsType {
-    colorScheme: ColorSchemeType,
-    darkMode: boolean,
-}
-
 // numpad config
 export interface NumpadConfigType {
     name: string,
@@ -51,17 +44,6 @@ export interface NumpadConfigType {
 }
 
 // color scheme
-export interface ColorModeType {
-    accent: string,
-    backgroundC: string,
-    secondaryBgC: string,
-    dTextC: string,
-    textC: string,
-    lowContrast: string,
-    highContrast: string,
-    midTone: string
-}
-
 export interface ColorSchemeType {
     accent: string,
     backgroundC: string,

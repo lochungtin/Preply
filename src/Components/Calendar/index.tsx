@@ -1,20 +1,15 @@
+import moment from 'moment';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
 import DateBtn from './DateBtn';
 
+import { theme } from '../../data/colors';
 import { CalendarStyles } from './styles';
 
-import { SettingsType } from '../../types';
-import { format, genCalendar, getDateNo, getName, getNextMonth, getPrevMonth } from '../../utils/date';
+import { format, genCalendar, getName, getNextMonth, getPrevMonth } from '../../utils/date';
 import { keygen } from '../../utils/keygen';
-import moment from 'moment';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface CalendarProps {
     expand: boolean,
@@ -28,7 +23,7 @@ interface CalendarStates {
     year: number,
 }
 
-class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarStates> {
+export default class Calendar extends React.Component<CalendarProps, CalendarStates> {
 
     constructor(props: any) {
         super(props);
@@ -72,17 +67,17 @@ class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarState
                 <TouchableOpacity style={CalendarStyles.navContainer}>
                     <TouchableOpacity onPress={this.prevMonth} style={CalendarStyles.btnContainer}>
                         <Icon
-                            color={this.props.settings.colorScheme.dTextC}
+                            color={theme.dTextC}
                             name='chevron-left'
                             size={30}
                         />
                     </TouchableOpacity>
-                    <Text style={{ ...CalendarStyles.monthLabel, color: this.props.settings.colorScheme.textC }}>
+                    <Text style={{ ...CalendarStyles.monthLabel, color: theme.textC }}>
                         {getName(this.state.month) + ' ' + this.state.year}
                     </Text>
                     <TouchableOpacity onPress={this.nextMonth} style={CalendarStyles.btnContainer}>
                         <Icon
-                            color={this.props.settings.colorScheme.dTextC}
+                            color={theme.dTextC}
                             name='chevron-right'
                             size={30}
                         />
@@ -93,7 +88,7 @@ class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarState
                         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(label => {
                             return (
                                 <View key={keygen()} style={CalendarStyles.btnContainer}>
-                                    <Text style={{ ...CalendarStyles.btnText, color: this.props.settings.colorScheme.accent }}>
+                                    <Text style={{ ...CalendarStyles.btnText, color: theme.accent }}>
                                         {label}
                                     </Text>
                                 </View>
@@ -122,9 +117,3 @@ class Calendar extends React.Component<ReduxProps & CalendarProps, CalendarState
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
-});
-
-export default connect(mapStateToProps)(Calendar);

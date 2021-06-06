@@ -1,17 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { connect } from 'react-redux';
 
 import { compute, isOp, isPa, tokenize, validate, } from '../../utils/rpn';
 import NumpadBtn from './NumpadBtn';
 
 import { CalculatorStyles } from './styles';
 
-import { NumpadConfigType, SettingsType, } from '../../types';
-
-interface ReduxProps {
-	settings: SettingsType,
-}
+import { NumpadConfigType } from '../../types';
 
 interface FunctionProps {
 	onClear: () => void,
@@ -19,7 +14,7 @@ interface FunctionProps {
 	onUpdate: (equation: string) => void,
 }
 
-class Calculator extends React.Component<ReduxProps & FunctionProps> {
+export default class Calculator extends React.Component<FunctionProps> {
 
 	state = {
 		equation: '',
@@ -185,9 +180,3 @@ class Calculator extends React.Component<ReduxProps & FunctionProps> {
 		);
 	}
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-	settings: state.settings
-});
-
-export default connect(mapStateToProps)(Calculator);

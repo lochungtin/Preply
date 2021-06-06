@@ -10,16 +10,16 @@ import RecordInputModal from '../Components/RecordInputModal';
 import RecordItem from '../Components/RecordItem';
 import SeparatorLine from '../Components/SeparatorLine';
 
+import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth, } from './styles';
 
-import { SettingsType, TodoType, } from '../types';
+import { TodoType, } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
 interface ReduxProps {
-	settings: SettingsType,
 	todos: Array<TodoType>,
 }
 
@@ -34,7 +34,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	render() {
 		return (
-			<View style={{ ...ScreenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title={'To Dos'} />
 				<RecordHandler
 					isCalendarOpen={this.state.calendarExpand}
@@ -71,7 +71,6 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
-	settings: state.settings,
 	todo: state.todos,
 });
 

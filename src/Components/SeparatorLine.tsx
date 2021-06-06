@@ -1,25 +1,20 @@
 import React from 'react';
-import { View, } from 'react-native';
-import { connect } from 'react-redux';
+import { View } from 'react-native';
 
-import { SettingsType } from '../types';
-
-interface ReduxProps {
-    settings: SettingsType
-}
+import { theme } from '../data/colors';
 
 interface BarProps {
 	width: number,
 	style?: any,
 }
 
-class SeparatorLine extends React.Component<ReduxProps & BarProps> {
+export default class SeparatorLine extends React.Component<BarProps> {
 	render() {
 		return (
 			<View 
 				style={{
 					...this.props.style,
-					backgroundColor: this.props.settings.colorScheme.separatorLineC,
+					backgroundColor: theme.separatorLineC,
 					height: 2,
 					width: this.props.width,
 				}}
@@ -27,9 +22,3 @@ class SeparatorLine extends React.Component<ReduxProps & BarProps> {
 		);
 	}
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings
-});
-
-export default connect(mapStateToProps)(SeparatorLine);

@@ -1,17 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, Text, View, } from 'react-native';
+import { View } from 'react-native';
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
+import {theme} from '../../data/colors';
 import { PickerStyles } from './styles';
 
-import { SettingsType } from '../../types';
 import Calendar from '../Calendar';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface DatePickerProps {
     children: any,
@@ -21,7 +15,7 @@ interface DatePickerProps {
     selected: string,
 }
 
-class DatePicker extends React.Component<ReduxProps & DatePickerProps> {
+export default class DatePicker extends React.Component<DatePickerProps> {
     render() {
         return (
             <>
@@ -33,7 +27,7 @@ class DatePicker extends React.Component<ReduxProps & DatePickerProps> {
                     onSwipeComplete={this.props.onClose}
                     style={PickerStyles.modalStyle} 
                 >
-                    <View style={{...PickerStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
+                    <View style={{...PickerStyles.rootContainer, backgroundColor: theme.backgroundC}}>
                         <Calendar
                             expand={true}
                             onDatePress={this.props.onDatePress}
@@ -46,9 +40,3 @@ class DatePicker extends React.Component<ReduxProps & DatePickerProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings
-});
-
-export default connect(mapStateToProps)(DatePicker);

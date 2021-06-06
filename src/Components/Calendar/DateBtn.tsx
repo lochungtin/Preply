@@ -1,16 +1,12 @@
 import moment from 'moment';
 import React from 'react';
 import { Text, TouchableOpacity, } from 'react-native';
-import { connect } from 'react-redux';
 
+import { theme } from '../../data/colors';
 import { CalendarStyles } from './styles';
 
-import { CalendarDateType, SettingsType } from '../../types';
+import { CalendarDateType } from '../../types';
 import { format } from '../../utils/date';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface BtnProps {
     active: boolean,
@@ -19,15 +15,15 @@ interface BtnProps {
     selected: boolean,
 }
 
-class DateBtn extends React.Component<ReduxProps & BtnProps> {
+export default class DateBtn extends React.Component<BtnProps> {
     render() {
-        let color: string = this.props.active ? this.props.settings.colorScheme.textC : this.props.settings.colorScheme.dTextC;
+        let color: string = this.props.active ? theme.textC : theme.dTextC;
         let formattedDate = format(this.props.date);
         if (moment().format('DD-MM-YYYY') === formattedDate)
-            color = this.props.settings.colorScheme.accent;
+            color = theme.accent;
 
         return (
-            <TouchableOpacity onPress={() => this.props.onPress(formattedDate)} style={{...CalendarStyles.btnContainer, borderColor: this.props.settings.colorScheme.accent, borderWidth: this.props.selected ? 1 : 0}}>
+            <TouchableOpacity onPress={() => this.props.onPress(formattedDate)} style={{...CalendarStyles.btnContainer, borderColor: theme.accent, borderWidth: this.props.selected ? 1 : 0}}>
                 <Text style={{ ...CalendarStyles.btnText, color }}>
                     {this.props.date.date}
                 </Text>
@@ -35,9 +31,3 @@ class DateBtn extends React.Component<ReduxProps & BtnProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings,
-});
-
-export default connect(mapStateToProps)(DateBtn);

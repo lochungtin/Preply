@@ -1,17 +1,11 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, Switch, } from 'react-native';
 import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { connect } from 'react-redux';
 
+import { theme } from '../../data/colors';
 import { PickerStyles } from './styles';
 
-import { SettingsType } from '../../types';
 import Clock from '../Clock';
-
-interface ReduxProps {
-    settings: SettingsType,
-}
 
 interface TimePickerProps {
     children: any,
@@ -23,7 +17,7 @@ interface TimePickerProps {
     pm: boolean,
 }
 
-class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
+export default class TimePicker extends React.Component<TimePickerProps> {
 
     state = {
         hr: this.props.hr,
@@ -35,7 +29,7 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
     onPress = (rt: string) => {
         if (this.state.minMode)
             this.props.onTimePress(`${this.state.hr}:${rt} ${this.state.pm ? 'PM' : 'AM'}`);
-        else 
+        else
             this.setState({ minMode: true, hr: rt });
     }
 
@@ -54,9 +48,9 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
                     onBackdropPress={this.props.onClose}
                     onSwipeComplete={this.props.onClose}
                     onModalShow={() => this.setState({ hr: this.props.hr, min: this.props.min, minMode: false, pm: this.props.pm, })}
-                    style={PickerStyles.modalStyle} 
+                    style={PickerStyles.modalStyle}
                 >
-                    <View style={{ ...PickerStyles.rootContainer, backgroundColor: this.props.settings.colorScheme.backgroundC }}>
+                    <View style={{ ...PickerStyles.rootContainer, backgroundColor: theme.backgroundC }}>
                         <Clock
                             data={data}
                             offset={32}
@@ -66,29 +60,29 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
                             <View style={PickerStyles.centerControlContainer}>
                                 <View style={PickerStyles.timePickerLabelContainer}>
                                     <TouchableOpacity onPress={() => this.setState({ minMode: false })}>
-                                        <Text style={{ ...PickerStyles.timePickerLabel, borderColor: this.props.settings.colorScheme.accent, borderBottomWidth: this.state.minMode ? 0 : 2, color: this.props.settings.colorScheme.textC }}>
+                                        <Text style={{ ...PickerStyles.timePickerLabel, borderColor: theme.accent, borderBottomWidth: this.state.minMode ? 0 : 2, color: theme.textC }}>
                                             {this.state.hr}
                                         </Text>
                                     </TouchableOpacity>
-                                    <Text style={{ ...PickerStyles.timePickerLabel, color: this.props.settings.colorScheme.textC }}>
+                                    <Text style={{ ...PickerStyles.timePickerLabel, color: theme.textC }}>
                                         :
                                     </Text>
                                     <TouchableOpacity onPress={() => this.setState({ minMode: true })}>
-                                        <Text style={{ ...PickerStyles.timePickerLabel, borderColor: this.props.settings.colorScheme.accent, borderBottomWidth: this.state.minMode ? 2 : 0, color: this.props.settings.colorScheme.textC }}>
+                                        <Text style={{ ...PickerStyles.timePickerLabel, borderColor: theme.accent, borderBottomWidth: this.state.minMode ? 2 : 0, color: theme.textC }}>
                                             {this.state.min}
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={PickerStyles.timePickerSwitchContainer}>
-                                    <Text style={{ ...PickerStyles.timePickerSwitchLabel, color: this.state.pm ? this.props.settings.colorScheme.textC : this.props.settings.colorScheme.accent }}>
+                                    <Text style={{ ...PickerStyles.timePickerSwitchLabel, color: this.state.pm ? theme.textC : theme.accent }}>
                                         AM
                                     </Text>
                                     <Switch
-                                        thumbColor={this.state.pm ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC}
+                                        thumbColor={this.state.pm ? theme.accent : theme.textC}
                                         onValueChange={pm => this.setState({ pm })}
                                         value={this.state.pm}
                                     />
-                                    <Text style={{ ...PickerStyles.timePickerSwitchLabel, color: this.state.pm ? this.props.settings.colorScheme.accent : this.props.settings.colorScheme.textC }}>
+                                    <Text style={{ ...PickerStyles.timePickerSwitchLabel, color: this.state.pm ? theme.accent : theme.textC }}>
                                         PM
                                     </Text>
                                 </View>
@@ -100,9 +94,3 @@ class TimePicker extends React.Component<ReduxProps & TimePickerProps> {
         );
     }
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-    settings: state.settings
-});
-
-export default connect(mapStateToProps)(TimePicker);
