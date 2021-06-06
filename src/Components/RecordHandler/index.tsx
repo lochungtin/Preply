@@ -3,6 +3,7 @@ import { TouchableOpacity, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { theme } from '../../data/colors';
+import HandlerBtn from './HandlerBtn';
 import { RecordHandlerStyles } from './styles';
 
 interface HandlerProps {
@@ -13,7 +14,6 @@ interface HandlerProps {
     toggleCalendar: () => void,
     toggleFilter: () => void,
     toggleSort: () => void,
-    type: string,
 }
 
 export default class RecordHandler extends React.Component<HandlerProps> {
@@ -27,27 +27,21 @@ export default class RecordHandler extends React.Component<HandlerProps> {
                         size={30}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.props.toggleSort}>
-                    <Icon
-                        color={this.props.isSorting ? theme.accent : theme.textC}
-                        name='sort-ascending'
-                        size={25}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.props.toggleFilter}>
-                    <Icon
-                        color={this.props.isFiltering ? theme.accent : theme.textC}
-                        name='filter-variant'
-                        size={25}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.props.toggleCalendar}>
-                    <Icon
-                        color={this.props.isCalendarOpen ? theme.accent : theme.textC}
-                        name='calendar-outline'
-                        size={25}
-                    />
-                </TouchableOpacity>
+                <HandlerBtn
+                    active={this.props.isSorting}
+                    iconName='sort-ascending'
+                    onPress={this.props.toggleSort}
+                />
+                <HandlerBtn
+                    active={this.props.isFiltering}
+                    iconName='filter-variant'
+                    onPress={this.props.toggleFilter}
+                />
+                <HandlerBtn
+                    active={this.props.isCalendarOpen}
+                    iconName='calendar-outline'
+                    onPress={this.props.toggleCalendar}
+                />
             </View>
         );
     }

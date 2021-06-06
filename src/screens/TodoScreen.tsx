@@ -7,7 +7,7 @@ import Calendar from '../Components/Calendar';
 import Header from '../Components/Header';
 import RecordHandler from '../Components/RecordHandler';
 import RecordInputModal from '../Components/RecordInputModal';
-import RecordItem from '../Components/RecordItem';
+import TodoItem from '../Components/TodoItem';
 import SeparatorLine from '../Components/SeparatorLine';
 
 import { theme } from '../data/colors';
@@ -44,7 +44,6 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					toggleCalendar={() => this.setState({ calendarExpand: !this.state.calendarExpand })}
 					toggleFilter={() => this.setState({ filtering: !this.state.filtering })}
 					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
-					type='Todo'
 				/>
 				<Calendar
 					expand={this.state.calendarExpand}
@@ -54,11 +53,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				/>
 				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>
-					<RecordItem />
-					<RecordItem />
-					<RecordItem />
-					<RecordItem />
-					<RecordItem />
+					{this.props.todos.map(todo => <TodoItem />)}
 				</ScrollView>
 				<RecordInputModal
 					onClose={() => this.setState({ inputModalOpen: false })}
@@ -71,7 +66,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
-	todo: state.todos,
+	todos: state.todos,
 });
 
 export default connect(mapStateToProps)(Screen);
