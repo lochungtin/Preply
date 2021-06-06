@@ -16,6 +16,7 @@ import { RecordInputModalStyles, screenWidth, } from './styles';
 
 import { tags } from '../../data/tags';
 import { SettingsType } from '../../types';
+import { repeats } from '../../data/repeats';
 
 interface ReduxProps {
     settings: SettingsType,
@@ -25,7 +26,6 @@ interface ModalProps {
     onClose: () => void,
     onSave: (obj: any) => void,
     open: boolean,
-    routine?: boolean,
 }
 
 class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
@@ -35,26 +35,26 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
         dateString: moment().format('DD-MM-YYYY'),
         notif: true,
         openDatePicker: false,
+        openRepeatPicker: false,
         openTagPicker: false,
         openTimePicker: false,
+        repeatKey: 'rep:0',
         tagKey: 'tag:0',
         timeString: '12:00 PM',
         title: '',
     }
 
-    datePickerOnSelect = (dateString: string) => {
-        console.log(dateString);
-        this.setState({ dateString, openDatePicker: false });
-    }
+    refresh = () => this.setState({
+        allDay: false,
+        dateString: moment().format('DD-MM-YYYY'),
+        notif: true,
+        tagKey: 'tag:0',
+        timeString: '12:00 PM',
+        title: '',
+    });
 
-    tagPickerOnSelect = (tagKey: string) => {
-        console.log(tagKey);
-        this.setState({ tagKey, openTagPicker: false });
-    }
-
-    timePickerOnSelect = (timeString: string) => {
-        console.log(timeString);
-        this.setState({ timeString, openTimePicker: false });
+    save = () => {
+        
     }
 
     render() {
@@ -64,6 +64,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                 isVisible={this.props.open}
                 onBackButtonPress={this.props.onClose}
                 onBackdropPress={this.props.onClose}
+                onModalWillShow={this.refresh}
                 onSwipeComplete={this.props.onClose}
                 propagateSwipe={true}
                 style={RecordInputModalStyles.positioner}
@@ -90,9 +91,9 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='calendar-text'>
                             <DatePicker
-                                open={this.state.openDatePicker}
                                 onClose={() => this.setState({ openDatePicker: false })}
-                                onDatePress={this.datePickerOnSelect}
+                                onDatePress={dateString => this.setState({ dateString, openDatePicker: false })}
+                                open={this.state.openDatePicker}
                                 selected={this.state.dateString}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openDatePicker: true })}>
@@ -116,9 +117,9 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                             <TimePicker
                                 hr={this.state.timeString.split(':')[0]}
                                 min={this.state.timeString.split(':')[1].substring(0, 2)}
-                                open={this.state.openTimePicker}
                                 onClose={() => this.setState({ openTimePicker: false })}
-                                onTimePress={this.timePickerOnSelect}
+                                onTimePress={timeString => this.setState({ timeString, openTimePicker: false })}
+                                open={this.state.openTimePicker}
                                 pm={this.state.timeString.split(' ')[1] === 'PM'}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openTimePicker: true })}>
@@ -128,16 +129,27 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                 </TouchableOpacity>
                             </TimePicker>
                         </InputRow>}
-                        {this.props.routine && <>
-                            <InputRow iconName='sync'>
-                                <Text>
-                                    No Repeats
-                                </Text>
-                            </InputRow>
-                            <InputRow iconName='blank'>
-
-                            </InputRow>
-                        </>}
+                        <InputRow iconName='sync'>
+                            <MultiSelectModal
+                                items={repeats.map(rep => {
+                                    return (
+                                        <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                            {rep.name}
+                                        </Text>
+                                    );
+                                })}
+                                onClose={() => this.setState({ openRepeatPicker: false })}
+                                onItemPress={repeatKey => this.setState({ repeatKey: 'rep:' + repeatKey, openRepeatPicker: false })}
+                                open={this.state.openRepeatPicker}
+                                selected={parseInt(this.state.repeatKey.substring(4))}
+                            >
+                                <TouchableOpacity onPress={() => this.setState({ openRepeatPicker: true })}>
+                                    <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
+                                        {repeats[parseInt(this.state.repeatKey.substring(4))].name}
+                                    </Text>
+                                </TouchableOpacity>
+                            </MultiSelectModal>
+                        </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='bell-outline'>
                             <Text style={{ ...RecordInputModalStyles.labelText, color: this.props.settings.colorScheme.textC }}>
@@ -155,10 +167,14 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                 Tag
                             </Text>
                             <MultiSelectModal
-                                items={tags.map(tag => <Tag {...tag} width={150} />)}
-                                open={this.state.openTagPicker}
+                                items={tags.map(tag => {
+                                    return (
+                                        <Tag {...tag} width={150} />
+                                    );
+                                })}
                                 onClose={() => this.setState({ openTagPicker: false })}
-                                onTagPress={this.tagPickerOnSelect}
+                                onItemPress={tagKey => this.setState({ tagKey: 'tag' + tagKey, openDatePicker: false })}
+                                open={this.state.openTagPicker}
                                 selected={parseInt(this.state.tagKey.substring(4))}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openTagPicker: true })}>
@@ -170,6 +186,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                         <InputRow iconName='card-text-outline'>
                             <TextInput
                                 multiline
+                                onChangeText={text => console.log(text)}
                                 placeholder='Description ...'
                                 style={RecordInputModalStyles.descriptionInput}
                             />

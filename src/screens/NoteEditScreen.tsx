@@ -8,14 +8,14 @@ import RecordHandler from '../Components/RecordHandler';
 
 import { ScreenStyles } from './styles';
 
-import { RoutineType, SettingsType, } from '../types';
+import { NoteType, SettingsType, } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
 interface ReduxProps {
-    routines: Array<RoutineType>,
+    notes: Array<NoteType>,
 	settings: SettingsType
 }
 
@@ -23,17 +23,16 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
 			<View style={{...ScreenStyles.screenD, backgroundColor: this.props.settings.colorScheme.backgroundC}}>
-				<Header nav={this.props.navigation} title={"Routines"} />
-				<RecordHandler nav={this.props.navigation} type='Routine'/>
+				<Header nav={this.props.navigation} title={"Notes"} />
+				
 			</View>
 		);
 	}
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
-	routines: state.routines,
-    settings: state.settings,
+    notes: state.notes,
+	settings: state.settings,
 });
 
 export default connect(mapStateToProps)(Screen);
-

@@ -6,45 +6,31 @@ import { StatusBar, Text, View, } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import { SettingsType } from '../types';
-import TodoScreen from '../screens/TodoScreen';
-import NoteScreen from '../screens/NoteScreen';
-import RoutineScreen from '../screens/RoutineScreen';
+import SeparatorLine from '../Components/SeparatorLine';
+import AccountScreen from '../screens/AccountScreen';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import ConverterScreen from '../screens/ConverterScreen';
+import NoteScreen from '../screens/NoteScreen';
+import NoteEditScreen from '../screens/NoteEditScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import AccountScreen from '../screens/AccountScreen';
-import SeparatorLine from '../Components/SeparatorLine';
+import TodoScreen from '../screens/TodoScreen';
 
 import { NavStyles } from './styles';
-import InputRecordScreen from '../screens/InputRecordScreen';
+
+import { SettingsType } from '../types';
 	
 interface ReduxProps {
 	settings: SettingsType,
 }
 
 const RootNav = createDrawerNavigator();
-const TodoNav = createStackNavigator();
 const NoteNav = createStackNavigator();
-const RoutineNav = createStackNavigator();
-
-const todo = (navigation: DrawerNavigationProp<any, any>) =>
-	<TodoNav.Navigator screenOptions={{ headerShown: false }}>
-		<TodoNav.Screen component={TodoScreen} name='todos' />
-		<TodoNav.Screen component={InputRecordScreen} name='input' />
-	</TodoNav.Navigator>
 
 const note = () =>
 	<NoteNav.Navigator screenOptions={{ headerShown: false }}>
 		<NoteNav.Screen component={NoteScreen} name='notes' />
-		<NoteNav.Screen component={InputRecordScreen} name='input' />
+		<NoteNav.Screen component={NoteEditScreen} name='input' />
 	</NoteNav.Navigator>
-
-const routine = () =>
-	<RoutineNav.Navigator screenOptions={{ headerShown: false }}>
-		<RoutineNav.Screen component={RoutineScreen} name='routines' />
-		<RoutineNav.Screen component={InputRecordScreen} name='input' />
-	</RoutineNav.Navigator>
 
 class AppNav extends React.Component<ReduxProps> {
 	drawerContent = (props: any) =>
@@ -73,16 +59,6 @@ class AppNav extends React.Component<ReduxProps> {
 				label="Notes"
 				labelStyle={{ color: this.props.settings.colorScheme.textC }}
 				onPress={() => props.navigation.navigate('notes')}
-			/>
-			<DrawerItem
-				icon={props => <Icon
-					color={this.props.settings.colorScheme.drawerIconC}
-					name='clock-outline'
-					size={props.size}
-				/>}
-				label="Routines"
-				labelStyle={{ color: this.props.settings.colorScheme.textC }}
-				onPress={() => props.navigation.navigate('routines')}
 			/>
 			<Text style={{ ...NavStyles.title, color: this.props.settings.colorScheme.textC }}>
 				Utilities
@@ -138,9 +114,8 @@ class AppNav extends React.Component<ReduxProps> {
 			<NavigationContainer>
 				<StatusBar backgroundColor={this.props.settings.colorScheme.backgroundC} />
 				<RootNav.Navigator drawerContent={this.drawerContent}>
-					<RootNav.Screen component={todo} name='todos' />
+					<RootNav.Screen component={TodoScreen} name='todos' />
 					<RootNav.Screen component={note} name='notes' />
-					<RootNav.Screen component={routine} name='routines' />
 					<RootNav.Screen component={CalculatorScreen} name='calculator' />
 					<RootNav.Screen component={ConverterScreen} name='converter' />
 					<RootNav.Screen component={AccountScreen} name='account' />

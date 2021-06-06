@@ -18,7 +18,7 @@ interface ModalProps {
     items: Array<any>,
     open: boolean,
     onClose: () => void,
-    onTagPress: (key: string) => void,
+    onItemPress: (key: string) => void,
     selected: number,
 }
 
@@ -44,7 +44,7 @@ class RecordInputModal extends React.Component<ReduxProps & ModalProps> {
                                         name={'chevron-right'}
                                         size={30}
                                     />
-                                    <TouchableOpacity onPress={() => this.props.onTagPress(`tag:${index}`)} style={MSMStyles.itemWrapper}>
+                                    <TouchableOpacity onPress={() => this.props.onItemPress(index.toString())} style={MSMStyles.itemWrapper}>
                                         {item}
                                     </TouchableOpacity>
                                     <Icon

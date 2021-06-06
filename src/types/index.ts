@@ -108,3 +108,9 @@ export interface TagType {
     key: string,
     name: string,
 }
+
+// repeat config
+export interface RepeatType {
+    key: string,
+    name: string,
+}
