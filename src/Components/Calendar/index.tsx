@@ -43,7 +43,8 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
 
         if (!this.props.expand) {
             let now = moment();
-            let row = grid.filter(row => row.findIndex(date => date.month === now.get('month') + 1 && date.date === now.get('date')) !== -1)[0];
+            let row = genCalendar(now.get('year'), now.get('month') + 1)
+                .filter(row => row.findIndex(date => date.month === now.get('month') + 1 && date.date === now.get('date')) !== -1)[0];
 
             return (
                 <View style={CalendarStyles.rowContainer}>
@@ -51,7 +52,7 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
                         return (
                             <DateBtn
                                 key={keygen()}
-                                active={date.month === this.state.month}
+                                active={true}
                                 date={date}
                                 onPress={this.props.onDatePress}
                                 selected={format(date) === this.props.selected}

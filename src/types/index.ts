@@ -25,13 +25,14 @@ export interface TodoType {
 }
 
 export interface NoteType {
-    key: string,
-    title: string,
+    content: string,
     date: {
         creation: string,
         modified: string,
     },
-    content: string,
+    key: string,
+    tagKey: string,
+    title: string,
 }
 
 // redux type

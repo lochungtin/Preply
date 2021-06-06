@@ -8,12 +8,15 @@ import Header from '../Components/Header';
 import InputModal from '../Components/InputModal';
 import RecordHandler from '../Components/RecordHandler';
 import SeparatorLine from '../Components/SeparatorLine';
-import TodoItem from '../Components/TodoItem';
+import RecordItem from '../Components/RecordItem';
 
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth, } from './styles';
 
 import { TodoType } from '../types';
+import { deleteTodo } from '../redux/action';
+import { store } from '../redux/store';
+
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -37,6 +40,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title={'To Dos'} />
 				<RecordHandler
+					calendar
 					isCalendarOpen={this.state.calendarExpand}
 					isFiltering={this.state.filtering}
 					isSorting={this.state.sorting}
@@ -55,7 +59,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<ScrollView>
 					{this.props.todos.map(todo => {
 						return (
-							<TodoItem onPress={recordKey => console.log(recordKey)} record={todo}/>
+							<RecordItem
+								key={todo.key}
+								onIconPress={recordKey => store.dispatch(deleteTodo(recordKey))}
+								onPress={recordKey => console.log(recordKey)}
+								record={todo}
+							/>
 						);
 					})}
 				</ScrollView>

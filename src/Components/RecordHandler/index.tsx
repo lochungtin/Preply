@@ -7,11 +7,12 @@ import HandlerBtn from './HandlerBtn';
 import { RecordHandlerStyles } from './styles';
 
 interface HandlerProps {
+    calendar?: boolean,
     isSorting: boolean,
     isFiltering: boolean,
-    isCalendarOpen: boolean,
+    isCalendarOpen?: boolean,
     onAdd: () => void,
-    toggleCalendar: () => void,
+    toggleCalendar?: () => void,
     toggleFilter: () => void,
     toggleSort: () => void,
 }
@@ -27,6 +28,7 @@ export default class RecordHandler extends React.Component<HandlerProps> {
                         size={30}
                     />
                 </TouchableOpacity>
+                {!this.props.calendar && <Icon color='transparent' name='plus' size={30} />}
                 <HandlerBtn
                     active={this.props.isSorting}
                     iconName='sort-ascending'
@@ -37,11 +39,11 @@ export default class RecordHandler extends React.Component<HandlerProps> {
                     iconName='filter-variant'
                     onPress={this.props.toggleFilter}
                 />
-                <HandlerBtn
-                    active={this.props.isCalendarOpen}
+                {this.props.calendar && <HandlerBtn
+                    active={this.props.isCalendarOpen || false}
                     iconName='calendar-outline'
-                    onPress={this.props.toggleCalendar}
-                />
+                    onPress={this.props.toggleCalendar || (() => {})}
+                />}
             </View>
         );
     }
