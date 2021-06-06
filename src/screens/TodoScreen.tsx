@@ -13,7 +13,7 @@ import TodoItem from '../Components/TodoItem';
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth, } from './styles';
 
-import { TodoType, } from '../types';
+import { TodoType } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -53,7 +53,11 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				/>
 				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>
-					{this.props.todos.map(todo => <TodoItem />)}
+					{this.props.todos.map(todo => {
+						return (
+							<TodoItem {...todo} onPress={recordKey => console.log(recordKey)}/>
+						);
+					})}
 				</ScrollView>
 				<InputModal
 					onClose={() => this.setState({ inputModalOpen: false })}

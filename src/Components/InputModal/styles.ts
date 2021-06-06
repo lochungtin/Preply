@@ -41,7 +41,7 @@ export const RecordInputModalStyles = StyleSheet.create({
     titleTextInput: {
         fontSize: 30,
         padding: 0,
-        width: screenWidth * 0.75
+        width: screenWidth * 0.65
     },
     inputContainer: {
         alignItems: 'center',

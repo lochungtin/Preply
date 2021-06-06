@@ -16,8 +16,8 @@ import { RecordInputModalStyles, screenWidth, } from './styles';
 
 import { tags } from '../../data/tags';
 import { repeats } from '../../data/repeats';
-import { store } from '../../redux/store';
 import { addTodo } from '../../redux/action';
+import { store } from '../../redux/store';
 import { keygen } from '../../utils/keygen';
 
 interface ModalProps {
@@ -27,31 +27,26 @@ interface ModalProps {
 
 export default class InputModal extends React.Component<ModalProps> {
 
-    state = {
+    defaultState = {
         allDay: false,
         content: '',
         dateString: moment().format('DD-MM-YYYY'),
         notif: true,
-        openDatePicker: false,
-        openRepeatPicker: false,
-        openTagPicker: false,
-        openTimePicker: false,
         repeatKey: 'rep:0',
         tagKey: 'tag:0',
         timeString: '12:00 PM',
         title: '',
     }
 
-    refresh = () => this.setState({
-        allDay: false,
-        content: '',
-        dateString: moment().format('DD-MM-YYYY'),
-        notif: true,
-        repeatKey: 'rep:0',
-        tagKey: 'tag:0',
-        timeString: '12:00 PM',
-        title: '',
-    });
+    state = {
+        ...this.defaultState,
+        openDatePicker: false,
+        openRepeatPicker: false,
+        openTagPicker: false,
+        openTimePicker: false,
+    }
+
+    refresh = () => this.setState(this.defaultState);
 
     save = () => {
         store.dispatch(addTodo({
@@ -98,6 +93,13 @@ export default class InputModal extends React.Component<ModalProps> {
                                 style={RecordInputModalStyles.titleTextInput}
                                 value={this.state.title || undefined}
                             />
+                            <TouchableOpacity onPress={this.save}>
+                                <Icon
+                                    color={theme.textC}
+                                    name='chevron-right'
+                                    size={30}
+                                />
+                            </TouchableOpacity>
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='calendar-text'>
