@@ -1,7 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import moment from 'moment';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { connect } from 'react-redux';
 
 import Calendar from '../Components/Calendar';
@@ -85,12 +85,16 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					<View style={ScreenStyles.scrollView}>
 						{todos.map(todo => {
 							return (
-								<RecordItem
-									key={todo.key}
-									onIconPress={recordKey => store.dispatch(deleteTodo(recordKey))}
-									onPress={recordKey => this.setState({ todo, inputModalOpen: true })}
-									record={todo}
-								/>
+								<Swipeable key={todo.key}
+									renderLeftActions={() => <View style={{ width: screenWidth }} />}
+									onSwipeableLeftOpen={() => store.dispatch(deleteTodo(todo.key))}
+								>
+									<RecordItem
+										onIconPress={recordKey => store.dispatch(deleteTodo(recordKey))}
+										onPress={recordKey => this.setState({ todo, inputModalOpen: true })}
+										record={todo}
+									/>
+								</Swipeable>
 							);
 						})}
 					</View>

@@ -2,6 +2,7 @@ import moment from 'moment';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { connect } from 'react-redux';
 
 import Header from '../Components/Header';
@@ -14,11 +15,11 @@ import Tag from '../Components/Tag';
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
-import { store } from '../redux/store';
+import { tags } from '../data/tags';
 import { addNote, deleteNote } from '../redux/action';
+import { store } from '../redux/store';
 import { NoteType } from '../types';
 import { keygen } from '../utils/keygen';
-import { tags } from '../data/tags';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -75,13 +76,18 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					<View style={ScreenStyles.scrollView}>
 						{notes.map(note => {
 							return (
-								<RecordItem
-									key={note.key}
-									onIconPress={recordKey => store.dispatch(deleteNote(recordKey))}
-									onPress={recordKey => this.props.navigation.navigate('noteEdit', note)}
-									record={note}
-									trash
-								/>
+								<Swipeable key={note.key}
+									renderLeftActions={() => <View style={{ width: screenWidth }} />}
+									onSwipeableLeftOpen={() => store.dispatch(deleteNote(note.key))}
+								>
+									<RecordItem
+										key={note.key}
+										onIconPress={recordKey => store.dispatch(deleteNote(recordKey))}
+										onPress={recordKey => this.props.navigation.navigate('noteEdit', note)}
+										record={note}
+										trash
+									/>
+								</Swipeable>
 							);
 						})}
 					</View>
