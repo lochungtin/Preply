@@ -7,7 +7,11 @@ import { CalculatorStyles } from './styles';
 
 import { NumpadConfigType } from '../../types';
 
-export default class NumpadBtn extends React.Component<NumpadConfigType> {
+interface NumpadProps {
+	color: string,
+}
+
+export default class NumpadBtn extends React.Component<NumpadConfigType & NumpadProps> {
 	render() {
 		return (
 			<TouchableOpacity
@@ -15,7 +19,7 @@ export default class NumpadBtn extends React.Component<NumpadConfigType> {
 				style={CalculatorStyles.cellContainer}
 			>
                 <Icon
-					color={theme.textC}
+					color={this.props.color}
 					name={this.props.name}
 					size={40}
 				/>

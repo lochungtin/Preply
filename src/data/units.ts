@@ -8,6 +8,10 @@ const pow3 = (num: number): number => num * 1000;
 const ipw3 = (num: number): number => num / 1000;
 
 export const distanceMatrix: UnitMatrixType = {
+    default: {
+        from: DistanceUnits.cm,
+        to: DistanceUnits.inch,
+    },
     labels: [
         DistanceUnits.mm,
         DistanceUnits.cm,
@@ -103,6 +107,10 @@ export const distanceMatrix: UnitMatrixType = {
 }
 
 export const temperatureMatrix: UnitMatrixType = {
+    default: {
+        from: TemperatureUnits.C,
+        to: TemperatureUnits.F,
+    },
     labels: [
         TemperatureUnits.C,
         TemperatureUnits.F,
@@ -120,6 +128,10 @@ export const temperatureMatrix: UnitMatrixType = {
 }
 
 export const weightMatrix: UnitMatrixType = {
+    default: {
+        from: WeightUnits.kg,
+        to: WeightUnits.lb,
+    },
     labels: [
         WeightUnits.g,
         WeightUnits.kg,

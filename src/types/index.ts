@@ -77,6 +77,10 @@ export interface ClockConfigType {
 
 // unit matrix type
 export interface UnitMatrixType {
+    default: {
+        from: number,
+        to: number,
+    }
     labels: Array<DistanceUnits | TemperatureUnits | WeightUnits>,
     matrix: Array<Array<(arg: number) => number>>,
 }

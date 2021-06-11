@@ -7,8 +7,10 @@ import NumpadBtn from './NumpadBtn';
 import { CalculatorStyles } from './styles';
 
 import { NumpadConfigType } from '../../types';
+import { theme } from '../../data/colors';
 
 interface FunctionProps {
+	disable?: boolean,
 	onClear: () => void,
 	onResult: (result: number) => void,
 	onUpdate: (equation: string) => void,
@@ -47,31 +49,35 @@ export default class Calculator extends React.Component<FunctionProps> {
 	}
 
 	onPressEval = () => {
-		let tokenized: Array<string> = tokenize(this.state.equation);
-		if (validate(tokenized)) {
-			let result: number = compute(tokenized);
-			let memory = result.toString();
-			if (memory.includes('.'))
-				memory = result.toFixed(3);
+		if (!this.props.disable) {
+			let tokenized: Array<string> = tokenize(this.state.equation);
+			if (validate(tokenized)) {
+				let result: number = compute(tokenized);
+				let memory = result.toString();
+				if (memory.includes('.'))
+					memory = result.toFixed(3);
 
-			this.setState({ equation: '', result, memory });
-			this.props.onUpdate('');
-			this.props.onResult(result);
+				this.setState({ equation: '', result, memory });
+				this.props.onUpdate('');
+				this.props.onResult(result);
+			}
 		}
 	}
 
 	onPressMem = () => {
-		let equation: string = this.state.equation;
-		let memory: string = this.state.memory.toString();
-		memory = memory.replace('-', '!');
+		if (!this.props.disable) {
+			let equation: string = this.state.equation;
+			let memory: string = this.state.memory.toString();
+			memory = memory.replace('-', '!');
 
-		if (equation[equation.length - 1] === ')')
-			equation += `*${memory}`;
-		else
-			equation += memory;
+			if (equation[equation.length - 1] === ')')
+				equation += `*${memory}`;
+			else
+				equation += memory;
 
-		this.setState({ equation });
-		this.props.onUpdate(equation);
+			this.setState({ equation });
+			this.props.onUpdate(equation);
+		}
 	}
 
 	onPressNumeric = (num: number) => {
@@ -86,51 +92,55 @@ export default class Calculator extends React.Component<FunctionProps> {
 	}
 
 	onPressOperator = (op: string) => {
-		let equation: string = this.state.equation;
-		let lastChar: string = equation[equation.length - 1];
-		if (equation === '') {
-			if (op === '-')
-				equation += '!';
-		}
-		else if (isOp(lastChar))
-			if (op === '-')
-				equation += '!';
+		if (!this.props.disable) {
+			let equation: string = this.state.equation;
+			let lastChar: string = equation[equation.length - 1];
+			if (equation === '') {
+				if (op === '-')
+					equation += '!';
+			}
+			else if (isOp(lastChar))
+				if (op === '-')
+					equation += '!';
+				else
+					equation = equation.slice(0, -1) + op;
+			else if (lastChar === '(') {
+				if (op === '-')
+					equation += '!';
+			}
 			else
-				equation = equation.slice(0, -1) + op;
-		else if (lastChar === '(') {
-			if (op === '-')
-				equation += '!';
-		}
-		else
-			equation += op;
+				equation += op;
 
-		this.setState({ equation });
-		this.props.onUpdate(equation);
+			this.setState({ equation });
+			this.props.onUpdate(equation);
+		}
 	}
 
 	onPressParentheses = () => {
-		let equation: string = this.state.equation;
-		let lastChar: string = equation[equation.length - 1];
-		let valid: boolean = validate(tokenize(equation));
+		if (!this.props.disable) {
+			let equation: string = this.state.equation;
+			let lastChar: string = equation[equation.length - 1];
+			let valid: boolean = validate(tokenize(equation));
 
-		// empty
-		if (equation.length === 0)
-			equation = '(';
-		// directly after operator
-		else if (isOp(lastChar) || isPa(lastChar)) {
-			// directly after close parenthesis
-			if (lastChar === ")")
-				equation += (valid ? '*(' : ')');
-			// directly after operator or open parenthesis
+			// empty
+			if (equation.length === 0)
+				equation = '(';
+			// directly after operator
+			else if (isOp(lastChar) || isPa(lastChar)) {
+				// directly after close parenthesis
+				if (lastChar === ")")
+					equation += (valid ? '*(' : ')');
+				// directly after operator or open parenthesis
+				else
+					equation += '(';
+			}
+			// directly after number
 			else
-				equation += '(';
-		}
-		// directly after number
-		else
-			equation += (valid ? '*(' : ')');
+				equation += (valid ? '*(' : ')');
 
-		this.setState({ equation });
-		this.props.onUpdate(equation);
+			this.setState({ equation });
+			this.props.onUpdate(equation);
+		}
 	}
 
 	render() {
@@ -172,7 +182,26 @@ export default class Calculator extends React.Component<FunctionProps> {
 				{keypos.map((row, index) => {
 					return (
 						<View key={index} style={CalculatorStyles.rowContainer}>
-							{row.map(key => <NumpadBtn {...key} key={key.name} />)}
+							{row.map(key => {
+								let color: string = theme.textC;;
+
+								if (this.props.disable) {
+									switch (true) {
+										case key.name.startsWith('num'):
+										case key.name.startsWith('key'):
+										case key.name.startsWith('cir'):
+										case key.name.endsWith('a-c'):
+											color = theme.textC;
+											break;
+										default:
+											color = theme.dTextC;
+									}
+								}
+
+								return (
+									<NumpadBtn {...key} color={color} key={key.name} />
+								);
+							})}
 						</View>
 					);
 				})}
