@@ -1,4 +1,5 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import moment from 'moment';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -32,11 +33,19 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = {
 		calendarExpand: false,
+		date: '',
 		inputModalOpen: false,
 		filter: tags.length,
 		openFilterPicker: false,
 		sorting: false,
 		todo: undefined,
+	}
+
+	toggleCalendarSelect = (date: string) => {
+		if (this.state.date === date)
+			this.setState({ date: '' });
+		else
+			this.setState({ date });
 	}
 
 	render() {
@@ -48,6 +57,9 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 		if (this.state.filter !== tags.length)
 			todos = todos.filter(todo => todo.tagKey === 'tag:' + this.state.filter);
+
+		if (this.state.date)
+			todos = todos.filter(todo => todo.date === this.state.date);
 
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
@@ -64,9 +76,9 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				/>
 				<Calendar
 					expand={this.state.calendarExpand}
-					onDatePress={date => console.log(date)}
+					onDatePress={this.toggleCalendarSelect}
 					toggleExpand={() => this.setState({ calendarExpand: !this.state.calendarExpand })}
-					selected={''}
+					selected={this.state.date}
 				/>
 				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>
