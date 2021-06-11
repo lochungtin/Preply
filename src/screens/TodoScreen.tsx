@@ -46,7 +46,8 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		if (this.state.sorting)
 			todos.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)));
 
-		console.log(this.state.filter);
+		if (this.state.filter !== tags.length)
+			todos = todos.filter(todo => todo.tagKey === 'tag:' + this.state.filter);
 
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
