@@ -10,6 +10,7 @@ import { CalendarStyles } from './styles';
 
 import { format, genCalendar, getName, getNextMonth, getPrevMonth } from '../../utils/date';
 import { keygen } from '../../utils/keygen';
+import { CalendarDateType } from '../../types';
 
 interface CalendarProps {
     expand: boolean,
@@ -42,9 +43,18 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
         let grid = genCalendar(this.state.year, this.state.month);
 
         if (!this.props.expand) {
-            let now = moment();
-            let row = genCalendar(now.get('year'), now.get('month') + 1)
-                .filter(row => row.findIndex(date => date.month === now.get('month') + 1 && date.date === now.get('date')) !== -1)[0];
+            let row: Array<CalendarDateType>;
+
+            if (this.props.selected) {
+                let dateSplt = this.props.selected.split('-');
+                row = genCalendar(parseInt(dateSplt[2]), parseInt(dateSplt[1]))
+                    .filter(row => row.findIndex(date => format(date) === this.props.selected) !== -1)[0];
+            }
+            else {
+                let now = moment();
+                row = genCalendar(now.get('year'), now.get('month') + 1)
+                    .filter(row => row.findIndex(date => date.month === now.get('month') + 1 && date.date === now.get('date')) !== -1)[0];
+            }
 
             return (
                 <View style={CalendarStyles.rowContainer}>

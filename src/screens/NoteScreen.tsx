@@ -5,9 +5,11 @@ import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Header from '../Components/Header';
+import MultiSelectModal from '../Components/MultiSelectModal';
 import RecordHandler from '../Components/RecordHandler';
-import SeparatorLine from '../Components/SeparatorLine';
 import RecordItem from '../Components/RecordItem';
+import SeparatorLine from '../Components/SeparatorLine';
+import Tag from '../Components/Tag';
 
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
@@ -16,6 +18,7 @@ import { store } from '../redux/store';
 import { addNote, deleteNote } from '../redux/action';
 import { NoteType } from '../types';
 import { keygen } from '../utils/keygen';
+import { tags } from '../data/tags';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -28,7 +31,8 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = {
-		filtering: false,
+		filter: tags.length,
+		openFilterPicker: false,
 		sorting: false,
 	}
 
@@ -47,20 +51,29 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	render() {
+
+		let notes: Array<NoteType> = [...this.props.notes];
+
+		if (this.state.sorting)
+			notes.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)));
+
+		if (this.state.filter !== tags.length)
+			notes = notes.filter(note => note.tagKey === 'tag:' + this.state.filter);
+
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title={"Notes"} />
 				<RecordHandler
-					isFiltering={this.state.filtering}
+					isFiltering={this.state.filter !== tags.length}
 					isSorting={this.state.sorting}
 					onAdd={this.createEmptyNote}
-					toggleFilter={() => this.setState({ filtering: !this.state.filtering })}
+					toggleFilter={() => this.setState({ openFilterPicker: true })}
 					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
 				/>
 				<SeparatorLine width={screenWidth * 0.95} style={{ marginTop: 5 }} />
 				<ScrollView>
 					<View style={ScreenStyles.scrollView}>
-						{this.props.notes.map(note => {
+						{notes.map(note => {
 							return (
 								<RecordItem
 									key={note.key}
@@ -73,6 +86,16 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 						})}
 					</View>
 				</ScrollView>
+				<MultiSelectModal
+					items={[
+						...tags.map(tag => <Tag {...tag} width={150} />),
+						<Tag color={theme.textC} key={`tag:${tags.length}`} name='No Filter' width={150} />
+					]}
+					onClose={() => this.setState({ openFilterPicker: false })}
+					onItemPress={filter => this.setState({ filter, openFilterPicker: false })}
+					open={this.state.openFilterPicker}
+					selected={this.state.filter}
+				/>
 			</View>
 		);
 	}
