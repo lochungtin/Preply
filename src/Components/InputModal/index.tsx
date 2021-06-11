@@ -127,7 +127,7 @@ export default class InputModal extends React.Component<ModalProps> {
                         <InputRow iconName='calendar-text'>
                             <DatePicker
                                 onClose={() => this.setState({ openDatePicker: false })}
-                                onDatePress={dateString => this.setState({ dateString, edited: true, openDatePicker: false })}
+                                onDatePress={date => this.setState({ date, edited: true, openDatePicker: false })}
                                 open={this.state.openDatePicker}
                                 selected={this.state.date}
                             >
@@ -153,7 +153,7 @@ export default class InputModal extends React.Component<ModalProps> {
                                 hr={this.state.time.split(':')[0]}
                                 min={this.state.time.split(':')[1].substring(0, 2)}
                                 onClose={() => this.setState({ openTimePicker: false })}
-                                onTimePress={timeString => this.setState({ timeString, edited: true, openTimePicker: false })}
+                                onTimePress={time => this.setState({ time, edited: true, openTimePicker: false })}
                                 open={this.state.openTimePicker}
                                 pm={this.state.time.split(' ')[1] === 'PM'}
                             >
