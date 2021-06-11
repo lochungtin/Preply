@@ -1,5 +1,5 @@
-import moment from 'moment';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import moment from 'moment';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -35,6 +35,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		filter: tags.length,
 		openFilterPicker: false,
 		sorting: false,
+		undoStack: [],
 	}
 
 	createEmptyNote = () => {
@@ -51,6 +52,18 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		}));
 	}
 
+	delete = (note: NoteType) => {
+		store.dispatch(deleteNote(note.key));
+		this.setState({ undoStack: [note, ...this.state.undoStack] });
+	}
+
+	undo = () => {
+		if (this.state.undoStack.length !== 0) {
+			store.dispatch(addNote(this.state.undoStack[0]));
+			this.setState({ undoStack: this.state.undoStack.slice(1) });
+		}
+	}
+
 	render() {
 
 		let notes: Array<NoteType> = [...this.props.notes];
@@ -65,11 +78,13 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title={"Notes"} />
 				<RecordHandler
+					canUndo={this.state.undoStack.length !== 0}
 					isFiltering={this.state.filter !== tags.length}
 					isSorting={this.state.sorting}
 					onAdd={this.createEmptyNote}
 					toggleFilter={() => this.setState({ openFilterPicker: true })}
 					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
+					undo={this.undo}
 				/>
 				<SeparatorLine width={screenWidth * 0.95} style={{ marginTop: 5 }} />
 				<ScrollView>
@@ -78,12 +93,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 							return (
 								<Swipeable key={note.key}
 									renderLeftActions={() => <View style={{ width: screenWidth }} />}
-									onSwipeableLeftOpen={() => store.dispatch(deleteNote(note.key))}
+									onSwipeableLeftOpen={() => this.delete(note)}
 								>
 									<RecordItem
 										key={note.key}
-										onIconPress={recordKey => store.dispatch(deleteNote(recordKey))}
-										onPress={recordKey => this.props.navigation.navigate('noteEdit', note)}
+										onIconPress={() => this.delete(note)}
+										onPress={() => this.props.navigation.navigate('noteEdit', note)}
 										record={note}
 										trash
 									/>

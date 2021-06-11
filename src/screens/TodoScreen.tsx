@@ -16,7 +16,7 @@ import Tag from '../Components/Tag';
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
-import { deleteTodo } from '../redux/action';
+import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
 import { TodoType } from '../types';
 import { tags } from '../data/tags';
@@ -39,6 +39,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		openFilterPicker: false,
 		sorting: false,
 		todo: undefined,
+		undoStack: [],
+	}
+
+	delete = (todo: TodoType) => {
+		store.dispatch(deleteTodo(todo.key));
+		this.setState({ undoStack: [todo, ...this.state.undoStack] });
 	}
 
 	toggleCalendarSelect = (date: string) => {
@@ -46,6 +52,13 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			this.setState({ date: '' });
 		else
 			this.setState({ date });
+	}
+
+	undo = () => {
+		if (this.state.undoStack.length !== 0) {
+			store.dispatch(addTodo(this.state.undoStack[0]));
+			this.setState({ undoStack: this.state.undoStack.slice(1) });
+		}
 	}
 
 	render() {
@@ -66,6 +79,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<Header nav={this.props.navigation} title={'To Dos'} />
 				<RecordHandler
 					calendar
+					canUndo={this.state.undoStack.length !== 0}
 					isCalendarOpen={this.state.calendarExpand}
 					isFiltering={this.state.filter !== tags.length}
 					isSorting={this.state.sorting}
@@ -73,6 +87,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					toggleCalendar={() => this.setState({ calendarExpand: !this.state.calendarExpand })}
 					toggleFilter={() => this.setState({ openFilterPicker: true })}
 					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
+					undo={this.undo}
 				/>
 				<Calendar
 					expand={this.state.calendarExpand}
@@ -87,11 +102,11 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 							return (
 								<Swipeable key={todo.key}
 									renderLeftActions={() => <View style={{ width: screenWidth }} />}
-									onSwipeableLeftOpen={() => store.dispatch(deleteTodo(todo.key))}
+									onSwipeableLeftOpen={() => this.delete(todo)}
 								>
 									<RecordItem
-										onIconPress={recordKey => store.dispatch(deleteTodo(recordKey))}
-										onPress={recordKey => this.setState({ todo, inputModalOpen: true })}
+										onIconPress={() => this.delete(todo)}
+										onPress={() => this.setState({ todo, inputModalOpen: true })}
 										record={todo}
 									/>
 								</Swipeable>

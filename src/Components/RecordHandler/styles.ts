@@ -16,7 +16,7 @@ export const RecordHandlerStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: screenWidth * 0.5,
+        width: screenWidth * 0.4,
     },
     addRecordText: {
         fontSize: 17,
