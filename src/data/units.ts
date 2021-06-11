@@ -1,5 +1,5 @@
 import { UnitMatrixType } from '../types';
-import { DistanceUnits, TemperatureUnits, WeightUnits, } from '../types/unitTypes';
+import { DistanceUnits, TemperatureUnits, WeightUnits } from '../types/unitTypes';
 
 const self = (num: number): number => num;
 

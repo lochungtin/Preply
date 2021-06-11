@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import { ActionType, NoteType, TodoType, } from '../types';
+import { ActionType, NoteType, TodoType } from '../types';
 import { deleteByKey, replaceByKey } from '../utils/arrayFn';
-import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, } from './action';
+import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO } from './action';
 
 const defaultNoteState: Array<NoteType> = [];
 const updateNotes = (noteState = defaultNoteState, action: ActionType) => {

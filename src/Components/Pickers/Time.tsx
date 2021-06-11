@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, View, Switch, } from 'react-native';
+import { TouchableOpacity, Text, View, Switch } from 'react-native';
 import Modal from 'react-native-modal';
 
 import { theme } from '../../data/colors';
@@ -47,7 +47,7 @@ export default class TimePicker extends React.Component<TimePickerProps> {
                     onBackButtonPress={this.props.onClose}
                     onBackdropPress={this.props.onClose}
                     onSwipeComplete={this.props.onClose}
-                    onModalShow={() => this.setState({ hr: this.props.hr, min: this.props.min, minMode: false, pm: this.props.pm, })}
+                    onModalShow={() => this.setState({ hr: this.props.hr, min: this.props.min, minMode: false, pm: this.props.pm })}
                     style={PickerStyles.modalStyle}
                 >
                     <View style={{ ...PickerStyles.rootContainer, backgroundColor: theme.backgroundC }}>

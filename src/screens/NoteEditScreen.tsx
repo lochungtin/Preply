@@ -1,6 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import moment from 'moment';
 import React from 'react';
-import { Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -9,13 +10,12 @@ import SeparatorLine from '../Components/SeparatorLine';
 import Tag from '../Components/Tag';
 
 import { theme } from '../data/colors';
-import { NoteScreenStyles, ScreenStyles, screenWidth, } from './styles';
+import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
 
-import { NoteType } from '../types';
 import { tags } from '../data/tags';
 import { store } from '../redux/store';
 import { editNote } from '../redux/action';
-import moment from 'moment';
+import { NoteType } from '../types';
 
 
 interface NavProps {
@@ -65,7 +65,8 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					</TouchableOpacity>
 					<TextInput
 						onChangeText={title => this.setState({ title, edited: true })}
-						style={NoteScreenStyles.titleInput}
+						placeholderTextColor={theme.dTextC}
+						style={{...NoteScreenStyles.titleInput, color: theme.textC}}
 						value={this.state.title}
 					/>
 					<TouchableOpacity onPress={this.save}>
@@ -84,7 +85,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 							);
 						})}
 						onClose={() => this.setState({ openTagPicker: false })}
-						onItemPress={tagKey => this.setState({ edited: true, openTagPicker: false, tagKey: 'tag:' + tagKey, })}
+						onItemPress={tagKey => this.setState({ edited: true, openTagPicker: false, tagKey: 'tag:' + tagKey })}
 						open={this.state.openTagPicker}
 						selected={parseInt(this.state.tagKey.substring(4))}
 					>
@@ -101,6 +102,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					multiline
 					onChangeText={content => this.setState({ content, edited: true })}
 					placeholder='start typing ...'
+					placeholderTextColor={theme.dTextC}
 					style={{ ...NoteScreenStyles.textInput, color: theme.textC }}
 					value={this.state.content}
 				/>

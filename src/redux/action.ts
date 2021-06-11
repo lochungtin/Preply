@@ -1,4 +1,4 @@
-import { NoteType, TodoType, } from '../types';
+import { NoteType, TodoType } from '../types';
 
 // note actions
 export const ADD_NOTE = 'ADD_NOTE';

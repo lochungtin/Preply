@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { ScrollView, View, } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 
 import Header from '../Components/Header';
@@ -12,9 +12,9 @@ import RecordItem from '../Components/RecordItem';
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
-import { NoteType } from '../types';
 import { store } from '../redux/store';
 import { addNote, deleteNote } from '../redux/action';
+import { NoteType } from '../types';
 import { keygen } from '../utils/keygen';
 
 interface NavProps {
@@ -64,11 +64,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 							<RecordItem
 								key={note.key}
 								onIconPress={recordKey => store.dispatch(deleteNote(recordKey))}
-								onPress={recordKey => {
-									console.log(recordKey);
-									console.log(note.key);
-									this.props.navigation.navigate('noteEdit', note)}
-								}								
+								onPress={recordKey => this.props.navigation.navigate('noteEdit', note)}								
 								record={note}
 								trash
 							/>

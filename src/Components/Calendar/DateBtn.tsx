@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { Text, TouchableOpacity, } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 import { theme } from '../../data/colors';
 import { CalendarStyles } from './styles';

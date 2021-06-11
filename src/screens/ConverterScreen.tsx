@@ -7,7 +7,7 @@ import Header from '../Components/Header';
 import SeparatorLine from '../Components/SeparatorLine';
 
 import { theme } from '../data/colors';
-import { calculatorScreenStyles, ScreenStyles, } from './styles';
+import { calculatorScreenStyles, ScreenStyles } from './styles';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { compute, isOp, isPa, tokenize, validate, } from '../../utils/rpn';
+import { compute, isOp, isPa, tokenize, validate } from '../../utils/rpn';
 import NumpadBtn from './NumpadBtn';
 
 import { CalculatorStyles } from './styles';

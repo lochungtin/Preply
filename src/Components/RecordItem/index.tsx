@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, TouchableOpacity, View, } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { theme } from '../../data/colors';
 import { RecordItemStyles } from './styles';
 
 import { tags } from '../../data/tags';
-import { NoteType, TodoType, } from '../../types';
+import { NoteType, TodoType } from '../../types';
 
 interface RecordProps {
     trash?: boolean

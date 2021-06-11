@@ -1,4 +1,4 @@
-import { DistanceUnits, TemperatureUnits, WeightUnits, } from './unitTypes';
+import { DistanceUnits, TemperatureUnits, WeightUnits } from './unitTypes';
 
 // data types
 export interface TagType {

@@ -23,22 +23,22 @@ export default class Clock extends React.Component<ClockProps> {
         const d = Math.sqrt(3) / 2 * r;
 
         let grid: Array<ClockConfigType> = [
-            { height: 0, values: [this.props.data[0]], width: 0, },
-            { height: r - d, values: [this.props.data[11], this.props.data[1]], width: r, },
-            { height: d - r / 2, values: [this.props.data[10], this.props.data[2]], width: d * 2, },
-            { height: r / 2, values: [this.props.data[9], this.props.data[3]], width: r * 2, },
-            { height: r / 2, values: [this.props.data[8], this.props.data[4]], width: d * 2, },
-            { height: d - r / 2, values: [this.props.data[7], this.props.data[5]], width: r, },
-            { height: r - d, values: [this.props.data[6]], width: 0, },
+            { height: 0, values: [this.props.data[0]], width: 0 },
+            { height: r - d, values: [this.props.data[11], this.props.data[1]], width: r },
+            { height: d - r / 2, values: [this.props.data[10], this.props.data[2]], width: d * 2 },
+            { height: r / 2, values: [this.props.data[9], this.props.data[3]], width: r * 2 },
+            { height: r / 2, values: [this.props.data[8], this.props.data[4]], width: d * 2 },
+            { height: d - r / 2, values: [this.props.data[7], this.props.data[5]], width: r },
+            { height: r - d, values: [this.props.data[6]], width: 0 },
         ];
 
         return (
-            <View style={{ ...ClockStyles.rootContainer, height: this.props.size, width: this.props.size, }}>
+            <View style={{ ...ClockStyles.rootContainer, height: this.props.size, width: this.props.size }}>
                 {grid.map((data, index) => {
                     return (
                         <View key={keygen()}>
                             <View style={{ height: data.height }} />
-                            <View style={{ ...ClockStyles.positionRow, height: 0, width: data.width + this.props.offset, }} >
+                            <View style={{ ...ClockStyles.positionRow, height: 0, width: data.width + this.props.offset }} >
                                 <ClockBtn
                                     onPress={() => this.props.onPress(data.values[0])}
                                     size={30}

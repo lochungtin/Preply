@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -12,17 +12,19 @@ import SeparatorLine from '../SeparatorLine';
 import Tag from '../Tag';
 
 import { theme } from '../../data/colors';
-import { RecordInputModalStyles, screenWidth, } from './styles';
+import { RecordInputModalStyles, screenWidth } from './styles';
 
 import { tags } from '../../data/tags';
 import { repeats } from '../../data/repeats';
-import { addTodo } from '../../redux/action';
+import { addTodo, editTodo } from '../../redux/action';
 import { store } from '../../redux/store';
+import { TodoType } from '../../types';
 import { keygen } from '../../utils/keygen';
 
 interface ModalProps {
     onClose: () => void,
     open: boolean,
+    record?: TodoType,
 }
 
 export default class InputModal extends React.Component<ModalProps> {
@@ -30,11 +32,12 @@ export default class InputModal extends React.Component<ModalProps> {
     defaultState = {
         allDay: false,
         content: '',
-        dateString: moment().format('DD-MM-YYYY'),
+        date: moment().format('DD-MM-YYYY'),
+        edited: false,
         notif: true,
         repeatKey: 'rep:0',
         tagKey: 'tag:0',
-        timeString: '12:00 PM',
+        time: '12:00 PM',
         title: '',
     }
 
@@ -46,20 +49,38 @@ export default class InputModal extends React.Component<ModalProps> {
         openTimePicker: false,
     }
 
-    refresh = () => this.setState(this.defaultState);
+    refresh = () => {
+        if (this.props.record)
+            this.setState(this.props.record);
+        else
+            this.setState(this.defaultState);
+    }
 
     save = () => {
-        store.dispatch(addTodo({
-            allDay: this.state.allDay,
-            content: this.state.content,
-            date: this.state.dateString,
-            key: keygen(),
-            notif: this.state.notif,
-            repeatKey: this.state.repeatKey,
-            tagKey: this.state.tagKey,
-            title: this.state.title || 'untitled',
-            time: this.state.timeString,
-        }));
+        if (this.props.record)
+            store.dispatch(editTodo({
+                allDay: this.state.allDay,
+                content: this.state.content,
+                date: this.state.date,
+                key: this.props.record.key,
+                notif: this.state.notif,
+                repeatKey: this.state.repeatKey,
+                tagKey: this.state.tagKey,
+                title: this.state.title || 'untitled',
+                time: this.state.time,
+            }));
+        else
+            store.dispatch(addTodo({
+                allDay: this.state.allDay,
+                content: this.state.content,
+                date: this.state.date,
+                key: keygen(),
+                notif: this.state.notif,
+                repeatKey: this.state.repeatKey,
+                tagKey: this.state.tagKey,
+                title: this.state.title || 'untitled',
+                time: this.state.time,
+            }));
         this.props.onClose();
     }
 
@@ -88,15 +109,16 @@ export default class InputModal extends React.Component<ModalProps> {
                         <SeparatorLine width={screenWidth * 0.9} />
                         <InputRow iconName='blank'>
                             <TextInput
-                                onChangeText={title => this.setState({ title })}
+                                onChangeText={title => this.setState({ title, edited: true })}
                                 placeholder='title'
-                                style={RecordInputModalStyles.titleTextInput}
+                                placeholderTextColor={theme.dTextC}
+                                style={{ ...RecordInputModalStyles.titleTextInput, color: theme.textC }}
                                 value={this.state.title || undefined}
                             />
                             <TouchableOpacity onPress={this.save}>
                                 <Icon
-                                    color={theme.textC}
-                                    name='chevron-right'
+                                    color={this.state.edited ? theme.accent : theme.textC}
+                                    name='content-save-outline'
                                     size={30}
                                 />
                             </TouchableOpacity>
@@ -105,13 +127,13 @@ export default class InputModal extends React.Component<ModalProps> {
                         <InputRow iconName='calendar-text'>
                             <DatePicker
                                 onClose={() => this.setState({ openDatePicker: false })}
-                                onDatePress={dateString => this.setState({ dateString, openDatePicker: false })}
+                                onDatePress={dateString => this.setState({ dateString, edited: true, openDatePicker: false })}
                                 open={this.state.openDatePicker}
-                                selected={this.state.dateString}
+                                selected={this.state.date}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openDatePicker: true })}>
                                     <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
-                                        {this.state.dateString}
+                                        {this.state.date}
                                     </Text>
                                 </TouchableOpacity>
                             </DatePicker>
@@ -121,23 +143,23 @@ export default class InputModal extends React.Component<ModalProps> {
                                 All Day
                             </Text>
                             <Switch
-                                onValueChange={allDay => this.setState({ allDay })}
+                                onValueChange={allDay => this.setState({ allDay, edited: true })}
                                 thumbColor={this.state.allDay ? theme.accent : theme.textC}
                                 value={this.state.allDay}
                             />
                         </InputRow>
                         {!this.state.allDay && <InputRow iconName='blank'>
                             <TimePicker
-                                hr={this.state.timeString.split(':')[0]}
-                                min={this.state.timeString.split(':')[1].substring(0, 2)}
+                                hr={this.state.time.split(':')[0]}
+                                min={this.state.time.split(':')[1].substring(0, 2)}
                                 onClose={() => this.setState({ openTimePicker: false })}
-                                onTimePress={timeString => this.setState({ timeString, openTimePicker: false })}
+                                onTimePress={timeString => this.setState({ timeString, edited: true, openTimePicker: false })}
                                 open={this.state.openTimePicker}
-                                pm={this.state.timeString.split(' ')[1] === 'PM'}
+                                pm={this.state.time.split(' ')[1] === 'PM'}
                             >
                                 <TouchableOpacity onPress={() => this.setState({ openTimePicker: true })}>
                                     <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
-                                        {this.state.timeString}
+                                        {this.state.time}
                                     </Text>
                                 </TouchableOpacity>
                             </TimePicker>
@@ -152,7 +174,7 @@ export default class InputModal extends React.Component<ModalProps> {
                                     );
                                 })}
                                 onClose={() => this.setState({ openRepeatPicker: false })}
-                                onItemPress={repeatKey => this.setState({ repeatKey: 'rep:' + repeatKey, openRepeatPicker: false })}
+                                onItemPress={repeatKey => this.setState({ edited: true, repeatKey: 'rep:' + repeatKey, openRepeatPicker: false })}
                                 open={this.state.openRepeatPicker}
                                 selected={parseInt(this.state.repeatKey.substring(4))}
                             >
@@ -169,7 +191,7 @@ export default class InputModal extends React.Component<ModalProps> {
                                 Notifications
                             </Text>
                             <Switch
-                                onValueChange={notif => this.setState({ notif })}
+                                onValueChange={notif => this.setState({ notif, edited: true })}
                                 thumbColor={this.state.notif ? theme.accent : theme.textC}
                                 value={this.state.notif}
                             />
@@ -186,7 +208,7 @@ export default class InputModal extends React.Component<ModalProps> {
                                     );
                                 })}
                                 onClose={() => this.setState({ openTagPicker: false })}
-                                onItemPress={tagKey => this.setState({ tagKey: 'tag:' + tagKey, openTagPicker: false })}
+                                onItemPress={tagKey => this.setState({ edited: true, tagKey: 'tag:' + tagKey, openTagPicker: false })}
                                 open={this.state.openTagPicker}
                                 selected={parseInt(this.state.tagKey.substring(4))}
                             >
@@ -199,9 +221,10 @@ export default class InputModal extends React.Component<ModalProps> {
                         <InputRow iconName='card-text-outline'>
                             <TextInput
                                 multiline
-                                onChangeText={content => this.setState({ content })}
+                                onChangeText={content => this.setState({ content, edited: true })}
                                 placeholder='Description ...'
-                                style={RecordInputModalStyles.descriptionInput}
+                                placeholderTextColor={theme.dTextC}
+                                style={{ ...RecordInputModalStyles.descriptionInput, color: theme.textC }}
                             />
                         </InputRow>
                     </View>

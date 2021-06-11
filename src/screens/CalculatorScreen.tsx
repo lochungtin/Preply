@@ -1,13 +1,13 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { Text, View, } from 'react-native';
+import { Text, View } from 'react-native';
 
 import Calculator from '../Components/Calculator';
 import Header from '../Components/Header';
 import SeparatorLine from '../Components/SeparatorLine';
 
 import { theme } from '../data/colors';
-import { calculatorScreenStyles, ScreenStyles, screenWidth, } from './styles';
+import { calculatorScreenStyles, ScreenStyles, screenWidth } from './styles';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
