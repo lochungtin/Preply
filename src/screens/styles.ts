@@ -7,7 +7,11 @@ export const ScreenStyles = StyleSheet.create({
         alignItems: 'center',
         display: 'flex',
         flex: 1
-    }
+    },
+    scrollView: {
+        alignItems: 'center',
+        width: screenWidth,
+    },
 });
 
 export const calculatorScreenStyles = StyleSheet.create({

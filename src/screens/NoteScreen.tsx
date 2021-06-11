@@ -59,17 +59,19 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				/>
 				<SeparatorLine width={screenWidth * 0.95} style={{ marginTop: 5 }} />
 				<ScrollView>
-					{this.props.notes.map(note => {
-						return (
-							<RecordItem
-								key={note.key}
-								onIconPress={recordKey => store.dispatch(deleteNote(recordKey))}
-								onPress={recordKey => this.props.navigation.navigate('noteEdit', note)}								
-								record={note}
-								trash
-							/>
-						);
-					})}
+					<View style={ScreenStyles.scrollView}>
+						{this.props.notes.map(note => {
+							return (
+								<RecordItem
+									key={note.key}
+									onIconPress={recordKey => store.dispatch(deleteNote(recordKey))}
+									onPress={recordKey => this.props.navigation.navigate('noteEdit', note)}
+									record={note}
+									trash
+								/>
+							);
+						})}
+					</View>
 				</ScrollView>
 			</View>
 		);

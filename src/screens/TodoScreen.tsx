@@ -35,8 +35,8 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		inputModalOpen: false,
 		filter: tags.length,
 		openFilterPicker: false,
-		record: undefined,
 		sorting: false,
+		todo: undefined,
 	}
 
 	render() {
@@ -70,21 +70,23 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				/>
 				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>
-					{todos.map(todo => {
-						return (
-							<RecordItem
-								key={todo.key}
-								onIconPress={recordKey => store.dispatch(deleteTodo(recordKey))}
-								onPress={recordKey => this.setState({ inputModalOpen: true, record: todo })}
-								record={todo}
-							/>
-						);
-					})}
+					<View style={ScreenStyles.scrollView}>
+						{todos.map(todo => {
+							return (
+								<RecordItem
+									key={todo.key}
+									onIconPress={recordKey => store.dispatch(deleteTodo(recordKey))}
+									onPress={recordKey => this.setState({ todo, inputModalOpen: true })}
+									record={todo}
+								/>
+							);
+						})}
+					</View>
 				</ScrollView>
 				<InputModal
-					onClose={() => this.setState({ inputModalOpen: false, record: undefined })}
+					onClose={() => this.setState({ inputModalOpen: false, todo: undefined })}
 					open={this.state.inputModalOpen}
-					record={this.state.record}
+					record={this.state.todo}
 				/>
 				<MultiSelectModal
 					items={[
