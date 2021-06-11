@@ -58,7 +58,7 @@ export const tags: Array<TagType> = [
     },
     {
         color: '#4371b5',
-        key: 'tag:12',
+        key: 'tag:11',
         name: 'Blue',
     },
 ];

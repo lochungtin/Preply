@@ -36,6 +36,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	render() {
+
+		let todos: Array<TodoType> = [...this.props.todos];
+
+		if (this.state.sorting)
+			todos.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)))
+
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title={'To Dos'} />
@@ -57,7 +63,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				/>
 				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>
-					{this.props.todos.map(todo => {
+					{todos.map(todo => {
 						return (
 							<RecordItem
 								key={todo.key}
@@ -69,7 +75,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					})}
 				</ScrollView>
 				<InputModal
-					onClose={() => this.setState({ inputModalOpen: false })}
+					onClose={() => this.setState({ inputModalOpen: false, record: undefined })}
 					open={this.state.inputModalOpen}
 					record={this.state.record}
 				/>

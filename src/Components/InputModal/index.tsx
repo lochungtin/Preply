@@ -30,7 +30,7 @@ interface ModalProps {
 export default class InputModal extends React.Component<ModalProps> {
 
     defaultState = {
-        allDay: false,
+        allDay: true,
         content: '',
         date: moment().format('DD-MM-YYYY'),
         edited: false,
@@ -51,7 +51,7 @@ export default class InputModal extends React.Component<ModalProps> {
 
     refresh = () => {
         if (this.props.record)
-            this.setState(this.props.record);
+            this.setState({...this.props.record, edited: false});
         else
             this.setState(this.defaultState);
     }
