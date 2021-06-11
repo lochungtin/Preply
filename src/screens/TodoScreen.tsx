@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import Calendar from '../Components/Calendar';
 import Header from '../Components/Header';
 import InputModal from '../Components/InputModal';
+import MultiSelectModal from '../Components/MultiSelectModal';
 import RecordHandler from '../Components/RecordHandler';
-import SeparatorLine from '../Components/SeparatorLine';
 import RecordItem from '../Components/RecordItem';
+import SeparatorLine from '../Components/SeparatorLine';
+import Tag from '../Components/Tag';
 
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
@@ -16,6 +18,7 @@ import { ScreenStyles, screenWidth } from './styles';
 import { deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
 import { TodoType } from '../types';
+import { tags } from '../data/tags';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -30,7 +33,8 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	state = {
 		calendarExpand: false,
 		inputModalOpen: false,
-		filtering: false,
+		filter: tags.length,
+		openFilterPicker: false,
 		record: undefined,
 		sorting: false,
 	}
@@ -40,7 +44,9 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		let todos: Array<TodoType> = [...this.props.todos];
 
 		if (this.state.sorting)
-			todos.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)))
+			todos.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)));
+
+		console.log(this.state.filter);
 
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
@@ -48,11 +54,11 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<RecordHandler
 					calendar
 					isCalendarOpen={this.state.calendarExpand}
-					isFiltering={this.state.filtering}
+					isFiltering={this.state.filter !== tags.length}
 					isSorting={this.state.sorting}
 					onAdd={() => this.setState({ inputModalOpen: true })}
 					toggleCalendar={() => this.setState({ calendarExpand: !this.state.calendarExpand })}
-					toggleFilter={() => this.setState({ filtering: !this.state.filtering })}
+					toggleFilter={() => this.setState({ openFilterPicker: true })}
 					toggleSort={() => this.setState({ sorting: !this.state.sorting })}
 				/>
 				<Calendar
@@ -78,6 +84,16 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					onClose={() => this.setState({ inputModalOpen: false, record: undefined })}
 					open={this.state.inputModalOpen}
 					record={this.state.record}
+				/>
+				<MultiSelectModal
+					items={[
+						...tags.map(tag => <Tag {...tag} width={150} />),
+						<Tag color={theme.textC} key={`tag:${tags.length}`} name='No Filter' width={150} />
+					]}
+					onClose={() => this.setState({ openFilterPicker: false })}
+					onItemPress={filter => this.setState({ filter, openFilterPicker: false })}
+					open={this.state.openFilterPicker}
+					selected={this.state.filter}
 				/>
 			</View>
 		);

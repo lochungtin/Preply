@@ -9,11 +9,11 @@ import { MSMStyles } from './styles';
 import { keygen } from '../../utils/keygen';
 
 interface ModalProps {
-    children: any,
+    children?: any,
     items: Array<any>,
     open: boolean,
     onClose: () => void,
-    onItemPress: (key: string) => void,
+    onItemPress: (index: number) => void,
     selected: number,
 }
 
@@ -39,7 +39,7 @@ export default class RecordInputModal extends React.Component<ModalProps> {
                                         name={'chevron-right'}
                                         size={30}
                                     />
-                                    <TouchableOpacity onPress={() => this.props.onItemPress(index.toString())} style={MSMStyles.itemWrapper}>
+                                    <TouchableOpacity onPress={() => this.props.onItemPress(index)} style={MSMStyles.itemWrapper}>
                                         {item}
                                     </TouchableOpacity>
                                     <Icon
