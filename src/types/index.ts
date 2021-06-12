@@ -39,13 +39,8 @@ export interface ActionType {
     payload?: any
 }
 
-// numpad config
-export interface NumpadConfigType {
-    name: string,
-    onPress: () => void,
-}
-
-// color scheme
+// data types
+// app color scheme
 export interface ColorSchemeType {
     accent: string,
     backgroundC: string,
@@ -59,18 +54,11 @@ export interface ColorSchemeType {
     textC: string,
 }
 
-// calendar type
+// calendar date type
 export interface CalendarDateType {
     date: number,
     month: number,
     year: number,
-}
-
-// clock btn config
-export interface ClockConfigType {
-    height: number,
-    values: Array<string>,
-    width: number
 }
 
 // unit matrix type
@@ -82,4 +70,18 @@ export interface UnitMatrixType {
     labels: Array<string>,
     matrix: Array<Array<(arg: number) => number>>,
     typeName: string,
+}
+
+// mappable config types
+// numpad btn config
+export interface NumpadConfigType {
+    name: string,
+    onPress: () => void,
+}
+
+// clock btn config
+export interface ClockConfigType {
+    height: number,
+    values: Array<string>,
+    width: number
 }
