@@ -15,9 +15,9 @@ export enum TemperatureUnits {
 }
 
 export enum WeightUnits {
-    lb,
     g,
     kg,
+    lb,
     st,
     oz,
 }

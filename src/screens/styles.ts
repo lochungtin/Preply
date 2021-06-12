@@ -14,7 +14,7 @@ export const ScreenStyles = StyleSheet.create({
     },
 });
 
-export const calculatorScreenStyles = StyleSheet.create({
+export const CalculatorScreenStyles = StyleSheet.create({
     displayContainer: {
         alignItems: 'center',
         display: 'flex',
@@ -57,6 +57,15 @@ export const calculatorScreenStyles = StyleSheet.create({
         display: 'flex',
         flex: 1,
         justifyContent: 'space-between',
+    },
+});
+
+export const ConverterScreenStyles = StyleSheet.create({
+    selectionText: {
+        fontSize: 15,
+    },
+    selectionLabel: {
+        fontSize: 17,
     },
 });
 

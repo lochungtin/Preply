@@ -1,5 +1,3 @@
-import { DistanceUnits, TemperatureUnits, WeightUnits } from './unitTypes';
-
 // data types
 export interface TagType {
     color: string,
@@ -81,6 +79,7 @@ export interface UnitMatrixType {
         from: number,
         to: number,
     }
-    labels: Array<DistanceUnits | TemperatureUnits | WeightUnits>,
+    labels: Array<string>,
     matrix: Array<Array<(arg: number) => number>>,
+    typeName: string,
 }

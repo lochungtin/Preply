@@ -7,7 +7,7 @@ import Header from '../Components/Header';
 import SeparatorLine from '../Components/SeparatorLine';
 
 import { theme } from '../data/colors';
-import { calculatorScreenStyles, ScreenStyles, screenWidth } from './styles';
+import { CalculatorScreenStyles, ScreenStyles, screenWidth } from './styles';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -30,15 +30,15 @@ export default class Screen extends React.Component<NavProps> {
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title='Calculator' />
-				<View style={calculatorScreenStyles.rootContainer}>
-					<View style={calculatorScreenStyles.displayContainer}>
-						<View style={calculatorScreenStyles.equationContainer}>
-							<Text style={{ ...calculatorScreenStyles.equation, color: theme.textC }}>
+				<View style={CalculatorScreenStyles.rootContainer}>
+					<View style={CalculatorScreenStyles.displayContainer}>
+						<View style={CalculatorScreenStyles.equationContainer}>
+							<Text style={{ ...CalculatorScreenStyles.equation, color: theme.textC }}>
 								{this.state.equation.replace(/!/g, '-')}
 							</Text>
 						</View>
-						<View style={calculatorScreenStyles.resultContainer}>
-							<Text style={{ ...calculatorScreenStyles.result, color: theme.textC }}>
+						<View style={CalculatorScreenStyles.resultContainer}>
+							<Text style={{ ...CalculatorScreenStyles.result, color: theme.textC }}>
 								{this.state.result}
 							</Text>
 						</View>

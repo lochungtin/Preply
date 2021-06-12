@@ -12,16 +12,7 @@ export const distanceMatrix: UnitMatrixType = {
         from: DistanceUnits.cm,
         to: DistanceUnits.inch,
     },
-    labels: [
-        DistanceUnits.mm,
-        DistanceUnits.cm,
-        DistanceUnits.m,
-        DistanceUnits.km,
-        DistanceUnits.inch,
-        DistanceUnits.feet,
-        DistanceUnits.yard,
-        DistanceUnits.mile,
-    ],
+    labels: Object.keys(DistanceUnits).map(val => DistanceUnits[parseInt(val)]).filter(val => typeof val === 'string'),
     matrix: [
         [ // from mm
             self,
@@ -103,7 +94,8 @@ export const distanceMatrix: UnitMatrixType = {
             n => n * 1760,
             self,
         ],
-    ]
+    ],
+    typeName: 'Distance',
 }
 
 export const temperatureMatrix: UnitMatrixType = {
@@ -111,10 +103,7 @@ export const temperatureMatrix: UnitMatrixType = {
         from: TemperatureUnits.C,
         to: TemperatureUnits.F,
     },
-    labels: [
-        TemperatureUnits.C,
-        TemperatureUnits.F,
-    ],
+    labels: Object.keys(TemperatureUnits).map(val => TemperatureUnits[parseInt(val)]).filter(val => typeof val === 'string'),
     matrix: [
         [ // from C
             self, 
@@ -125,6 +114,7 @@ export const temperatureMatrix: UnitMatrixType = {
             self,
         ],
     ],
+    typeName: 'Temperature',
 }
 
 export const weightMatrix: UnitMatrixType = {
@@ -132,13 +122,7 @@ export const weightMatrix: UnitMatrixType = {
         from: WeightUnits.kg,
         to: WeightUnits.lb,
     },
-    labels: [
-        WeightUnits.g,
-        WeightUnits.kg,
-        WeightUnits.lb,
-        WeightUnits.oz,
-        WeightUnits.st,
-    ],
+    labels: Object.keys(WeightUnits).map(val => WeightUnits[parseInt(val)]).filter(val => typeof val === 'string'),
     matrix: [
         [ // from g
             self,
@@ -175,5 +159,6 @@ export const weightMatrix: UnitMatrixType = {
             n => n * 224,
             self,
         ],
-    ]
+    ],
+    typeName: 'Weight',
 }

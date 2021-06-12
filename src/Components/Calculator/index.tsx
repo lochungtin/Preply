@@ -51,7 +51,7 @@ export default class Calculator extends React.Component<FunctionProps> {
 	onPressEval = () => {
 		if (!this.props.disable) {
 			let tokenized: Array<string> = tokenize(this.state.equation);
-			if (validate(tokenized)) {
+			if (tokenized.length > 0 && validate(tokenized)) {
 				let result: number = compute(tokenized);
 				let memory = result.toString();
 				if (memory.includes('.'))
