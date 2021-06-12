@@ -19,20 +19,11 @@ interface CalendarProps {
     toggleExpand: () => void,
 }
 
-interface CalendarStates {
-    month: number,
-    year: number,
-}
+export default class Calendar extends React.Component<CalendarProps> {
 
-export default class Calendar extends React.Component<CalendarProps, CalendarStates> {
-
-    constructor(props: any) {
-        super(props);
-        let now = moment();
-        this.state = {
-            month: now.get('month') + 1,
-            year: now.get('year'),
-        }
+    state = {
+        month: moment().get('month') + 1,
+        year: moment().get('year'),
     }
 
     nextMonth = () => this.setState(getNextMonth(this.state.year, this.state.month));
@@ -40,25 +31,25 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
     prevMonth = () => this.setState(getPrevMonth(this.state.year, this.state.month));
 
     render() {
-        let grid = genCalendar(this.state.year, this.state.month);
+        let grid: Array<Array<CalendarDateType>> = genCalendar(this.state.year, this.state.month);
 
         if (!this.props.expand) {
             let row: Array<CalendarDateType>;
 
             if (this.props.selected) {
-                let dateSplt = this.props.selected.split('-');
+                let dateSplt: Array<string> = this.props.selected.split('-');
                 row = genCalendar(parseInt(dateSplt[2]), parseInt(dateSplt[1]))
                     .filter(row => row.findIndex(date => format(date) === this.props.selected) !== -1)[0];
             }
             else {
-                let now = moment();
+                let now: moment.Moment = moment();
                 row = genCalendar(now.get('year'), now.get('month') + 1)
                     .filter(row => row.findIndex(date => date.month === now.get('month') + 1 && date.date === now.get('date')) !== -1)[0];
             }
 
             return (
                 <View style={CalendarStyles.rowContainer}>
-                    {row.map(date => {
+                    {row.map((date: CalendarDateType) => {
                         return (
                             <DateBtn
                                 key={keygen()}
@@ -96,7 +87,7 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
                 </TouchableOpacity>
                 <View style={CalendarStyles.tableContainer}>
                     <View style={CalendarStyles.rowContainer}>
-                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(label => {
+                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((label: string) => {
                             return (
                                 <View key={keygen()} style={CalendarStyles.btnContainer}>
                                     <Text style={{ ...CalendarStyles.btnText, color: theme.accent }}>
@@ -106,10 +97,10 @@ export default class Calendar extends React.Component<CalendarProps, CalendarSta
                             );
                         })}
                     </View>
-                    {grid.map(row => {
+                    {grid.map((row: Array<CalendarDateType>) => {
                         return (
                             <View key={keygen()} style={CalendarStyles.rowContainer}>
-                                {row.map(date => {
+                                {row.map((date: CalendarDateType) => {
                                     return (
                                         <DateBtn
                                             key={keygen()}

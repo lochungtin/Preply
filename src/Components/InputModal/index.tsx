@@ -18,7 +18,7 @@ import { tags } from '../../data/tags';
 import { repeats } from '../../data/repeats';
 import { addTodo, editTodo } from '../../redux/action';
 import { store } from '../../redux/store';
-import { TodoType } from '../../types';
+import { RepeatType, TagType, TodoType } from '../../types';
 import { keygen } from '../../utils/keygen';
 
 interface ModalProps {
@@ -51,7 +51,7 @@ export default class InputModal extends React.Component<ModalProps> {
 
     refresh = () => {
         if (this.props.record)
-            this.setState({...this.props.record, edited: false});
+            this.setState({ ...this.props.record, edited: false });
         else
             this.setState(this.defaultState);
     }
@@ -166,7 +166,7 @@ export default class InputModal extends React.Component<ModalProps> {
                         </InputRow>}
                         <InputRow iconName='sync'>
                             <MultiSelectModal
-                                items={repeats.map(rep => {
+                                items={repeats.map((rep: RepeatType) => {
                                     return (
                                         <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                             {rep.name}
@@ -202,7 +202,7 @@ export default class InputModal extends React.Component<ModalProps> {
                                 Tag
                             </Text>
                             <MultiSelectModal
-                                items={tags.map(tag => {
+                                items={tags.map((tag: TagType) => {
                                     return (
                                         <Tag {...tag} width={150} />
                                     );

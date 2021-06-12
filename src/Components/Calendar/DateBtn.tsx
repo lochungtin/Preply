@@ -16,9 +16,11 @@ interface BtnProps {
 }
 
 export default class DateBtn extends React.Component<BtnProps> {
+
     render() {
         let color: string = this.props.active ? theme.textC : theme.dTextC;
         let formattedDate = format(this.props.date);
+
         if (moment().format('DD-MM-YYYY') === formattedDate)
             color = theme.accent;
 

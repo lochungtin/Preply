@@ -31,7 +31,7 @@ export default class RecordInputModal extends React.Component<ModalProps> {
                     style={{ alignItems: 'center', display: 'flex' }}
                 >
                     <View style={{ ...MSMStyles.rootContainer, backgroundColor: theme.backgroundC }}>
-                        {this.props.items.map((item, index) => {
+                        {this.props.items.map((item: any, index: number) => {
                             return (
                                 <View key={keygen()} style={MSMStyles.itemContainer}>
                                     <Icon

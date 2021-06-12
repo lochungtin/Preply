@@ -19,8 +19,8 @@ interface ClockProps {
 export default class Clock extends React.Component<ClockProps> {
 
     render() {
-        const r = this.props.size / 2;
-        const d = Math.sqrt(3) / 2 * r;
+        let r: number = this.props.size / 2;
+        let d: number = Math.sqrt(3) / 2 * r;
 
         let grid: Array<ClockConfigType> = [
             { height: 0, values: [this.props.data[0]], width: 0 },
@@ -34,7 +34,7 @@ export default class Clock extends React.Component<ClockProps> {
 
         return (
             <View style={{ ...ClockStyles.rootContainer, height: this.props.size, width: this.props.size }}>
-                {grid.map((data, index) => {
+                {grid.map((data: ClockConfigType, index: number) => {
                     return (
                         <View key={keygen()}>
                             <View style={{ height: data.height }} />

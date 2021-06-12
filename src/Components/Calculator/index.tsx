@@ -9,14 +9,14 @@ import { CalculatorStyles } from './styles';
 
 import { NumpadConfigType } from '../../types';
 
-interface FunctionProps {
+interface CalculatorProps {
 	disable?: boolean,
 	onClear: () => void,
 	onResult: (result: number) => void,
 	onUpdate: (equation: string) => void,
 }
 
-export default class Calculator extends React.Component<FunctionProps> {
+export default class Calculator extends React.Component<CalculatorProps> {
 
 	state = {
 		equation: '',
@@ -144,7 +144,7 @@ export default class Calculator extends React.Component<FunctionProps> {
 	}
 
 	render() {
-		const keypos: Array<Array<NumpadConfigType>> = [
+		let keypos: Array<Array<NumpadConfigType>> = [
 			[
 				{ name: 'alpha-m', onPress: this.onPressMem },
 				{ name: 'code-parentheses', onPress: this.onPressParentheses },
@@ -179,10 +179,10 @@ export default class Calculator extends React.Component<FunctionProps> {
 
 		return (
 			<View style={CalculatorStyles.numpadContainer}>
-				{keypos.map((row, index) => {
+				{keypos.map((row: Array<NumpadConfigType>, index: number) => {
 					return (
 						<View key={index} style={CalculatorStyles.rowContainer}>
-							{row.map(key => {
+							{row.map((key: NumpadConfigType) => {
 								let color: string = theme.textC;;
 
 								if (this.props.disable) {
