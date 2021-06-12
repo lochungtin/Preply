@@ -10,6 +10,7 @@ import SeparatorLine from '../Components/SeparatorLine';
 import AccountScreen from '../screens/AccountScreen';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import ConverterScreen from '../screens/ConverterScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import NoteEditScreen from '../screens/NoteEditScreen';
 import NoteScreen from '../screens/NoteScreen';
 import SignInScreen from '../screens/SignInScreen';
@@ -108,6 +109,7 @@ class AppNav extends React.Component<ReduxProps> {
 				<>
 					<AuthNav.Screen component={SignInScreen} name='signin' />
 					<AuthNav.Screen component={SignUpScreen} name='signUp' />
+					<AuthNav.Screen component={ForgotPasswordScreen} name='pswdReset' />
 				</> :
 				<>
 					<AuthNav.Screen component={AccountScreen} name='account' />

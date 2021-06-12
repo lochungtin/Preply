@@ -26,7 +26,7 @@ export const AccountScreenStyles = StyleSheet.create({
         marginBottom: 40,
         width: screenWidth * 0.7,
     },
-    signInBtn: {
+    confirmBtn: {
         alignItems: 'center',
         borderRadius: 15,
         borderWidth: 2,
@@ -43,7 +43,7 @@ export const AccountScreenStyles = StyleSheet.create({
         marginTop: 100,
         width: screenWidth * 0.6,
     },
-    signUpHeader: {
+    header: {
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'row',
@@ -54,6 +54,11 @@ export const AccountScreenStyles = StyleSheet.create({
     signUpLabel: {
         fontSize: 22,
     },
+    resetPromptText: {
+        marginVertical: 25,
+        textAlign: 'justify',
+        width: screenWidth * 0.6,
+    }
 });
 
 export const CalculatorScreenStyles = StyleSheet.create({

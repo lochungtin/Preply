@@ -7,7 +7,7 @@ import AccountTextInput from '../Components/AccountTextInput';
 import Logo from '../Components/Logo';
 
 import { theme } from '../data/colors';
-import { AccountScreenStyles, ScreenStyles, screenWidth } from './styles';
+import { AccountScreenStyles, ScreenStyles } from './styles';
 
 import { signIn } from '../firebase/auth';
 
@@ -30,7 +30,7 @@ export default class Screen extends React.Component<NavProps> {
 	render() {
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
-				<View style={AccountScreenStyles.signUpHeader}>
+				<View style={AccountScreenStyles.header}>
 					<TouchableOpacity onPress={() => this.props.navigation.goBack()}>
 						<Icon
 							color={theme.textC}
@@ -65,7 +65,7 @@ export default class Screen extends React.Component<NavProps> {
 					placeholder='Reenter password'
 				/>
 				<View style={{ height: 100 }} />
-				<TouchableOpacity style={{ ...AccountScreenStyles.signInBtn, borderColor: theme.accent }}>
+				<TouchableOpacity style={{ ...AccountScreenStyles.confirmBtn, borderColor: theme.accent }}>
 					<Text style={{ color: theme.textC }}>
 						Sign Up Now
 					</Text>

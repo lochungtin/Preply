@@ -1,13 +1,13 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import AccountTextInput from '../Components/AccountTextInput';
 
+import AccountTextInput from '../Components/AccountTextInput';
 import Header from '../Components/Header';
 import Logo from '../Components/Logo';
 
 import { theme } from '../data/colors';
-import { AccountScreenStyles, ScreenStyles, screenWidth } from './styles';
+import { AccountScreenStyles, ScreenStyles } from './styles';
 
 import { signIn } from '../firebase/auth';
 
@@ -45,13 +45,13 @@ export default class Screen extends React.Component<NavProps> {
 					placeholder='Password'
 				/>
 				<View style={AccountScreenStyles.forgotPswdContainer}>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => this.props.navigation.navigate('pswdReset')}>
 						<Text style={{ color: theme.textC }}>
 							Forgot Password?
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<TouchableOpacity style={{ ...AccountScreenStyles.signInBtn, borderColor: theme.accent }}>
+				<TouchableOpacity style={{ ...AccountScreenStyles.confirmBtn, borderColor: theme.accent }}>
 					<Text style={{ color: theme.textC }}>
 						Sign In
 					</Text>
