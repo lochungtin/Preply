@@ -21,4 +21,4 @@ export const repeats: Array<RepeatType> = [
         key: 'rep:4',
         name: 'Yearly',
     },
-]
+];

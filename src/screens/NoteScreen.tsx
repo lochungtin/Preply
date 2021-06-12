@@ -18,7 +18,7 @@ import { ScreenStyles, screenWidth } from './styles';
 import { tags } from '../data/tags';
 import { addNote, deleteNote } from '../redux/action';
 import { store } from '../redux/store';
-import { NoteType } from '../types';
+import { NoteType, TagType } from '../types';
 import { keygen } from '../utils/keygen';
 
 interface NavProps {
@@ -39,7 +39,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	createEmptyNote = () => {
-		let now = moment().format('DD-MM-YYYY');
+		let now: string = moment().format('DD-MM-YYYY');
 		store.dispatch(addNote({
 			content: '',
 			date: {
@@ -89,7 +89,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<SeparatorLine width={screenWidth * 0.95} style={{ marginTop: 5 }} />
 				<ScrollView>
 					<View style={ScreenStyles.scrollView}>
-						{notes.map(note => {
+						{notes.map((note: NoteType) => {
 							return (
 								<Swipeable key={note.key}
 									renderLeftActions={() => <View style={{ width: screenWidth }} />}
@@ -109,7 +109,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				</ScrollView>
 				<MultiSelectModal
 					items={[
-						...tags.map(tag => <Tag {...tag} width={150} />),
+						...tags.map((tag: TagType) => <Tag {...tag} width={150} />),
 						<Tag color={theme.textC} key={`tag:${tags.length}`} name='No Filter' width={150} />
 					]}
 					onClose={() => this.setState({ openFilterPicker: false })}

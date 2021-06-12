@@ -19,7 +19,7 @@ import { ScreenStyles, screenWidth } from './styles';
 import { tags } from '../data/tags';
 import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
-import { TodoType } from '../types';
+import { TagType, TodoType } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -98,7 +98,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				<SeparatorLine width={screenWidth * 0.95} />
 				<ScrollView>
 					<View style={ScreenStyles.scrollView}>
-						{todos.map(todo => {
+						{todos.map((todo: TodoType) => {
 							return (
 								<Swipeable key={todo.key}
 									renderLeftActions={() => <View style={{ width: screenWidth }} />}
@@ -121,7 +121,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				/>
 				<MultiSelectModal
 					items={[
-						...tags.map(tag => <Tag {...tag} width={150} />),
+						...tags.map((tag: TagType) => <Tag {...tag} width={150} />),
 						<Tag color={theme.textC} key={`tag:${tags.length}`} name='No Filter' width={150} />
 					]}
 					onClose={() => this.setState({ openFilterPicker: false })}

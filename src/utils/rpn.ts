@@ -96,7 +96,7 @@ export const compute = (equation: Array<string>): number => evaluate(convert(equ
 export const validate = (splt: Array<string>): boolean => {
     let stack: Array<string> = [];
 
-    for (let i = 0; i < splt.length; ++i) {
+    for (let i: number = 0; i < splt.length; ++i) {
         let token: string = splt[i];
         if (token === '(')
             stack.push('(');

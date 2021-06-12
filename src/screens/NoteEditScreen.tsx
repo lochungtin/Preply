@@ -15,7 +15,7 @@ import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
 import { tags } from '../data/tags';
 import { editNote } from '../redux/action';
 import { store } from '../redux/store';
-import { NoteType } from '../types';
+import { NoteType, TagType } from '../types';
 
 
 interface NavProps {
@@ -38,7 +38,6 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	save = () => {
-		console.log(this.props.route.params.key);
 		store.dispatch(editNote({
 			content: this.state.content,
 			date: {
@@ -79,7 +78,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				</View>
 				<View style={NoteScreenStyles.infoRow}>
 					<MultiSelectModal
-						items={tags.map(tag => {
+						items={tags.map((tag: TagType) => {
 							return (
 								<Tag {...tag} width={150} />
 							);

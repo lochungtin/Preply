@@ -40,9 +40,9 @@ export const genCalendar = (year: number, month: number): Array<Array<CalendarDa
 
     let grid: Array<Array<CalendarDateType>> = [];
 
-    for (let i = 0; i < cellCount; ++i) {
-        let row = Math.floor(i / 7);
-        let col = i % 7;
+    for (let i: number = 0; i < cellCount; ++i) {
+        let row: number = Math.floor(i / 7);
+        let col: number = i % 7;
 
         let obj: CalendarDateType;
         if (row == 0 && i < startDay)

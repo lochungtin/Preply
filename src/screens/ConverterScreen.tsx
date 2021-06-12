@@ -57,7 +57,7 @@ export default class Screen extends React.Component<NavProps> {
 									{this.state.input}
 								</Text>
 								<MultiSelectModal
-									items={this.types[this.state.type].labels.map((label, index) => {
+									items={this.types[this.state.type].labels.map((label: string, index: number) => {
 										return (
 											<Text style={{ ...ConverterScreenStyles.selectionText, color: this.state.from === index ? theme.accent : theme.textC }}>
 												{label}
@@ -86,7 +86,7 @@ export default class Screen extends React.Component<NavProps> {
 									{this.types[this.state.type].matrix[this.state.from][this.state.to](this.state.input).toFixed(2)}
 								</Text>
 								<MultiSelectModal
-									items={this.types[this.state.type].labels.map((label, index) => {
+									items={this.types[this.state.type].labels.map((label: string, index: number) => {
 										return (
 											<Text style={{ ...ConverterScreenStyles.selectionText, color: this.state.to === index ? theme.accent : theme.textC }}>
 												{label}
@@ -107,7 +107,7 @@ export default class Screen extends React.Component<NavProps> {
 							</View>
 						</View>
 						<MultiSelectModal
-							items={this.types.map((type, index) => {
+							items={this.types.map((type: UnitMatrixType, index: number) => {
 								return (
 									<Text style={{ ...ConverterScreenStyles.selectionText, color: this.state.type === index ? theme.accent : theme.textC }}>
 										{type.typeName}
