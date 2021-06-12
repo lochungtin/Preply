@@ -92,7 +92,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 							<Tag {...(tags.find(tag => tag.key === this.state.tagKey) || tags[0])} />
 						</TouchableOpacity>
 					</MultiSelectModal>
-					<Text style={{ ...NoteScreenStyles.dateText, color: theme.dTextC }}>
+					<Text style={{ color: theme.dTextC }}>
 						{`Last Modified: ${this.props.route.params.date.modified}`}
 					</Text>
 				</View>

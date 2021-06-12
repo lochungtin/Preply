@@ -14,6 +14,37 @@ export const ScreenStyles = StyleSheet.create({
     },
 });
 
+export const AccountScreenStyles = StyleSheet.create({
+    logoWrapper: {
+        margin: 20,
+    },
+    forgotPswdContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginBottom: 40,
+        width: screenWidth * 0.7,
+    },
+    signInBtn: {
+        alignItems: 'center',
+        borderRadius: 15,
+        borderWidth: 2,
+        display: 'flex',
+        height: 40,
+        justifyContent: 'center',
+        width: screenWidth * 0.7,
+    },
+    signUpTextContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 100,
+        width: screenWidth * 0.6,
+    },
+});
+
 export const CalculatorScreenStyles = StyleSheet.create({
     displayContainer: {
         alignItems: 'center',
@@ -72,7 +103,6 @@ export const ConverterScreenStyles = StyleSheet.create({
     },
     selectionText: {
         textAlign: 'center',
-        fontSize: 15,
         minWidth: 25,
     },
     selectionLabel: {
@@ -132,12 +162,8 @@ export const NoteScreenStyles = StyleSheet.create({
         justifyContent: 'space-between',
         width: screenWidth * 0.9,
     },
-    dateText: {
-        fontSize: 15,
-    },
     textInput: {
         flex: 1,
-        fontSize: 15,
         marginVertical: 10,
         padding: 0,
         textAlignVertical: 'top',
