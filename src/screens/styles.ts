@@ -61,12 +61,53 @@ export const CalculatorScreenStyles = StyleSheet.create({
 });
 
 export const ConverterScreenStyles = StyleSheet.create({
+    typeBubble: {
+        alignItems: 'center',
+        borderRadius: 15,
+        borderWidth: 2,
+        display: 'flex',
+        height: 40,
+        justifyContent: 'center',
+        width: screenWidth * 0.8,
+    },
     selectionText: {
+        textAlign: 'center',
         fontSize: 15,
+        minWidth: 25,
     },
     selectionLabel: {
         fontSize: 17,
     },
+    inputRows: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginTop: 30,
+    },
+    inputRow: {
+        alignItems: 'center',
+        borderBottomWidth: 2,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 15,
+        padding: 10,
+        paddingLeft: 20,
+        width: screenWidth * 0.8,
+    },
+    unitBubble: {
+        alignItems: 'center',
+        borderRadius: 15,
+        borderWidth: 2,
+        display: 'flex',
+        height: 40,
+        justifyContent: 'center',
+        width: 65,
+    },
+    valueText: {
+        fontSize: 22,
+    }
 });
 
 export const NoteScreenStyles = StyleSheet.create({

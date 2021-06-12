@@ -1,6 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Calculator from '../Components/Calculator';
 import Header from '../Components/Header';
@@ -40,9 +41,7 @@ export default class Screen extends React.Component<NavProps> {
 		to: this.types[type].default.to,
 	});
 
-	onClear = () => this.setState({ result: 0 });
-
-	onResult = (input: number) => this.setState({ input });
+	onClear = () => this.setState({ input: 0 });
 
 	render() {
 		return (
@@ -50,29 +49,11 @@ export default class Screen extends React.Component<NavProps> {
 				<Header nav={this.props.navigation} title={"Unit Converter"} />
 				<View style={CalculatorScreenStyles.rootContainer}>
 					<View style={CalculatorScreenStyles.displayContainer}>
-						<View>
-							<MultiSelectModal
-								items={this.types.map((type, index) => {
-									return (
-										<Text style={{ ...ConverterScreenStyles.selectionText, color: this.state.type === index ? theme.accent : theme.textC }}>
-											{type.typeName}
-										</Text>
-									);
-								})}
-								onClose={() => this.setState({ openTypePicker: false })}
-								onItemPress={this.onChangeType}
-								open={this.state.openTypePicker}
-								selected={this.state.type}
-							>
-								<TouchableOpacity onPress={() => this.setState({ openTypePicker: true })}>
-									<Text style={{ ...ConverterScreenStyles.selectionLabel, color: theme.textC }}>
-										{this.types[this.state.type].typeName}
-									</Text>
-								</TouchableOpacity>
-							</MultiSelectModal>
-						</View>
-						<View>
-							<View>
+						<View style={ConverterScreenStyles.inputRows}>
+							<View style={{ ...ConverterScreenStyles.inputRow, borderColor: theme.separatorLineC }}>
+								<Text style={{ ...ConverterScreenStyles.valueText, color: theme.textC }}>
+									{this.state.input}
+								</Text>
 								<MultiSelectModal
 									items={this.types[this.state.type].labels.map((label, index) => {
 										return (
@@ -86,14 +67,22 @@ export default class Screen extends React.Component<NavProps> {
 									open={this.state.openFromPicker}
 									selected={this.state.from}
 								>
-									<TouchableOpacity onPress={() => this.setState({ openFromPicker: true })}>
+									<TouchableOpacity style={{ ...ConverterScreenStyles.unitBubble, borderColor: theme.accent }} onPress={() => this.setState({ openFromPicker: true })}>
 										<Text style={{ ...ConverterScreenStyles.selectionLabel, color: theme.textC }}>
 											{this.types[this.state.type].labels[this.state.from]}
 										</Text>
 									</TouchableOpacity>
 								</MultiSelectModal>
 							</View>
-							<View>
+							<Icon
+								color={theme.accent}
+								name='chevron-triple-down'
+								size={40}
+							/>
+							<View style={{ ...ConverterScreenStyles.inputRow, borderColor: theme.separatorLineC }}>
+								<Text style={{ ...ConverterScreenStyles.valueText, color: theme.textC }}>
+									{this.types[this.state.type].matrix[this.state.from][this.state.to](this.state.input).toFixed(2)}
+								</Text>
 								<MultiSelectModal
 									items={this.types[this.state.type].labels.map((label, index) => {
 										return (
@@ -107,7 +96,7 @@ export default class Screen extends React.Component<NavProps> {
 									open={this.state.openToPicker}
 									selected={this.state.to}
 								>
-									<TouchableOpacity onPress={() => this.setState({ openToPicker: true })}>
+									<TouchableOpacity style={{ ...ConverterScreenStyles.unitBubble, borderColor: theme.accent }} onPress={() => this.setState({ openToPicker: true })}>
 										<Text style={{ ...ConverterScreenStyles.selectionLabel, color: theme.textC }}>
 											{this.types[this.state.type].labels[this.state.to]}
 										</Text>
@@ -115,13 +104,32 @@ export default class Screen extends React.Component<NavProps> {
 								</MultiSelectModal>
 							</View>
 						</View>
+						<MultiSelectModal
+							items={this.types.map((type, index) => {
+								return (
+									<Text style={{ ...ConverterScreenStyles.selectionText, color: this.state.type === index ? theme.accent : theme.textC }}>
+										{type.typeName}
+									</Text>
+								);
+							})}
+							onClose={() => this.setState({ openTypePicker: false })}
+							onItemPress={this.onChangeType}
+							open={this.state.openTypePicker}
+							selected={this.state.type}
+						>
+							<TouchableOpacity style={{ ...ConverterScreenStyles.typeBubble, borderColor: theme.accent }} onPress={() => this.setState({ openTypePicker: true })}>
+								<Text style={{ ...ConverterScreenStyles.selectionLabel, color: theme.textC }}>
+									{this.types[this.state.type].typeName}
+								</Text>
+							</TouchableOpacity>
+						</MultiSelectModal>
 						<SeparatorLine width={screenWidth * 0.9} />
 					</View>
 					<Calculator
 						disable
 						onClear={this.onClear}
-						onResult={this.onResult}
-						onUpdate={eq => { }}
+						onResult={res => { }}
+						onUpdate={input => this.setState({ input })}
 					/>
 				</View>
 			</View>
