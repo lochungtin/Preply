@@ -85,3 +85,9 @@ export interface ClockConfigType {
     values: Array<string>,
     width: number
 }
+
+// util types
+// rpn prec map type
+export interface PrecMapType {
+    [index: string]: number
+}

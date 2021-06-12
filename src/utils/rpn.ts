@@ -1,6 +1,4 @@
-interface PrecMapType {
-    [index: string]: number
-}
+import { PrecMapType } from "../types";
 
 const precMap: PrecMapType = {
     '+': 1,
