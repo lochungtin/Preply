@@ -1,7 +1,6 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import { connect } from 'react-redux';
 import AccountTextInput from '../Components/AccountTextInput';
 
 import Header from '../Components/Header';
@@ -16,14 +15,17 @@ interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
-interface ReduxProps {
+export default class Screen extends React.Component<NavProps> {
 
-}
-
-class Screen extends React.Component<NavProps & ReduxProps> {
+	state = {
+		email: '',
+		pswd: '',
+	}
 
 	signIn = () => {
-		signIn('lochungtin@gmail.com', 'killme').then(res => console.log(res.user?.email, res.user?.uid)).catch(err => console.log(err));
+		signIn(this.state.email, this.state.pswd)
+			.then(res => console.log(res.user?.email, res.user?.uid))
+			.catch(err => console.log(err));
 	}
 
 	render() {
@@ -34,12 +36,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					<Logo size={200} />
 				</View>
 				<AccountTextInput
-					onChangeText={text => console.log(text)}
+					onChangeText={email => this.setState({ email })}
 					placeholder='Email'
 				/>
 				<AccountTextInput
 					hidden
-					onChangeText={text => console.log(text)}
+					onChangeText={pswd => this.setState({ pswd })}
 					placeholder='Password'
 				/>
 				<View style={AccountScreenStyles.forgotPswdContainer}>
@@ -58,7 +60,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					<Text style={{ color: theme.textC }}>
 						Don't have an account?
 					</Text>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => this.props.navigation.navigate('signUp')}>
 						<Text style={{ color: theme.accent }}>
 							Sign Up
 						</Text>
@@ -68,9 +70,3 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		);
 	}
 }
-
-const mapStateToProps = (state: ReduxProps) => ({
-
-});
-
-export default connect(mapStateToProps)(Screen);

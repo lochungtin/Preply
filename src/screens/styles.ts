@@ -43,6 +43,17 @@ export const AccountScreenStyles = StyleSheet.create({
         marginTop: 100,
         width: screenWidth * 0.6,
     },
+    signUpHeader: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 20,
+        width: screenWidth * 0.9,
+    },
+    signUpLabel: {
+        fontSize: 22,
+    },
 });
 
 export const CalculatorScreenStyles = StyleSheet.create({
