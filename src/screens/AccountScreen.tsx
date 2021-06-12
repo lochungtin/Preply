@@ -13,13 +13,14 @@ interface NavProps {
 }
 
 interface ReduxProps {
-	
+
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
+
 		return (
-			<View style={{...ScreenStyles.screenD, backgroundColor: theme.backgroundC}}>
+			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title={"Accounts"} />
 			</View>
 		);
@@ -27,7 +28,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
-    
+
 });
 
 export default connect(mapStateToProps)(Screen);

@@ -91,3 +91,10 @@ export interface ClockConfigType {
 export interface PrecMapType {
     [index: string]: number
 }
+
+// account types
+export interface AccountType {
+    email: string,
+    uid: string,
+    useGoogle: boolean,
+}

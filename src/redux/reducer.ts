@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO } from './action';
+import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, SIGNIN, SIGNOUT } from './action';
 
 import { ActionType, NoteType, TodoType } from '../types';
 import { deleteByKey, replaceByKey } from '../utils/arrayFn';
@@ -42,7 +42,19 @@ const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
     }
 }
 
+const updateAccount = (account = null, action: ActionType) => {
+    switch(action.type) {
+        case SIGNIN:
+            return action.payload;
+        case SIGNOUT:
+            return null;
+        default:
+            return account;
+    }
+}
+
 export default combineReducers({
+    account: updateAccount,
     notes: updateNotes,
     todos: updateTodos,
 });
