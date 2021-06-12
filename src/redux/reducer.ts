@@ -8,7 +8,6 @@ import { deleteByKey, replaceByKey } from '../utils/arrayFn';
 
 const defaultNoteState: Array<NoteType> = [];
 const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
-    console.log(action.payload);
     let update = [...noteState];
     switch (action.type) {
         case ADD_NOTE:
