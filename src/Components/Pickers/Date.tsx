@@ -2,10 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import Modal from 'react-native-modal';
 
+import Calendar from '../Calendar';
+
 import {theme} from '../../data/colors';
 import { PickerStyles } from './styles';
-
-import Calendar from '../Calendar';
 
 interface DatePickerProps {
     children: any,

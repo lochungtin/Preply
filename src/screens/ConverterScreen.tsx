@@ -9,9 +9,11 @@ import MultiSelectModal from '../Components/MultiSelectModal';
 import SeparatorLine from '../Components/SeparatorLine';
 
 import { theme } from '../data/colors';
+import { CalculatorScreenStyles, ConverterScreenStyles, ScreenStyles, screenWidth } from './styles';
+
 import { distanceMatrix, temperatureMatrix, weightMatrix } from '../data/units';
 import { UnitMatrixType } from '../types';
-import { CalculatorScreenStyles, ConverterScreenStyles, ScreenStyles, screenWidth } from './styles';
+
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -129,7 +131,7 @@ export default class Screen extends React.Component<NavProps> {
 						disable
 						onClear={this.onClear}
 						onResult={res => { }}
-						onUpdate={input => this.setState({ input })}
+						onUpdate={input => this.setState({ input: input || 0 })}
 					/>
 				</View>
 			</View>

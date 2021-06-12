@@ -2,8 +2,9 @@ import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { theme } from '../../data/colors';
 import HandlerBtn from './HandlerBtn';
+
+import { theme } from '../../data/colors';
 import { RecordHandlerStyles } from './styles';
 
 interface HandlerProps {

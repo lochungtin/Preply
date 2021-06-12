@@ -1,11 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, Text, View, Switch } from 'react-native';
+import { Switch, TouchableOpacity, Text, View } from 'react-native';
 import Modal from 'react-native-modal';
+
+import Clock from '../Clock';
 
 import { theme } from '../../data/colors';
 import { PickerStyles } from './styles';
-
-import Clock from '../Clock';
 
 interface TimePickerProps {
     children: any,

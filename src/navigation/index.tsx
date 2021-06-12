@@ -1,4 +1,4 @@
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerNavigationProp } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
@@ -9,8 +9,8 @@ import SeparatorLine from '../Components/SeparatorLine';
 import AccountScreen from '../screens/AccountScreen';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import ConverterScreen from '../screens/ConverterScreen';
-import NoteScreen from '../screens/NoteScreen';
 import NoteEditScreen from '../screens/NoteEditScreen';
+import NoteScreen from '../screens/NoteScreen';
 import TodoScreen from '../screens/TodoScreen';
 
 import { theme } from '../data/colors';

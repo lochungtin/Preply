@@ -13,8 +13,8 @@ import { theme } from '../data/colors';
 import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
-import { store } from '../redux/store';
 import { editNote } from '../redux/action';
+import { store } from '../redux/store';
 import { NoteType } from '../types';
 
 

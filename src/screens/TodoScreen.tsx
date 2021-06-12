@@ -16,10 +16,10 @@ import Tag from '../Components/Tag';
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
+import { tags } from '../data/tags';
 import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
 import { TodoType } from '../types';
-import { tags } from '../data/tags';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,

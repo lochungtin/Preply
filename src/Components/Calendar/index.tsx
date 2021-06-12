@@ -8,9 +8,9 @@ import DateBtn from './DateBtn';
 import { theme } from '../../data/colors';
 import { CalendarStyles } from './styles';
 
+import { CalendarDateType } from '../../types';
 import { format, genCalendar, getName, getNextMonth, getPrevMonth } from '../../utils/date';
 import { keygen } from '../../utils/keygen';
-import { CalendarDateType } from '../../types';
 
 interface CalendarProps {
     expand: boolean,

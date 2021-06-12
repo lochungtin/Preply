@@ -38,7 +38,7 @@ export default class Screen extends React.Component<NavProps> {
 							</Text>
 						</View>
 						<View style={CalculatorScreenStyles.resultContainer}>
-							<Text style={{ ...CalculatorScreenStyles.result, color: theme.textC }}>
+							<Text style={{ ...CalculatorScreenStyles.result, color: theme.accent }}>
 								{this.state.result}
 							</Text>
 						</View>

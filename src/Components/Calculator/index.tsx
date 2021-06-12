@@ -4,10 +4,10 @@ import { View } from 'react-native';
 import { compute, isOp, isPa, tokenize, validate } from '../../utils/rpn';
 import NumpadBtn from './NumpadBtn';
 
+import { theme } from '../../data/colors';
 import { CalculatorStyles } from './styles';
 
 import { NumpadConfigType } from '../../types';
-import { theme } from '../../data/colors';
 
 interface FunctionProps {
 	disable?: boolean,
