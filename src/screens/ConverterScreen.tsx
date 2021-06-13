@@ -3,10 +3,10 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import Calculator from '../components/Calculator';
-import Header from '../components/Header';
-import MultiSelectModal from '../components/MultiSelectModal';
-import SeparatorLine from '../components/SeparatorLine';
+import Calculator from '../Components/Calculator';
+import Header from '../Components/Header';
+import MultiSelectModal from '../Components/MultiSelectModal';
+import SeparatorLine from '../Components/SeparatorLine';
 
 import { theme } from '../data/colors';
 import { CalculatorScreenStyles, ConverterScreenStyles, ScreenStyles, screenWidth } from './styles';

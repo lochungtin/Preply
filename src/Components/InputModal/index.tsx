@@ -57,12 +57,17 @@ export default class InputModal extends React.Component<ModalProps> {
     }
 
     save = () => {
+        let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
         if (this.props.record)
             store.dispatch(editTodo({
                 allDay: this.state.allDay,
                 content: this.state.content,
                 date: this.state.date,
                 key: this.props.record.key,
+                meta: {
+                    creation: this.props.record.meta.creation,
+                    modified: now,
+                },
                 notif: this.state.notif,
                 repeatKey: this.state.repeatKey,
                 tagKey: this.state.tagKey,
@@ -75,6 +80,10 @@ export default class InputModal extends React.Component<ModalProps> {
                 content: this.state.content,
                 date: this.state.date,
                 key: keygen(),
+                meta: {
+                    creation: now,
+                    modified: now,
+                },
                 notif: this.state.notif,
                 repeatKey: this.state.repeatKey,
                 tagKey: this.state.tagKey,

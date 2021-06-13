@@ -5,9 +5,9 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import MultiSelectModal from '../components/MultiSelectModal';
-import SeparatorLine from '../components/SeparatorLine';
-import Tag from '../components/Tag';
+import MultiSelectModal from '../Components/MultiSelectModal';
+import SeparatorLine from '../Components/SeparatorLine';
+import Tag from '../Components/Tag';
 
 import { theme } from '../data/colors';
 import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
@@ -40,8 +40,8 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	save = () => {
 		store.dispatch(editNote({
 			content: this.state.content,
-			date: {
-				creation: this.props.route.params.date.creation,
+			meta: {
+				creation: this.props.route.params.meta.creation,
 				modified: moment().format('DD-MM-YYYY'),
 			},
 			key: this.props.route.params.key,
@@ -93,7 +93,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 						</TouchableOpacity>
 					</MultiSelectModal>
 					<Text style={{ color: theme.dTextC }}>
-						{`Last Modified: ${this.props.route.params.date.modified}`}
+						{`Last Modified: ${this.props.route.params.meta.modified}`}
 					</Text>
 				</View>
 				<SeparatorLine width={screenWidth * 0.95} />

@@ -4,14 +4,14 @@ import { ScrollView, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { connect } from 'react-redux';
 
-import Calendar from '../components/Calendar';
-import Header from '../components/Header';
-import InputModal from '../components/InputModal';
-import MultiSelectModal from '../components/MultiSelectModal';
-import RecordHandler from '../components/RecordHandler';
-import RecordItem from '../components/RecordItem';
-import SeparatorLine from '../components/SeparatorLine';
-import Tag from '../components/Tag';
+import Calendar from '../Components/Calendar';
+import Header from '../Components/Header';
+import InputModal from '../Components/InputModal';
+import MultiSelectModal from '../Components/MultiSelectModal';
+import RecordHandler from '../Components/RecordHandler';
+import RecordItem from '../Components/RecordItem';
+import SeparatorLine from '../Components/SeparatorLine';
+import Tag from '../Components/Tag';
 
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
@@ -19,14 +19,14 @@ import { ScreenStyles, screenWidth } from './styles';
 import { tags } from '../data/tags';
 import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
-import { TagType, TodoType } from '../types';
+import { TagType, TodoMap, TodoType } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
 interface ReduxProps {
-	todos: Array<TodoType>,
+	todos: TodoMap,
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
@@ -62,8 +62,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	render() {
-
-		let todos: Array<TodoType> = [...this.props.todos];
+		let todos: Array<TodoType> = Object.keys(this.props.todos).map(key => this.props.todos[key]);
 
 		if (this.state.sorting)
 			todos.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)));

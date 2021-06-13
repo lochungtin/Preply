@@ -3,7 +3,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import Header from '../components/Header';
+import Header from '../Components/Header';
 
 import { theme } from '../data/colors';
 import { signOutRedux } from '../redux/action';
