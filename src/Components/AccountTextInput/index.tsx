@@ -25,8 +25,9 @@ export default class AccountTextInput extends React.Component<InputProps> {
 
     render() {
         return (
-            <View style={{...AccountTextInputStyles.rootContainer,  borderColor: theme.separatorLineC }}>
+            <View style={{ ...AccountTextInputStyles.rootContainer, borderColor: theme.separatorLineC }}>
                 <TextInput
+                    autoCapitalize={'none'}
                     onChangeText={this.props.onChangeText}
                     placeholder={this.props.placeholder}
                     placeholderTextColor={theme.dTextC}

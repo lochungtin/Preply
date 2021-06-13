@@ -1,6 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 
 import AccountTextInput from '../Components/AccountTextInput';
 import Header from '../Components/Header';
@@ -10,6 +11,8 @@ import { theme } from '../data/colors';
 import { AccountScreenStyles, ScreenStyles } from './styles';
 
 import { signIn } from '../firebase/auth';
+import { store } from '../redux/store';
+import { signInRedux } from '../redux/action';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -24,8 +27,38 @@ export default class Screen extends React.Component<NavProps> {
 
 	signIn = () => {
 		signIn(this.state.email, this.state.pswd)
-			.then(res => console.log(res.user?.email, res.user?.uid))
-			.catch(err => console.log(err));
+			.then(res => {
+				this.props.navigation.navigate('auth');
+				store.dispatch(signInRedux({
+					email: res.user?.email || '',
+					uid: res.user?.uid || '',
+					useGoogle: false,
+				}));
+				showMessage({
+					message: 'Login Successful',
+					type: 'success',
+				});
+			})
+			.catch(err => {
+				let message: string;
+
+				switch (err.code) {
+					case 'auth/invalid-email':
+						message = 'Invalid email provided';
+						break;
+					case 'auth/wrong-password':
+						message = 'Password entered is not correct';
+						break;
+					default:
+						message = err.toString();
+						break;
+				}
+
+				showMessage({
+					message,
+					type: 'danger',
+				});
+			});
 	}
 
 	render() {
@@ -51,7 +84,7 @@ export default class Screen extends React.Component<NavProps> {
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<TouchableOpacity style={{ ...AccountScreenStyles.confirmBtn, borderColor: theme.accent }}>
+				<TouchableOpacity onPress={this.signIn} style={{ ...AccountScreenStyles.confirmBtn, borderColor: theme.accent }}>
 					<Text style={{ color: theme.textC }}>
 						Sign In
 					</Text>

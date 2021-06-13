@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { StatusBar, Text, View } from 'react-native';
+import FlashMessage from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -93,7 +94,7 @@ class AppNav extends React.Component<ReduxProps> {
 				/>}
 				label="Account"
 				labelStyle={{ color: theme.textC }}
-				onPress={() => props.navigation.navigate('account')}
+				onPress={() => props.navigation.navigate('auth')}
 			/>
 		</DrawerContentScrollView>
 
@@ -105,19 +106,13 @@ class AppNav extends React.Component<ReduxProps> {
 
 	auth = () =>
 		<AuthNav.Navigator screenOptions={{ headerShown: false }}>
-			{this.props.account === null ?
-				<>
-					<AuthNav.Screen component={SignInScreen} name='signin' />
-					<AuthNav.Screen component={SignUpScreen} name='signUp' />
-					<AuthNav.Screen component={ForgotPasswordScreen} name='pswdReset' />
-				</> :
-				<>
-					<AuthNav.Screen component={AccountScreen} name='account' />
-				</>
-			}
-		</AuthNav.Navigator>
+			<AuthNav.Screen component={SignInScreen} name='signIn' />
+			<AuthNav.Screen component={SignUpScreen} name='signUp' />
+			<AuthNav.Screen component={ForgotPasswordScreen} name='pswdReset' />
+		</AuthNav.Navigator >
 
 	render() {
+		console.log(this.props.account === null)
 		return (
 			<NavigationContainer>
 				<StatusBar backgroundColor={theme.backgroundC} />
@@ -126,8 +121,9 @@ class AppNav extends React.Component<ReduxProps> {
 					<RootNav.Screen component={this.note} name='notes' />
 					<RootNav.Screen component={CalculatorScreen} name='calculator' />
 					<RootNav.Screen component={ConverterScreen} name='converter' />
-					<RootNav.Screen component={this.auth} name='account' />
+					<RootNav.Screen component={(this.props.account === null ? this.auth : AccountScreen)} name='auth' />
 				</RootNav.Navigator>
+				<FlashMessage position='top' />
 			</NavigationContainer>
 		);
 	}
