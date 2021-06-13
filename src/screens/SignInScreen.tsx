@@ -28,15 +28,15 @@ export default class Screen extends React.Component<NavProps> {
 	signIn = () => {
 		signIn(this.state.email, this.state.pswd)
 			.then(res => {
-				this.props.navigation.navigate('auth');
 				store.dispatch(signInRedux({
 					email: res.user?.email || '',
 					uid: res.user?.uid || '',
 					useGoogle: false,
 				}));
 				showMessage({
+					backgroundColor: theme.accent,
+					color: theme.modalBgC,
 					message: 'Login Successful',
-					type: 'success',
 				});
 			})
 			.catch(err => {
@@ -56,7 +56,8 @@ export default class Screen extends React.Component<NavProps> {
 
 				showMessage({
 					message,
-					type: 'danger',
+					backgroundColor: theme.modalBgC,
+					color: theme.accent,
 				});
 			});
 	}

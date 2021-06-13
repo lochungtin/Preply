@@ -28,7 +28,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	render() {
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
-				<Header nav={this.props.navigation} title={"Accounts"} />
+				<Header nav={this.props.navigation} title={"Account"} />
 				<TouchableOpacity onPress={this.signOut}>
 					<Text style={{ color: theme.textC }}>
 						Sign Out
