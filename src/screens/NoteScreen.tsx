@@ -5,12 +5,12 @@ import { ScrollView, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { connect } from 'react-redux';
 
-import Header from '../Components/Header';
-import MultiSelectModal from '../Components/MultiSelectModal';
-import RecordHandler from '../Components/RecordHandler';
-import RecordItem from '../Components/RecordItem';
-import SeparatorLine from '../Components/SeparatorLine';
-import Tag from '../Components/Tag';
+import Header from '../components/Header';
+import MultiSelectModal from '../components/MultiSelectModal';
+import RecordHandler from '../components/RecordHandler';
+import RecordItem from '../components/RecordItem';
+import SeparatorLine from '../components/SeparatorLine';
+import Tag from '../components/Tag';
 
 import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';

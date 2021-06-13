@@ -7,7 +7,7 @@ import FlashMessage from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import SeparatorLine from '../Components/SeparatorLine';
+import SeparatorLine from '../components/SeparatorLine';
 import AccountScreen from '../screens/AccountScreen';
 import CalculatorScreen from '../screens/CalculatorScreen';
 import ConverterScreen from '../screens/ConverterScreen';

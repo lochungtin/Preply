@@ -5,9 +5,9 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
-import MultiSelectModal from '../Components/MultiSelectModal';
-import SeparatorLine from '../Components/SeparatorLine';
-import Tag from '../Components/Tag';
+import MultiSelectModal from '../components/MultiSelectModal';
+import SeparatorLine from '../components/SeparatorLine';
+import Tag from '../components/Tag';
 
 import { theme } from '../data/colors';
 import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
