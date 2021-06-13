@@ -11,17 +11,26 @@ interface NavProps {
 }
 
 interface BarProps {
+	backMode?: boolean,
 	title: string,
 }
 
 export default class Header extends React.Component<NavProps & BarProps> {
+
+	onPress = () => {
+		if (this.props.backMode)
+			this.props.nav.goBack();
+		else
+			this.props.nav.openDrawer();
+	}
+
 	render() {
 		return (
 			<View style={{ ...HeaderStyles.rootContainer, backgroundColor: theme.headerC }}>
-				<TouchableOpacity onPress={this.props.nav.openDrawer}>
+				<TouchableOpacity onPress={this.onPress}>
 					<Icon
 						color={theme.textC}
-						name='menu-open'
+						name={this.props.backMode ? 'chevron-left' : 'menu-open'}
 						size={35}
 					/>
 				</TouchableOpacity>
