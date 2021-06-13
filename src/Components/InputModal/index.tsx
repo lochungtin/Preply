@@ -3,6 +3,7 @@ import React from 'react';
 import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
 import MultiSelectModal from '../MultiSelectModal';
 import DatePicker from '../Pickers/Date';
@@ -14,11 +15,12 @@ import Tag from '../Tag';
 import { theme } from '../../data/colors';
 import { RecordInputModalStyles, screenWidth } from './styles';
 
-import { tags } from '../../data/tags';
 import { repeats } from '../../data/repeats';
+import { tags } from '../../data/tags';
+import { firebaseSetTodo } from '../../firebase/data';
 import { addTodo, editTodo } from '../../redux/action';
 import { store } from '../../redux/store';
-import { RepeatType, TagType, TodoType } from '../../types';
+import { AccountType, RepeatType, TagType, TodoType } from '../../types';
 import { keygen } from '../../utils/keygen';
 
 interface ModalProps {
@@ -27,7 +29,11 @@ interface ModalProps {
     record?: TodoType,
 }
 
-export default class InputModal extends React.Component<ModalProps> {
+interface ReduxProps {
+    account: AccountType,
+}
+
+class InputModal extends React.Component<ReduxProps & ModalProps> {
 
     defaultState = {
         allDay: true,
@@ -57,30 +63,43 @@ export default class InputModal extends React.Component<ModalProps> {
     }
 
     save = () => {
-        if (this.props.record)
-            store.dispatch(editTodo({
-                allDay: this.state.allDay,
-                content: this.state.content,
-                date: this.state.date,
-                key: this.props.record.key,
-                notif: this.state.notif,
-                repeatKey: this.state.repeatKey,
-                tagKey: this.state.tagKey,
-                title: this.state.title || 'untitled',
-                time: this.state.time,
-            }));
-        else
-            store.dispatch(addTodo({
-                allDay: this.state.allDay,
-                content: this.state.content,
-                date: this.state.date,
-                key: keygen(),
-                notif: this.state.notif,
-                repeatKey: this.state.repeatKey,
-                tagKey: this.state.tagKey,
-                title: this.state.title || 'untitled',
-                time: this.state.time,
-            }));
+        let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
+        let payload: TodoType = {
+            allDay: this.state.allDay,
+            content: this.state.content,
+            date: this.state.date,
+            key: '',
+            meta: {
+                creation: '',
+                modified: '',
+            },
+            notif: this.state.notif,
+            repeatKey: this.state.repeatKey,
+            tagKey: this.state.tagKey,
+            title: this.state.title || 'untitled',
+            time: this.state.time,
+        };
+
+        if (this.props.record) {
+            payload.key = this.props.record.key;
+            payload.meta = {
+                creation: this.props.record.meta.creation,
+                modified: now,
+            };
+            store.dispatch(editTodo(payload));
+        }
+        else {
+            payload.key = keygen();
+            payload.meta = {
+                creation: now,
+                modified: now,
+            };
+            store.dispatch(addTodo(payload));
+        }
+
+        if (this.props.account !== null)
+            firebaseSetTodo(this.props.account.uid, payload);
+
         this.props.onClose();
     }
 
@@ -233,3 +252,9 @@ export default class InputModal extends React.Component<ModalProps> {
         );
     }
 }
+
+const mapStateToProps = (state: ReduxProps) => ({
+    account: state.account,
+});
+
+export default connect(mapStateToProps)(InputModal);

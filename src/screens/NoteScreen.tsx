@@ -16,9 +16,10 @@ import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
+import { firebaseDeleteNote, firebaseSetNote } from '../firebase/data';
 import { addNote, deleteNote } from '../redux/action';
 import { store } from '../redux/store';
-import { NoteType, TagType } from '../types';
+import { AccountType, NoteMap, NoteType, TagType } from '../types';
 import { keygen } from '../utils/keygen';
 
 interface NavProps {
@@ -26,7 +27,8 @@ interface NavProps {
 }
 
 interface ReduxProps {
-	notes: Array<NoteType>,
+	account: AccountType,
+	notes: NoteMap,
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
@@ -39,34 +41,45 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	createEmptyNote = () => {
-		let now: string = moment().format('DD-MM-YYYY');
-		store.dispatch(addNote({
+		let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
+		let payload: NoteType = {
 			content: '',
-			date: {
+			meta: {
 				creation: now,
 				modified: now,
 			},
 			key: keygen(),
 			tagKey: 'tag:0',
 			title: 'New Note',
-		}));
+		};
+
+		store.dispatch(addNote(payload));
+		if (this.props.account !== null)
+			firebaseSetNote(this.props.account.uid, payload);
 	}
 
 	delete = (note: NoteType) => {
 		store.dispatch(deleteNote(note.key));
+		if (this.props.account !== null)
+			firebaseDeleteNote(this.props.account.uid, note.key);
+
 		this.setState({ undoStack: [note, ...this.state.undoStack] });
 	}
 
 	undo = () => {
 		if (this.state.undoStack.length !== 0) {
-			store.dispatch(addNote(this.state.undoStack[0]));
+			let payload: NoteType = this.state.undoStack[0];
+
+			store.dispatch(addNote(payload));
+			if (this.props.account !== null)
+				firebaseSetNote(this.props.account.uid, payload);
+
 			this.setState({ undoStack: this.state.undoStack.slice(1) });
 		}
 	}
 
 	render() {
-
-		let notes: Array<NoteType> = [...this.props.notes];
+		let notes: Array<NoteType> = Object.keys(this.props.notes).map((key: string) => this.props.notes[key]);
 
 		if (this.state.sorting)
 			notes.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)));
@@ -123,6 +136,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
+	account: state.account,
 	notes: state.notes,
 });
 

@@ -2,40 +2,40 @@ import { combineReducers } from 'redux';
 
 import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, SIGNIN, SIGNOUT } from './action';
 
-import { ActionType, NoteType, TodoType } from '../types';
+import { ActionType, NoteMap, TodoMap } from '../types';
 import { deleteByKey, replaceByKey } from '../utils/arrayFn';
 
 
-const defaultNoteState: Array<NoteType> = [];
+const defaultNoteState: NoteMap = {};
 const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
-    let update = [...noteState];
+    let update: NoteMap = { ...noteState };
     switch (action.type) {
         case ADD_NOTE:
-            update.push(action.payload);
+            update[action.payload.key] = action.payload;
             return update;
         case DELETE_NOTE:
-            deleteByKey(update, action.payload);
+            delete update[action.payload];
             return update;
         case EDIT_NOTE:
-            replaceByKey(update, action.payload);
+            update[action.payload.key] = action.payload;
             return update;
         default:
             return noteState;
     }
 }
 
-const defaultTodoState: Array<TodoType> = [];
+const defaultTodoState: TodoMap = {};
 const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
-    let update = [...todoState];
+    let update: TodoMap = { ...todoState };
     switch (action.type) {
         case ADD_TODO:
-            update.push(action.payload);
+            update[action.payload.key] = action.payload;
             return update;
         case DELETE_TODO:
-            deleteByKey(update, action.payload);
+            delete update[action.payload];
             return update;
         case EDIT_TODO:
-            replaceByKey(update, action.payload);
+            update[action.payload.key] = action.payload;
             return update;
         default:
             return todoState;
@@ -43,7 +43,7 @@ const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
 }
 
 const updateAccount = (account = null, action: ActionType) => {
-    switch(action.type) {
+    switch (action.type) {
         case SIGNIN:
             return action.payload;
         case SIGNOUT:

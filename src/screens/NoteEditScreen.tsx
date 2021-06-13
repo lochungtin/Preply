@@ -13,9 +13,11 @@ import { theme } from '../data/colors';
 import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
+import { firebaseSetNote } from '../firebase/data';
 import { editNote } from '../redux/action';
 import { store } from '../redux/store';
-import { NoteType, TagType } from '../types';
+import { AccountType, NoteMap, NoteType, TagType } from '../types';
+
 
 
 interface NavProps {
@@ -24,7 +26,8 @@ interface NavProps {
 }
 
 interface ReduxProps {
-	notes: Array<NoteType>,
+	account: AccountType,
+	notes: NoteMap,
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
@@ -38,16 +41,21 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	save = () => {
-		store.dispatch(editNote({
+		let payload: NoteType = {
 			content: this.state.content,
-			date: {
-				creation: this.props.route.params.date.creation,
+			meta: {
+				creation: this.props.route.params.meta.creation,
 				modified: moment().format('DD-MM-YYYY'),
 			},
 			key: this.props.route.params.key,
 			tagKey: this.state.tagKey,
 			title: this.state.title,
-		}));
+		};
+
+		store.dispatch(editNote(payload));
+		if (this.props.account !== null)
+			firebaseSetNote(this.props.account.uid, payload);
+
 		this.setState({ edited: false });
 	}
 
@@ -93,7 +101,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 						</TouchableOpacity>
 					</MultiSelectModal>
 					<Text style={{ color: theme.dTextC }}>
-						{`Last Modified: ${this.props.route.params.date.modified}`}
+						{`Last Modified: ${this.props.route.params.meta.modified}`}
 					</Text>
 				</View>
 				<SeparatorLine width={screenWidth * 0.95} />
@@ -111,6 +119,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
+	account: state.account,
 	notes: state.notes,
 });
 

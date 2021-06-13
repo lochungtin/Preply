@@ -17,16 +17,18 @@ import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
+import { firebaseDeleteTodo, firebaseSetTodo } from '../firebase/data';
 import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
-import { TagType, TodoType } from '../types';
+import { AccountType, TagType, TodoMap, TodoType } from '../types';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
 interface ReduxProps {
-	todos: Array<TodoType>,
+	account: AccountType,
+	todos: TodoMap,
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
@@ -44,6 +46,9 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	delete = (todo: TodoType) => {
 		store.dispatch(deleteTodo(todo.key));
+		if (this.props.account !== null)
+			firebaseDeleteTodo(this.props.account.uid, todo.key);
+
 		this.setState({ undoStack: [todo, ...this.state.undoStack] });
 	}
 
@@ -56,14 +61,18 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	undo = () => {
 		if (this.state.undoStack.length !== 0) {
-			store.dispatch(addTodo(this.state.undoStack[0]));
+			let payload: TodoType = this.state.undoStack[0];
+
+			store.dispatch(addTodo(payload));
+			if (this.props.account !== null)
+				firebaseSetTodo(this.props.account.uid, payload);
+
 			this.setState({ undoStack: this.state.undoStack.slice(1) });
 		}
 	}
 
 	render() {
-
-		let todos: Array<TodoType> = [...this.props.todos];
+		let todos: Array<TodoType> = Object.keys(this.props.todos).map((key: string) => this.props.todos[key]);
 
 		if (this.state.sorting)
 			todos.sort((a, b) => parseInt(a.tagKey.substring(4)) - parseInt(b.tagKey.substring(4)));
@@ -135,6 +144,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
+	account: state.account,
 	todos: state.todos,
 });
 

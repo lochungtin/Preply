@@ -10,11 +10,17 @@ export interface RepeatType {
     name: string,
 }
 
+export interface MetaDateType {
+    creation: string,
+    modified: string,
+}
+
 export interface TodoType {
     allDay: boolean,
     content: string,
     date: string,
     key: string,
+    meta: MetaDateType,
     notif: boolean,
     repeatKey: string,
     tagKey: string,
@@ -22,15 +28,20 @@ export interface TodoType {
     time: string,
 }
 
+export interface TodoMap {
+    [key: string]: TodoType,
+}
+
 export interface NoteType {
     content: string,
-    date: {
-        creation: string,
-        modified: string,
-    },
+    meta: MetaDateType,
     key: string,
     tagKey: string,
     title: string,
+}
+
+export interface NoteMap {
+    [key: string]: NoteType,
 }
 
 // redux type
