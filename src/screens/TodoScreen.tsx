@@ -1,6 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { connect } from 'react-redux';
 
@@ -19,13 +20,15 @@ import { ScreenStyles, screenWidth } from './styles';
 import { tags } from '../data/tags';
 import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
-import { TagType, TodoMap, TodoType } from '../types';
+import { AccountType, TagType, TodoMap, TodoType } from '../types';
+import { firebaseDeleteTodo, firebaseSetTodo } from '../firebase/data';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
 interface ReduxProps {
+	account: AccountType,
 	todos: TodoMap,
 }
 
@@ -44,6 +47,17 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	delete = (todo: TodoType) => {
 		store.dispatch(deleteTodo(todo.key));
+		if (this.props.account !== null)
+			firebaseDeleteTodo(this.props.account.uid, todo.key, (err: Error | null) => {
+				if (err)
+					showMessage({
+						backgroundColor: theme.modalBgC,
+						color: theme.accent,
+						description: err.toString(),
+						message: 'There was an error accessing cloud storage',
+					});
+			});
+
 		this.setState({ undoStack: [todo, ...this.state.undoStack] });
 	}
 
@@ -56,7 +70,20 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	undo = () => {
 		if (this.state.undoStack.length !== 0) {
-			store.dispatch(addTodo(this.state.undoStack[0]));
+			let payload = this.state.undoStack[0];
+
+			store.dispatch(addTodo(payload));
+			if (this.props.account !== null)
+				firebaseSetTodo(this.props.account.uid, payload, (err: Error | null) => {
+					if (err)
+						showMessage({
+							backgroundColor: theme.modalBgC,
+							color: theme.accent,
+							description: err.toString(),
+							message: 'There was an error accessing cloud storage',
+						});
+				});
+
 			this.setState({ undoStack: this.state.undoStack.slice(1) });
 		}
 	}
@@ -134,6 +161,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
+	account: state.account,
 	todos: state.todos,
 });
 

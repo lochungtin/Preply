@@ -1,8 +1,10 @@
 import moment from 'moment';
 import React from 'react';
 import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 
 import MultiSelectModal from '../MultiSelectModal';
 import DatePicker from '../Pickers/Date';
@@ -16,9 +18,10 @@ import { RecordInputModalStyles, screenWidth } from './styles';
 
 import { tags } from '../../data/tags';
 import { repeats } from '../../data/repeats';
+import { firebaseSetTodo } from '../../firebase/data';
 import { addTodo, editTodo } from '../../redux/action';
 import { store } from '../../redux/store';
-import { RepeatType, TagType, TodoType } from '../../types';
+import { AccountType, RepeatType, TagType, TodoType } from '../../types';
 import { keygen } from '../../utils/keygen';
 
 interface ModalProps {
@@ -27,7 +30,11 @@ interface ModalProps {
     record?: TodoType,
 }
 
-export default class InputModal extends React.Component<ModalProps> {
+interface ReduxProps {
+    account: AccountType,
+}
+
+class InputModal extends React.Component<ReduxProps & ModalProps> {
 
     defaultState = {
         allDay: true,
@@ -58,38 +65,49 @@ export default class InputModal extends React.Component<ModalProps> {
 
     save = () => {
         let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
-        if (this.props.record)
-            store.dispatch(editTodo({
-                allDay: this.state.allDay,
-                content: this.state.content,
-                date: this.state.date,
-                key: this.props.record.key,
-                meta: {
-                    creation: this.props.record.meta.creation,
-                    modified: now,
-                },
-                notif: this.state.notif,
-                repeatKey: this.state.repeatKey,
-                tagKey: this.state.tagKey,
-                title: this.state.title || 'untitled',
-                time: this.state.time,
-            }));
-        else
-            store.dispatch(addTodo({
-                allDay: this.state.allDay,
-                content: this.state.content,
-                date: this.state.date,
-                key: keygen(),
-                meta: {
-                    creation: now,
-                    modified: now,
-                },
-                notif: this.state.notif,
-                repeatKey: this.state.repeatKey,
-                tagKey: this.state.tagKey,
-                title: this.state.title || 'untitled',
-                time: this.state.time,
-            }));
+        let payload: TodoType = {
+            allDay: this.state.allDay,
+            content: this.state.content,
+            date: this.state.date,
+            key: '',
+            meta: {
+                creation: '',
+                modified: '',
+            },
+            notif: this.state.notif,
+            repeatKey: this.state.repeatKey,
+            tagKey: this.state.tagKey,
+            title: this.state.title || 'untitled',
+            time: this.state.time,
+        };
+
+        if (this.props.record) {
+            payload.key = this.props.record.key;
+            payload.meta = {
+                creation: this.props.record.meta.creation,
+                modified: now,
+            };
+            store.dispatch(editTodo(payload));
+        }
+        else {
+            payload.key = keygen();
+            payload.meta = {
+                creation: now,
+                modified: now,
+            };
+            store.dispatch(addTodo(payload));
+        }
+
+        if (this.props.account !== null)
+            firebaseSetTodo(this.props.account.uid, payload, (err: Error | null) => {
+                if (err) 
+                    showMessage({
+                        backgroundColor: theme.modalBgC,
+                        color: theme.accent,
+                        description: err.toString(),
+                        message: 'There was an error accessing cloud storage',                        
+                    });
+            });
         this.props.onClose();
     }
 
@@ -242,3 +260,9 @@ export default class InputModal extends React.Component<ModalProps> {
         );
     }
 }
+
+const mapStateToProps = (state: ReduxProps) => ({
+    account: state.account,
+});
+
+export default connect(mapStateToProps)(InputModal);
