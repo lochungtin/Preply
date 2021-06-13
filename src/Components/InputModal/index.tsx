@@ -1,7 +1,6 @@
 import moment from 'moment';
 import React from 'react';
 import { ScrollView, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
@@ -99,15 +98,8 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
         }
 
         if (this.props.account !== null)
-            firebaseSetTodo(this.props.account.uid, payload, (err: Error | null) => {
-                if (err) 
-                    showMessage({
-                        backgroundColor: theme.modalBgC,
-                        color: theme.accent,
-                        description: err.toString(),
-                        message: 'There was an error accessing cloud storage',                        
-                    });
-            });
+            firebaseSetTodo(this.props.account.uid, payload);
+
         this.props.onClose();
     }
 

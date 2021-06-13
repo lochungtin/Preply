@@ -15,7 +15,8 @@ import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
 import { tags } from '../data/tags';
 import { editNote } from '../redux/action';
 import { store } from '../redux/store';
-import { NoteType, TagType } from '../types';
+import { AccountType, NoteMap, NoteType, TagType } from '../types';
+import { firebaseSetNote } from '../firebase/data';
 
 
 interface NavProps {
@@ -24,7 +25,8 @@ interface NavProps {
 }
 
 interface ReduxProps {
-	notes: Array<NoteType>,
+	account: AccountType,
+	notes: NoteMap,
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
@@ -38,7 +40,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	save = () => {
-		store.dispatch(editNote({
+		let payload: NoteType = {
 			content: this.state.content,
 			meta: {
 				creation: this.props.route.params.meta.creation,
@@ -47,7 +49,12 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			key: this.props.route.params.key,
 			tagKey: this.state.tagKey,
 			title: this.state.title,
-		}));
+		};
+
+		store.dispatch(editNote(payload));
+		if (this.props.account !== null)
+			firebaseSetNote(this.props.account.uid, payload);
+
 		this.setState({ edited: false });
 	}
 
@@ -111,6 +118,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
+	account: state.account,
 	notes: state.notes,
 });
 

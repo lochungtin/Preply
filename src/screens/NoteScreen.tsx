@@ -16,9 +16,10 @@ import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
+import { firebaseDeleteNote, firebaseSetNote } from '../firebase/data';
 import { addNote, deleteNote } from '../redux/action';
 import { store } from '../redux/store';
-import { NoteMap, NoteType, TagType } from '../types';
+import { AccountType, NoteMap, NoteType, TagType } from '../types';
 import { keygen } from '../utils/keygen';
 
 interface NavProps {
@@ -26,6 +27,7 @@ interface NavProps {
 }
 
 interface ReduxProps {
+	account: AccountType,
 	notes: NoteMap,
 }
 
@@ -40,7 +42,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	createEmptyNote = () => {
 		let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
-		store.dispatch(addNote({
+		let payload: NoteType = {
 			content: '',
 			meta: {
 				creation: now,
@@ -49,17 +51,29 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			key: keygen(),
 			tagKey: 'tag:0',
 			title: 'New Note',
-		}));
+		};
+
+		store.dispatch(addNote(payload));
+		if (this.props.account !== null)
+			firebaseSetNote(this.props.account.uid, payload);
 	}
 
 	delete = (note: NoteType) => {
 		store.dispatch(deleteNote(note.key));
+		if (this.props.account !== null)
+			firebaseDeleteNote(this.props.account.uid, note.key);
+
 		this.setState({ undoStack: [note, ...this.state.undoStack] });
 	}
 
 	undo = () => {
 		if (this.state.undoStack.length !== 0) {
-			store.dispatch(addNote(this.state.undoStack[0]));
+			let payload: NoteType = this.state.undoStack[0];
+
+			store.dispatch(addNote(payload));
+			if (this.props.account !== null)
+				firebaseSetNote(this.props.account.uid, payload);
+
 			this.setState({ undoStack: this.state.undoStack.slice(1) });
 		}
 	}
@@ -122,6 +136,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 }
 
 const mapStateToProps = (state: ReduxProps) => ({
+	account: state.account,
 	notes: state.notes,
 });
 
