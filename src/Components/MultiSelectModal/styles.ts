@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const MSMStyles = StyleSheet.create({
+export const MultiSelectModalStyles = StyleSheet.create({
     modalStyle: {
         alignItems: 'center',
         display: 'flex',

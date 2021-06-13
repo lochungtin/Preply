@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { theme } from '../../data/colors';
-import { MSMStyles } from './styles';
+import { MultiSelectModalStyles } from './styles';
 
 import { keygen } from '../../utils/keygen';
 
@@ -30,16 +30,16 @@ export default class RecordInputModal extends React.Component<ModalProps> {
                     onSwipeComplete={this.props.onClose}
                     style={{ alignItems: 'center', display: 'flex' }}
                 >
-                    <View style={{ ...MSMStyles.rootContainer, backgroundColor: theme.backgroundC }}>
+                    <View style={{ ...MultiSelectModalStyles.rootContainer, backgroundColor: theme.backgroundC }}>
                         {this.props.items.map((item: any, index: number) => {
                             return (
-                                <View key={keygen()} style={MSMStyles.itemContainer}>
+                                <View key={keygen()} style={MultiSelectModalStyles.itemContainer}>
                                     <Icon
                                         color={this.props.selected === index ? theme.textC : 'transparent'}
                                         name={'chevron-right'}
                                         size={30}
                                     />
-                                    <TouchableOpacity onPress={() => this.props.onItemPress(index)} style={MSMStyles.itemWrapper}>
+                                    <TouchableOpacity onPress={() => this.props.onItemPress(index)} style={MultiSelectModalStyles.itemWrapper}>
                                         {item}
                                     </TouchableOpacity>
                                     <Icon

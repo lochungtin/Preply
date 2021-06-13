@@ -1,4 +1,4 @@
-import { NoteType, TodoType } from '../types';
+import { AccountType, NoteType, TodoType } from '../types';
 
 // note actions
 export const ADD_NOTE = 'ADD_NOTE';
@@ -36,4 +36,15 @@ export const EDIT_TODO = 'EDIT_TODO';
 export const editTodo = (payload: TodoType) => ({
     type: EDIT_TODO,
     payload,
+});
+
+export const SIGNIN = 'SIGNIN';
+export const signInRedux = (payload: AccountType) => ({
+    type: SIGNIN,
+    payload,
+});
+
+export const SIGNOUT = 'SIGNOUT';
+export const signOutRedux = () => ({
+    type: SIGNOUT,
 });

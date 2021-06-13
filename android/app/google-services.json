@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "390413415136",
+    "project_id": "preply-b21f6",
+    "storage_bucket": "preply-b21f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390413415136:android:766638b354cc8ad4ce1685",
+        "android_client_info": {
+          "package_name": "com.preply"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390413415136-ta50da6jipth00c5q17kj8hbt33a1dbm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.preply",
+            "certificate_hash": "5774c316ade78afc1822dd6e3ebd89d715f914df"
+          }
+        },
+        {
+          "client_id": "390413415136-43mjismsg9r0lavffj70g8la9mk1j71k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqd92WcoxQwf2l9LF4mvnMOwd4_P0zb6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390413415136-43mjismsg9r0lavffj70g8la9mk1j71k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
