@@ -58,7 +58,7 @@ export default class Screen extends React.Component<NavProps> {
 				showMessage({
 					backgroundColor: theme.accent,
 					color: theme.modalBgC,
-					message: 'Sign Up Successful - Auto logged in',
+					message: 'Sign up successful, auto logged in',
 				});
 			})
 			.catch(err => {
