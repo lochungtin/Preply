@@ -60,6 +60,4 @@ buck-out/
 
 # images and psds
 .img
-
-# firebase config keys
-src/firebase/config.ts
+src/data/secrets.ts
