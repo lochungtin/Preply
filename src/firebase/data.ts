@@ -1,4 +1,5 @@
 import { showMessage } from 'react-native-flash-message';
+
 import { theme } from '../data/colors';
 import { NoteMap, NoteType, TodoMap, TodoType } from '../types';
 import firebaseConfig from './config';

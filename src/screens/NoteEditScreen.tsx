@@ -13,10 +13,11 @@ import { theme } from '../data/colors';
 import { NoteScreenStyles, ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
+import { firebaseSetNote } from '../firebase/data';
 import { editNote } from '../redux/action';
 import { store } from '../redux/store';
 import { AccountType, NoteMap, NoteType, TagType } from '../types';
-import { firebaseSetNote } from '../firebase/data';
+
 
 
 interface NavProps {

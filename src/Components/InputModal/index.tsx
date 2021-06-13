@@ -15,8 +15,8 @@ import Tag from '../Tag';
 import { theme } from '../../data/colors';
 import { RecordInputModalStyles, screenWidth } from './styles';
 
-import { tags } from '../../data/tags';
 import { repeats } from '../../data/repeats';
+import { tags } from '../../data/tags';
 import { firebaseSetTodo } from '../../firebase/data';
 import { addTodo, editTodo } from '../../redux/action';
 import { store } from '../../redux/store';
