@@ -2,9 +2,9 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import Calculator from '../Components/Calculator';
-import Header from '../Components/Header';
-import SeparatorLine from '../Components/SeparatorLine';
+import Calculator from '../components/Calculator';
+import Header from '../components/Header';
+import SeparatorLine from '../components/SeparatorLine';
 
 import { theme } from '../data/colors';
 import { CalculatorScreenStyles, ScreenStyles, screenWidth } from './styles';

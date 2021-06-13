@@ -2,9 +2,9 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 
-import AccountTextInput from '../Components/AccountTextInput';
-import Header from '../Components/Header';
-import Logo from '../Components/Logo';
+import AccountTextInput from '../components/AccountTextInput';
+import Header from '../components/Header';
+import Logo from '../components/Logo';
 
 import { theme } from '../data/colors';
 import { AccountScreenStyles, ScreenStyles } from './styles';
