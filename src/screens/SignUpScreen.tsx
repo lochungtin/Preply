@@ -11,14 +11,23 @@ import { theme } from '../data/colors';
 import { AccountScreenStyles, ScreenStyles } from './styles';
 
 import { signUp } from '../firebase/auth';
+import { firebaseOverwriteUserData } from '../firebase/data';
 import { signInRedux } from '../redux/action';
 import { store } from '../redux/store';
+import { NoteMap, TodoMap } from '../types';
+import { connect } from 'react-redux';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
 }
 
-export default class Screen extends React.Component<NavProps> {
+interface ReduxProps {
+	notes: NoteMap,
+	todos: TodoMap,
+
+}
+
+class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = {
 		email: '',
@@ -59,6 +68,11 @@ export default class Screen extends React.Component<NavProps> {
 					backgroundColor: theme.accent,
 					color: theme.modalBgC,
 					message: 'Sign up successful, auto logged in',
+				});
+
+				firebaseOverwriteUserData(res.user?.uid || '', {
+					notes: this.props.notes,
+					todos: this.props.todos,
 				});
 			})
 			.catch(err => {
@@ -117,3 +131,10 @@ export default class Screen extends React.Component<NavProps> {
 		);
 	}
 }
+
+const mapStateToProps = (state: ReduxProps) => ({
+	notes: state.notes,
+	todos: state.todos,
+});
+
+export default connect(mapStateToProps)(Screen);

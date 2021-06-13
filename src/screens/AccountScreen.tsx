@@ -22,7 +22,6 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	signOut = () => {
 		store.dispatch(signOutRedux())
-		console.log('asdf')
 	}
 
 	render() {

@@ -54,15 +54,24 @@ export const firebaseDeleteTodo = (uid: string, todoKey: string, callback: ((err
     db.ref().update(update, callback);
 }    
 
+// user data complete overwrite
 export const firebaseOverwriteUserData = (uid: string, payload: { notes: NoteMap, todos: TodoMap }, callback: ((err: Error | null) => any) = defErrCallback) => {
     let update: any = {};
+    let notekeys: any = {};
+    let todokeys: any = {};
 
+    Object.keys(payload.notes).forEach(key => notekeys[key] = true);
+    Object.keys(payload.todos).forEach(key => todokeys[key] = true);
+
+    update[`/UserData/${uid}/notekeys/`] = notekeys;
+    update[`/UserData/${uid}/todokeys/`] = todokeys;
     update[`/UserData/${uid}/notes/`] = payload.notes;
     update[`/UserData/${uid}/todos/`] = payload.todos;
 
     db.ref().update(update, callback);
 }
 
+// 
 export const firebaseSetNote = (uid: string, payload: NoteType, callback: ((err: Error | null) => any) = defErrCallback) =>
     db.ref(`/UserData/${uid}/notes/${payload.key}`).set(payload, callback);
 
