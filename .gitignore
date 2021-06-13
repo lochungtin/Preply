@@ -58,5 +58,8 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-
+# images and psds
 .img
+
+# firebase config keys
+src/firebase/config.ts
