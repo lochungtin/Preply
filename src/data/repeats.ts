@@ -17,8 +17,4 @@ export const repeats: Array<RepeatType> = [
         key: 'rep:3',
         name: 'Monthly',
     },
-    {
-        key: 'rep:4',
-        name: 'Yearly',
-    },
 ];
