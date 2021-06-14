@@ -1,9 +1,11 @@
 import PushNotification, { ReceivedNotification } from 'react-native-push-notification';
 
 class NotificationHandler {
-    onNotification = (notification: Omit<ReceivedNotification, "userInfo">) => {
-        console.log('NotificationHandler:', notification);
+    attachRegister = (Handler: any) => this.onRegister = Handler;
 
+    attachNotification = (Handler: any) => this.onNotification = Handler;
+
+    onNotification = (notification: Omit<ReceivedNotification, "userInfo">) => {
         if (typeof this.onNotification === 'function')
             this.onNotification(notification);
     }
@@ -13,35 +15,22 @@ class NotificationHandler {
             this.onRegister(token);
     }
 
-    onAction = (notification: ReceivedNotification) => { }
-
     onRegistrationError = (err: any) => console.log(err);
-
-    attachRegister = (handler: any) => this.onRegister = handler;
-
-    attachNotification = (handler: any) => this.onNotification = handler;
 }
 
-const handler = new NotificationHandler();
+const Handler = new NotificationHandler();
 
 PushNotification.configure({
-    onRegister: handler.onRegister.bind(handler),
-
-    onNotification: handler.onNotification.bind(handler),
-
-    onAction: handler.onAction.bind(handler),
-
-    onRegistrationError: handler.onRegistrationError.bind(handler),
-
+    onRegister: Handler.onRegister.bind(Handler),
+    onNotification: Handler.onNotification.bind(Handler),
+    onRegistrationError: Handler.onRegistrationError.bind(Handler),
     permissions: {
         alert: true,
         badge: true,
         sound: true,
     },
-
     popInitialNotification: true,
-
     requestPermissions: true,
 });
 
-export default handler;
+export default Handler;

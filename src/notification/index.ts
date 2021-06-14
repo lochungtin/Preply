@@ -8,7 +8,17 @@ export default class NotifService {
     lastChannelCounter: number = 0;
 
     constructor(onRegister: any, onNotification: any) {
-        this.createDefaultChannels();
+        PushNotification.createChannel(
+            {
+                channelId: 'PreplyRepeatNotifs',
+                channelName: 'PreplyRepeatNotifs',
+                channelDescription: "Todo Reminders",
+                soundName: "default",
+                importance: 4,
+                vibrate: true,
+            },
+            (created: boolean) => console.log(`Channel created: '${created}'`)
+        );
 
         Handler.attachRegister(onRegister);
         Handler.attachNotification(onNotification);
@@ -29,9 +39,6 @@ export default class NotifService {
 
     getScheduledLocalNotifications = (callback: (notifs: PushNotificationScheduledLocalObject[]) => void) =>
         PushNotification.getScheduledLocalNotifications(callback);
-
-    popInitialNotification = () => PushNotification.popInitialNotification((notification: ReceivedNotification | null) =>
-        console.log('InitialNotication: ', notification));
 
     requestPermissions = () => PushNotification.requestPermissions();
 
@@ -58,16 +65,4 @@ export default class NotifService {
         });
         return this.lastId;
     }
-
-    private createDefaultChannels = () => PushNotification.createChannel(
-        {
-            channelId: 'PreplyRepeatNotifs',
-            channelName: 'PreplyRepeatNotifs',
-            channelDescription: "Todo Reminders",
-            soundName: "default",
-            importance: 4,
-            vibrate: true,
-        },
-        (created: boolean) => console.log(`Channel created: '${created}'`)
-    );
 }
