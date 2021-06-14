@@ -16,7 +16,7 @@ import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
-import { firebaseDeleteNote, firebaseSetNote } from '../firebase/data';
+import { firebaseAddNote, firebaseDeleteNote } from '../firebase/data';
 import { addNote, deleteNote } from '../redux/action';
 import { store } from '../redux/store';
 import { AccountType, NoteMap, NoteType, TagType } from '../types';
@@ -41,7 +41,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	createEmptyNote = () => {
-		let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
+		let now: string = moment().format('YYYY-MM-DD HH:mm:ss');
 		let payload: NoteType = {
 			content: '',
 			meta: {
@@ -55,7 +55,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 		store.dispatch(addNote(payload));
 		if (this.props.account !== null)
-			firebaseSetNote(this.props.account.uid, payload);
+			firebaseAddNote(this.props.account.uid, payload);
 	}
 
 	delete = (note: NoteType) => {
@@ -72,7 +72,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 			store.dispatch(addNote(payload));
 			if (this.props.account !== null)
-				firebaseSetNote(this.props.account.uid, payload);
+				firebaseAddNote(this.props.account.uid, payload);
 
 			this.setState({ undoStack: this.state.undoStack.slice(1) });
 		}

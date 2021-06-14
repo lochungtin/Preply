@@ -1,4 +1,4 @@
-import { AccountType, NoteType, TodoType } from '../types';
+import { AccountType, NoteMap, NoteType, TodoMap, TodoType } from '../types';
 
 // note actions
 export const ADD_NOTE = 'ADD_NOTE';
@@ -16,6 +16,12 @@ export const deleteNote = (payload: string) => ({
 export const EDIT_NOTE = 'EDIT_NOTE';
 export const editNote = (payload: NoteType) => ({
     type: EDIT_NOTE,
+    payload,
+});
+
+export const OVERWRITE_NOTES = 'OVERWRITE_NOTES';
+export const overwriteNotes = (payload: NoteMap) => ({
+    type: OVERWRITE_NOTES,
     payload,
 });
 
@@ -38,6 +44,14 @@ export const editTodo = (payload: TodoType) => ({
     payload,
 });
 
+export const OVERWRITE_TODOS = 'OVERWRITE_TODOS';
+export const overwriteTodos = (payload: TodoMap) => ({
+    type: OVERWRITE_TODOS,
+    payload,
+});
+
+
+// account actions
 export const SIGNIN = 'SIGNIN';
 export const signInRedux = (payload: AccountType) => ({
     type: SIGNIN,

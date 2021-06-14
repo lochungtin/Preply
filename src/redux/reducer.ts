@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, SIGNIN, SIGNOUT } from './action';
+import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, OVERWRITE_NOTES, OVERWRITE_TODOS, SIGNIN, SIGNOUT } from './action';
 
 import { ActionType, NoteMap, TodoMap } from '../types';
 import { deleteByKey, replaceByKey } from '../utils/arrayFn';
@@ -19,6 +19,8 @@ const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
         case EDIT_NOTE:
             update[action.payload.key] = action.payload;
             return update;
+        case OVERWRITE_NOTES:
+            return action.payload;
         default:
             return noteState;
     }
@@ -37,6 +39,8 @@ const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
         case EDIT_TODO:
             update[action.payload.key] = action.payload;
             return update;
+        case OVERWRITE_TODOS:
+            return action.payload;
         default:
             return todoState;
     }

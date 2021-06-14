@@ -17,7 +17,7 @@ import { theme } from '../data/colors';
 import { ScreenStyles, screenWidth } from './styles';
 
 import { tags } from '../data/tags';
-import { firebaseDeleteTodo, firebaseSetTodo } from '../firebase/data';
+import { firebaseAddTodo, firebaseDeleteTodo, firebaseSetTodo } from '../firebase/data';
 import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
 import { AccountType, TagType, TodoMap, TodoType } from '../types';
@@ -65,7 +65,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 			store.dispatch(addTodo(payload));
 			if (this.props.account !== null)
-				firebaseSetTodo(this.props.account.uid, payload);
+				firebaseAddTodo(this.props.account.uid, payload);
 
 			this.setState({ undoStack: this.state.undoStack.slice(1) });
 		}

@@ -17,7 +17,7 @@ import { RecordInputModalStyles, screenWidth } from './styles';
 
 import { repeats } from '../../data/repeats';
 import { tags } from '../../data/tags';
-import { firebaseSetTodo } from '../../firebase/data';
+import { firebaseAddTodo, firebaseSetTodo } from '../../firebase/data';
 import { addTodo, editTodo } from '../../redux/action';
 import { store } from '../../redux/store';
 import { AccountType, RepeatType, TagType, TodoType } from '../../types';
@@ -63,7 +63,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
     }
 
     save = () => {
-        let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
+        let now: string = moment().format('YYYY-MM-DD HH:mm:ss');
         let payload: TodoType = {
             allDay: this.state.allDay,
             content: this.state.content,
@@ -86,7 +86,10 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                 creation: this.props.record.meta.creation,
                 modified: now,
             };
+            
             store.dispatch(editTodo(payload));
+            if (this.props.account !== null)
+                firebaseSetTodo(this.props.account.uid, payload);
         }
         else {
             payload.key = keygen();
@@ -94,11 +97,11 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                 creation: now,
                 modified: now,
             };
-            store.dispatch(addTodo(payload));
-        }
 
-        if (this.props.account !== null)
-            firebaseSetTodo(this.props.account.uid, payload);
+            store.dispatch(addTodo(payload));
+            if (this.props.account !== null)
+                firebaseAddTodo(this.props.account.uid, payload);
+        }
 
         this.props.onClose();
     }
