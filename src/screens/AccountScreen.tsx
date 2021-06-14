@@ -43,19 +43,15 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		openSyncOpPicker: false,
 	}
 
-	signOut = () => {
-		store.dispatch(signOutRedux());
-		signOut();
-	}
+	overwriteCloudStore = () => 
+		firebaseOverwriteUserData(this.props.account.uid, { notes: this.props.notes, todos: this.props.todos });
 
 	overwriteLocalStore = () => {
 		firebaseFetchAll(this.props.account.uid)
-			.then((snapshot: firebaseConfig.database.DataSnapshot) => {
-				if (snapshot.exists()) {
-					let data: FullSnapshotType = snapshot.val();
-
-					store.dispatch(overwriteNotes(data.notes || {}));
-					store.dispatch(overwriteTodos(data.todos || {}));
+			.then((snapshot: FullSnapshotType) => {
+				if (snapshot) {
+					store.dispatch(overwriteNotes(snapshot.notes || {}));
+					store.dispatch(overwriteTodos(snapshot.todos || {}));
 				}
 			})
 			.catch(firebaseDefaultErrorCallback);
@@ -65,7 +61,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		firebaseFetchAll(this.props.account.uid)
 			.then((snapshot: FullSnapshotType) => {
 				if (!snapshot)
-					firebaseOverwriteUserData(this.props.account.uid, { notes: this.props.notes, todos: this.props.todos });
+					this.overwriteCloudStore();
 				else {
 					let data: FullSnapshotType = { ...snapshot };
 					let combined: MergeType = merge(this.props.notes, this.props.todos, data);
@@ -77,6 +73,24 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				}
 			})
 			.catch(firebaseDefaultErrorCallback)
+	}
+
+	signOut = () => {
+		store.dispatch(signOutRedux());
+		signOut();
+	}
+
+	sync = () => {
+		switch (this.props.syncOp.key) {
+			case 'syn:1':
+				this.overwriteCloudStore();
+				break;
+			case 'syn:2':
+				this.overwriteLocalStore();
+				break;
+			default:
+				this.mergeLocalWithFirebase();
+		}
 	}
 
 	updateSyncOp = (index: number) => {
@@ -94,7 +108,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 						<ConfirmBtn onPress={this.signOut} text='Sign Out' />
 
 						<AccountItemSeparator iconName='sync' text='Data Sync' />
-						<ConfirmBtn onPress={() => { }} text='Sync Now' />
+						<ConfirmBtn onPress={this.sync} text='Sync Now' />
 						<View style={{ height: 30 }} />
 						<View style={AccountScreenStyles.syncMethodContainer}>
 							<Icon
