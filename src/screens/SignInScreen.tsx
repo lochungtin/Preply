@@ -49,6 +49,9 @@ export default class Screen extends React.Component<NavProps> {
 					case 'auth/wrong-password':
 						message = 'Password entered is not correct';
 						break;
+					case 'auth/user-not-found':
+						message = 'There is no account under this email address'
+						break;
 					default:
 						message = err.toString();
 						break;

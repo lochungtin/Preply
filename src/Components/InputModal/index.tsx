@@ -63,7 +63,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
     }
 
     save = () => {
-        let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
+        let now: string = moment().format('YYYY-MM-DD HH:mm:ss');
         let payload: TodoType = {
             allDay: this.state.allDay,
             content: this.state.content,

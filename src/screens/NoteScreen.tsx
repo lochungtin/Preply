@@ -41,7 +41,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	createEmptyNote = () => {
-		let now: string = moment().format('DD-MM-YYYY-HH:mm:ss');
+		let now: string = moment().format('YYYY-MM-DD HH:mm:ss');
 		let payload: NoteType = {
 			content: '',
 			meta: {

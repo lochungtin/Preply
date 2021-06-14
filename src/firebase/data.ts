@@ -53,7 +53,7 @@ export const firebaseDeleteTodo = (uid: string, todoKey: string, callback: ((err
     update[`/UserData/${uid}/todos/${todoKey}`] = null;
 
     db.ref().update(update, callback);
-}    
+}
 
 // user data complete overwrite
 export const firebaseOverwriteUserData = (uid: string, payload: { notes: NoteMap, todos: TodoMap }, callback: ((err: Error | null) => any) = firebaseDefaultErrorCallback) => {
@@ -73,12 +73,9 @@ export const firebaseOverwriteUserData = (uid: string, payload: { notes: NoteMap
 }
 
 // retrieve all user data
-export const firebaseFetchAll = async (uid: string) => 
-    db.ref().child('UserData').child(uid).get();
-
-// retrieve all keys from keylist
-export const firebaseFetchKeylist = async (uid: string) => 
-    db.ref().child('UserData').child(uid).child('keylist').get();
+export const firebaseFetchAll = async (uid: string) =>
+    db.ref().child('UserData').child(uid).once('value')
+        .then((snapshot: firebaseConfig.database.DataSnapshot) => snapshot.val());
 
 // update actions
 export const firebaseSetNote = (uid: string, payload: NoteType, callback: ((err: Error | null) => any) = firebaseDefaultErrorCallback) =>

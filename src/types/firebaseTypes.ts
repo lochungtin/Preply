@@ -14,3 +14,8 @@ export interface FullSnapshotType {
     notes: NoteMap,
     todos: TodoMap,
 }
+
+export interface MergeType {
+    notes: NoteMap,
+    todos: TodoMap,
+}
