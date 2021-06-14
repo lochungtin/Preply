@@ -1,8 +1,11 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { LogBox, TouchableOpacity, Text, View } from 'react-native';
+import { LogBox, TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 
+import AccountItemSeparator from '../components/AccountItemSeparator';
+import AccountTextInput from '../components/AccountTextInput';
+import ConfirmBtn from '../components/ConfirmBtn';
 import Header from '../components/Header';
 
 import { theme } from '../data/colors';
@@ -72,17 +75,34 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 		return (
 			<View style={{ ...ScreenStyles.screenD, backgroundColor: theme.backgroundC }}>
 				<Header nav={this.props.navigation} title={"Account"} />
-				<TouchableOpacity onPress={this.signOut}>
-					<Text style={{ color: theme.textC }}>
-						Sign Out
-					</Text>
-				</TouchableOpacity>
+				<ScrollView showsVerticalScrollIndicator={false}>
+					<View style={ScreenStyles.scrollView}>
+						<AccountItemSeparator iconName='logout' text='Sign Out' />
+						<ConfirmBtn onPress={this.signOut} text='Sign Out' />
 
-				<TouchableOpacity onPress={this.mergeLocalWithFirebase}>
-					<Text style={{ color: theme.textC }}>
-						update
-					</Text>
-				</TouchableOpacity>
+						<AccountItemSeparator iconName='sync' text='Data Sync' />
+						<ConfirmBtn onPress={() => { }} text='Sync Now' />
+
+						<AccountItemSeparator iconName='form-textbox-password' text='Password' />
+						<AccountTextInput
+							hidden
+							placeholder='Current password'
+							onChangeText={text => console.log(text)}
+						/>
+						<AccountTextInput
+							hidden
+							placeholder='New password'
+							onChangeText={text => console.log(text)}
+						/>
+						<AccountTextInput
+							hidden
+							placeholder='Reenter new password'
+							onChangeText={text => console.log(text)}
+						/>
+						<View style={{ height: 30 }} />
+						<ConfirmBtn onPress={() => { }} text='Update Password' />
+					</View>
+				</ScrollView>
 			</View>
 		);
 	}
