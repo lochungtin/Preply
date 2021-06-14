@@ -1,4 +1,4 @@
-import { AccountType, NoteMap, NoteType, TodoMap, TodoType } from '../types';
+import { AccountType, NoteMap, NoteType, SyncOptionType, TodoMap, TodoType } from '../types';
 
 // note actions
 export const ADD_NOTE = 'ADD_NOTE';
@@ -50,7 +50,6 @@ export const overwriteTodos = (payload: TodoMap) => ({
     payload,
 });
 
-
 // account actions
 export const SIGNIN = 'SIGNIN';
 export const signInRedux = (payload: AccountType) => ({
@@ -61,4 +60,11 @@ export const signInRedux = (payload: AccountType) => ({
 export const SIGNOUT = 'SIGNOUT';
 export const signOutRedux = () => ({
     type: SIGNOUT,
+});
+
+// sync option acionts
+export const UPDATE_SYNC_OPTION = 'UPDATE_SYNC_OPTION';
+export const updateSyncOption = (payload: SyncOptionType) => ({
+    type: UPDATE_SYNC_OPTION,
+    payload,
 });
