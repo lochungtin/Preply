@@ -8,6 +8,7 @@ import Header from '../components/Header';
 import { theme } from '../data/colors';
 import { ScreenStyles } from './styles';
 
+import { signOut } from '../firebase/auth';
 import { firebaseDefaultErrorCallback, firebaseFetchAll, firebaseOverwriteUserData } from '../firebase/data';
 import firebaseConfig from '../firebase/config';
 import { overwriteNotes, overwriteTodos, signOutRedux } from '../redux/action';
@@ -15,6 +16,7 @@ import { store } from '../redux/store';
 import { AccountType, NoteMap, TodoMap } from '../types';
 import { FullSnapshotType, MergeType } from '../types/firebaseTypes';
 import { merge } from '../utils/merger';
+
 
 LogBox.ignoreLogs(['AsyncStorage has been']);
 
@@ -31,7 +33,8 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 
 	signOut = () => {
-		store.dispatch(signOutRedux())
+		store.dispatch(signOutRedux());
+		signOut();
 	}
 
 	overwriteLocalStore = () => {
