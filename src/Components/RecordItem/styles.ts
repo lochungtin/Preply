@@ -28,5 +28,5 @@ export const RecordItemStyles = StyleSheet.create({
         height: 60,
         justifyContent: 'center',
         width: 60,
-    }
+    },
 });

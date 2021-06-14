@@ -7,12 +7,5 @@ interface LogoProps {
 }
 
 export default class Header extends React.Component<LogoProps> {
-    render() {
-        return (
-            <Image
-                style={{ height: this.props.size, width: this.props.size }}
-                source={{ uri: `data:image/png;base64,${base64}` }}
-            />
-        );
-    }
+    render = () => <Image source={{ uri: `data:image/png;base64,${base64}` }} style={{ height: this.props.size, width: this.props.size }} />;
 }

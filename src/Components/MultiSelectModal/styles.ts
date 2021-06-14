@@ -22,5 +22,5 @@ export const MultiSelectModalStyles = StyleSheet.create({
     },
     itemWrapper: {
         marginHorizontal: 10,
-    }
+    },
 });

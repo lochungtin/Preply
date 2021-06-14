@@ -26,7 +26,7 @@ export default class DateBtn extends React.Component<BtnProps> {
 
         return (
             <TouchableOpacity onPress={() => this.props.onPress(formattedDate)} style={{...CalendarStyles.btnContainer, borderColor: theme.accent, borderWidth: this.props.selected ? 1 : 0}}>
-                <Text style={{ ...CalendarStyles.btnText, color }}>
+                <Text style={{ color }}>
                     {this.props.date.date}
                 </Text>
             </TouchableOpacity>

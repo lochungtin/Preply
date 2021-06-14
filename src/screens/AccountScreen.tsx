@@ -23,7 +23,6 @@ import { merge } from '../utils/merger';
 import { syncOptions } from '../data/dataSync';
 import { showMessage } from 'react-native-flash-message';
 
-
 LogBox.ignoreLogs(['AsyncStorage has been']);
 
 interface NavProps {
@@ -131,8 +130,6 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				this.setState({ ...this.defaultState });
 			})
 			.catch(err => {
-				console.log(err.code);
-
 				let message: string;
 				let description: string | undefined;
 

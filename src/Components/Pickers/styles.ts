@@ -1,6 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
-
-export const screenWidth = Dimensions.get('screen').width;
+import { StyleSheet } from 'react-native';
 
 export const PickerStyles = StyleSheet.create({
     modalStyle: {
