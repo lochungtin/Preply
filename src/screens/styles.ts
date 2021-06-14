@@ -26,15 +26,6 @@ export const AccountScreenStyles = StyleSheet.create({
         marginBottom: 40,
         width: screenWidth * 0.7,
     },
-    confirmBtn: {
-        alignItems: 'center',
-        borderRadius: 15,
-        borderWidth: 2,
-        display: 'flex',
-        height: 40,
-        justifyContent: 'center',
-        width: screenWidth * 0.7,
-    },
     signUpTextContainer: {
         alignItems: 'center',
         display: 'flex',
@@ -58,6 +49,31 @@ export const AccountScreenStyles = StyleSheet.create({
         marginVertical: 25,
         textAlign: 'justify',
         width: screenWidth * 0.6,
+    },
+    syncMethodContainer: {
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: screenWidth * 0.7,
+    },
+    syncMethodLabel: {
+        fontSize: 16,
+        width: screenWidth * 0.6,
+    },
+    syncMethodText: {
+        fontSize: 16,
+        textAlign: 'center',
+        width: screenWidth * 0.45,
+    },
+    syncMethodBtn: {
+        alignItems: 'center',
+        borderRadius: 15,
+        borderWidth: 2,
+        display: 'flex',
+        height: 40,
+        justifyContent: 'center',
+        width: screenWidth * 0.2,
     }
 });
 
@@ -153,7 +169,7 @@ export const ConverterScreenStyles = StyleSheet.create({
     },
     valueText: {
         fontSize: 22,
-    }
+    },
 });
 
 export const NoteScreenStyles = StyleSheet.create({

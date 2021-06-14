@@ -14,7 +14,7 @@ export default class ConfirmBtn extends React.Component<BtnProps> {
         return (
             <TouchableOpacity onPress={this.props.onPress} style={{ ...ConfirmBtnStyles.rootContainer, borderColor: theme.accent }}>
                 <Text style={{ color: theme.textC }}>
-                    Sync Now
+                    {this.props.text}
                 </Text>
             </TouchableOpacity>
         );

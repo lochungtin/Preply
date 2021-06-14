@@ -1,6 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { LogBox, TouchableOpacity, Text, View, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
 import AccountItemSeparator from '../components/AccountItemSeparator';
@@ -9,7 +10,7 @@ import ConfirmBtn from '../components/ConfirmBtn';
 import Header from '../components/Header';
 
 import { theme } from '../data/colors';
-import { ScreenStyles } from './styles';
+import { AccountScreenStyles, ScreenStyles } from './styles';
 
 import { signOut } from '../firebase/auth';
 import { firebaseDefaultErrorCallback, firebaseFetchAll, firebaseOverwriteUserData } from '../firebase/data';
@@ -82,6 +83,27 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 						<AccountItemSeparator iconName='sync' text='Data Sync' />
 						<ConfirmBtn onPress={() => { }} text='Sync Now' />
+						<View style={{ height: 30 }} />
+						<View style={AccountScreenStyles.syncMethodContainer}>
+							<Icon
+								color={theme.textC}
+								name='chevron-right'
+								size={30}
+							/>
+							<Text style={{ ...AccountScreenStyles.syncMethodLabel, color: theme.textC }}>
+								Sync Method
+							</Text>
+						</View>
+						<View style={AccountScreenStyles.syncMethodContainer}>
+							<Text style={{ ...AccountScreenStyles.syncMethodText, color: theme.accent }}>
+								Compare and Merge
+							</Text>
+							<TouchableOpacity style={{ ...AccountScreenStyles.syncMethodBtn, borderColor: theme.accent }}>
+								<Text style={{ color: theme.textC }}>
+									Change
+								</Text>
+							</TouchableOpacity>
+						</View>
 
 						<AccountItemSeparator iconName='form-textbox-password' text='Password' />
 						<AccountTextInput
