@@ -112,7 +112,6 @@ class AppNav extends React.Component<ReduxProps> {
 		</AuthNav.Navigator >
 
 	render() {
-		console.log(this.props.account === null)
 		return (
 			<NavigationContainer>
 				<StatusBar backgroundColor={theme.backgroundC} />

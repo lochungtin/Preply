@@ -1,13 +1,23 @@
 import { combineReducers } from 'redux';
 
-import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, OVERWRITE_NOTES, OVERWRITE_TODOS, SIGNIN, SIGNOUT } from './action';
+import { ADD_NOTE, ADD_TODO, DELETE_NOTE, DELETE_TODO, EDIT_NOTE, EDIT_TODO, OVERWRITE_NOTES, OVERWRITE_TODOS, SIGNIN, SIGNOUT, UPDATE_SYNC_OPTION } from './action';
 
-import { ActionType, NoteMap, TodoMap } from '../types';
-import { deleteByKey, replaceByKey } from '../utils/arrayFn';
+import { AccountType, ActionType, NoteMap, SyncOptionType, TodoMap } from '../types';
+import { syncOptions } from '../data/dataSync';
 
+const updateAccount = (account: AccountType | null = null, action: ActionType) => {
+    switch (action.type) {
+        case SIGNIN:
+            return action.payload;
+        case SIGNOUT:
+            return null;
+        default:
+            return account;
+    }
+}
 
 const defaultNoteState: NoteMap = {};
-const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
+const updateNotes = (noteState: NoteMap = defaultNoteState, action: ActionType) => {
     let update: NoteMap = { ...noteState };
     switch (action.type) {
         case ADD_NOTE:
@@ -26,8 +36,11 @@ const updateNotes = (noteState = defaultNoteState, action: ActionType) => {
     }
 }
 
+const updateSyncOption = (syncOpState: SyncOptionType = syncOptions[0], action: ActionType) => 
+    action.type === UPDATE_SYNC_OPTION ? action.payload : syncOpState;
+
 const defaultTodoState: TodoMap = {};
-const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
+const updateTodos = (todoState: TodoMap = defaultTodoState, action: ActionType) => {
     let update: TodoMap = { ...todoState };
     switch (action.type) {
         case ADD_TODO:
@@ -46,19 +59,9 @@ const updateTodos = (todoState = defaultTodoState, action: ActionType) => {
     }
 }
 
-const updateAccount = (account = null, action: ActionType) => {
-    switch (action.type) {
-        case SIGNIN:
-            return action.payload;
-        case SIGNOUT:
-            return null;
-        default:
-            return account;
-    }
-}
-
 export default combineReducers({
     account: updateAccount,
     notes: updateNotes,
+    syncOp: updateSyncOption,
     todos: updateTodos,
 });

@@ -4,6 +4,7 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 
 import AccountTextInput from '../components/AccountTextInput';
+import ConfirmBtn from '../components/ConfirmBtn';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 
@@ -72,6 +73,7 @@ export default class Screen extends React.Component<NavProps> {
 				<View style={AccountScreenStyles.logoWrapper}>
 					<Logo size={200} />
 				</View>
+
 				<AccountTextInput
 					onChangeText={email => this.setState({ email })}
 					placeholder='Email'
@@ -88,11 +90,8 @@ export default class Screen extends React.Component<NavProps> {
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<TouchableOpacity onPress={this.signIn} style={{ ...AccountScreenStyles.confirmBtn, borderColor: theme.accent }}>
-					<Text style={{ color: theme.textC }}>
-						Sign In
-					</Text>
-				</TouchableOpacity>
+				<ConfirmBtn onPress={this.signIn} text='Sign In'/>
+
 				<View style={AccountScreenStyles.signUpTextContainer}>
 					<Text style={{ color: theme.textC }}>
 						Don't have an account?

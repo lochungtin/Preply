@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-export const screenWidth = Dimensions.get('screen').width;
+const screenWidth = Dimensions.get('screen').width;
 
 export const CalendarStyles = StyleSheet.create({
     rootContainer: {
@@ -46,7 +46,4 @@ export const CalendarStyles = StyleSheet.create({
         justifyContent: 'center',
         width: 40,
     },
-    btnText: {
-
-    }
 });

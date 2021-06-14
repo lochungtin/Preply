@@ -90,7 +90,7 @@ export default class Calendar extends React.Component<CalendarProps> {
                         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((label: string) => {
                             return (
                                 <View key={keygen()} style={CalendarStyles.btnContainer}>
-                                    <Text style={{ ...CalendarStyles.btnText, color: theme.accent }}>
+                                    <Text style={{ color: theme.accent }}>
                                         {label}
                                     </Text>
                                 </View>

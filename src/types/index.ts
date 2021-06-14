@@ -109,3 +109,9 @@ export interface AccountType {
     uid: string,
     useGoogle: boolean,
 }
+
+// sync options types
+export interface SyncOptionType {
+    key: string,
+    name: string,
+}

@@ -1,8 +1,9 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import AccountTextInput from '../components/AccountTextInput';
+import ConfirmBtn from '../components/ConfirmBtn';
 import Header from '../components/Header';
 import Logo from '../components/Logo';
 
@@ -63,19 +64,17 @@ export default class Screen extends React.Component<NavProps> {
                 <View style={AccountScreenStyles.logoWrapper}>
                     <Logo size={200} />
                 </View>
+
                 <Text style={{ ...AccountScreenStyles.resetPromptText, color: theme.dTextC }}>
                     Looks like someone forget their password. Type your email below to reset your password.
                 </Text>
+
                 <AccountTextInput
                     onChangeText={email => this.setState({ email })}
                     placeholder='Email'
                 />
                 <View style={{ height: 50 }} />
-                <TouchableOpacity onPress={this.resetPswd} style={{ ...AccountScreenStyles.confirmBtn, borderColor: theme.accent }}>
-                    <Text style={{ color: theme.textC }}>
-                        Reset Password
-                    </Text>
-                </TouchableOpacity>
+                <ConfirmBtn onPress={this.resetPswd} text='Reset Password'/>
             </View>
         );
     }

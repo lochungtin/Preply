@@ -15,5 +15,5 @@ export const ClockStyles = StyleSheet.create({
     },
     text: {
         textAlign: 'center',
-    }
+    },
 });
