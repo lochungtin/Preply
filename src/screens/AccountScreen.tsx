@@ -39,13 +39,15 @@ interface ReduxProps {
 
 class Screen extends React.Component<NavProps & ReduxProps> {
 
-	state = {
+	defaultState = {
 		curPswd: '',
 		email: '',
 		openSyncOpPicker: false,
 		pswd: '',
 		rPswd: '',
 	}
+
+	state = { ...this.defaultState }
 
 	overwriteCloudStore = () =>
 		firebaseOverwriteUserData(this.props.account.uid, { notes: this.props.notes, todos: this.props.todos });
@@ -120,11 +122,14 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			});
 
 		changePswd(this.props.account.email, this.state.curPswd, this.state.pswd)
-			.then(() => showMessage({
-				backgroundColor: theme.accent,
-				color: theme.modalBgC,
-				message: 'Password change successful',
-			}))
+			.then(() => {
+				showMessage({
+					backgroundColor: theme.accent,
+					color: theme.modalBgC,
+					message: 'Password change successful',
+				});
+				this.setState({ ...this.defaultState });
+			})
 			.catch(err => {
 				console.log(err.code);
 
@@ -146,6 +151,7 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 					backgroundColor: theme.modalBgC,
 					color: theme.accent,
 				});
+				this.setState({ ...this.defaultState });
 			});
 	}
 
