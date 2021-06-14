@@ -13,15 +13,15 @@ import MultiSelectModal from '../components/MultiSelectModal';
 import { theme } from '../data/colors';
 import { AccountScreenStyles, ScreenStyles } from './styles';
 
-import { signOut } from '../firebase/auth';
+import { changePswd, signOut } from '../firebase/auth';
 import { firebaseDefaultErrorCallback, firebaseFetchAll, firebaseOverwriteUserData } from '../firebase/data';
-import firebaseConfig from '../firebase/config';
 import { overwriteNotes, overwriteTodos, signOutRedux, updateSyncOption } from '../redux/action';
 import { store } from '../redux/store';
 import { AccountType, NoteMap, SyncOptionType, TodoMap } from '../types';
 import { FullSnapshotType, MergeType } from '../types/firebaseTypes';
 import { merge } from '../utils/merger';
 import { syncOptions } from '../data/dataSync';
+import { showMessage } from 'react-native-flash-message';
 
 
 LogBox.ignoreLogs(['AsyncStorage has been']);
@@ -40,10 +40,14 @@ interface ReduxProps {
 class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = {
+		curPswd: '',
+		email: '',
 		openSyncOpPicker: false,
+		pswd: '',
+		rPswd: '',
 	}
 
-	overwriteCloudStore = () => 
+	overwriteCloudStore = () =>
 		firebaseOverwriteUserData(this.props.account.uid, { notes: this.props.notes, todos: this.props.todos });
 
 	overwriteLocalStore = () => {
@@ -91,6 +95,58 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			default:
 				this.mergeLocalWithFirebase();
 		}
+	}
+
+	updatePswd = () => {
+		if (!this.state.pswd)
+			return showMessage({
+				backgroundColor: theme.modalBgC,
+				color: theme.accent,
+				message: 'A password is required',
+			});
+
+		if (this.state.pswd !== this.state.rPswd)
+			return showMessage({
+				backgroundColor: theme.modalBgC,
+				color: theme.accent,
+				message: `New passwords don't match`,
+			});
+
+		if (this.state.pswd.length < 6)
+			return showMessage({
+				backgroundColor: theme.modalBgC,
+				color: theme.accent,
+				message: 'Password must have 6+ characters',
+			});
+
+		changePswd(this.props.account.email, this.state.curPswd, this.state.pswd)
+			.then(() => showMessage({
+				backgroundColor: theme.accent,
+				color: theme.modalBgC,
+				message: 'Password change successful',
+			}))
+			.catch(err => {
+				console.log(err.code);
+
+				let message: string;
+				let description: string | undefined;
+
+				switch (err.code) {
+					case 'auth/wrong-password':
+						message = 'Password entered is incorrect';
+						break;
+					default:
+						message = err.toString();
+						description = err.toString();
+				}
+
+				showMessage({
+					description,
+					message,
+					backgroundColor: theme.modalBgC,
+					color: theme.accent,
+				});
+			});
 	}
 
 	updateSyncOp = (index: number) => {
@@ -149,20 +205,20 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 						<AccountTextInput
 							hidden
 							placeholder='Current password'
-							onChangeText={text => console.log(text)}
+							onChangeText={curPswd => this.setState({ curPswd })}
 						/>
 						<AccountTextInput
 							hidden
 							placeholder='New password'
-							onChangeText={text => console.log(text)}
+							onChangeText={pswd => this.setState({ pswd })}
 						/>
 						<AccountTextInput
 							hidden
 							placeholder='Reenter new password'
-							onChangeText={text => console.log(text)}
+							onChangeText={rPswd => this.setState({ rPswd })}
 						/>
 						<View style={{ height: 30 }} />
-						<ConfirmBtn onPress={() => { }} text='Update Password' />
+						<ConfirmBtn onPress={this.updatePswd} text='Update Password' />
 					</View>
 				</ScrollView>
 			</View>

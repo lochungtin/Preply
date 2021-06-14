@@ -41,14 +41,14 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			return showMessage({
 				backgroundColor: theme.modalBgC,
 				color: theme.accent,
-				message: `An email is required `,
+				message: 'An email is required',
 			});
 
 		if (!this.state.pswd)
 			return showMessage({
 				backgroundColor: theme.modalBgC,
 				color: theme.accent,
-				message: `A password is required `,
+				message: 'A password is required',
 			});
 
 		if (this.state.pswd !== this.state.rPswd)
@@ -56,6 +56,13 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				backgroundColor: theme.modalBgC,
 				color: theme.accent,
 				message: `Passwords don't match`,
+			});
+
+		if (this.state.pswd.length < 6)
+			return showMessage({
+				backgroundColor: theme.modalBgC,
+				color: theme.accent,
+				message: 'Password must have 6+ characters',
 			});
 
 		signUp(this.state.email, this.state.pswd)
@@ -81,13 +88,10 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 				switch (err.code) {
 					case 'auth/invalid-email':
-						message = 'Invalid Email'
-						break;
-					case 'auth/weak-password':
-						message = 'Password must have 6+ characters'
+						message = 'Invalid Email';
 						break;
 					case 'auth/email-already-in-use':
-						message = 'Email already in use, try logging in'
+						message = 'Email already in use, try logging in';
 						break;
 					default:
 						message = err.toString();

@@ -1,5 +1,8 @@
 import firebaseConfig from './config';
 
+export const changePswd = async(email: string, curPswd: string, newPswd: string) =>
+    await (await signIn(email, curPswd)).user?.updatePassword(newPswd);
+
 export const resetPswd = async (email: string) => 
     await firebaseConfig.auth().sendPasswordResetEmail(email);
 
