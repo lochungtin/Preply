@@ -56,7 +56,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
         notif: false,
         repeatKey: 'rep:0',
         tagKey: 'tag:0',
-        time: '12:00 PM',
+        time: '12:00 AM',
         title: '',
     }
 
