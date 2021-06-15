@@ -5,15 +5,9 @@ class NotificationHandler {
 
     attachNotification = (Handler: any) => this.onNotification = Handler;
 
-    onNotification = (notification: Omit<ReceivedNotification, "userInfo">) => {
-        if (typeof this.onNotification === 'function')
-            this.onNotification(notification);
-    }
+    onNotification = (notification: Omit<ReceivedNotification, "userInfo">) => { }
 
-    onRegister = (token: { os: string, token: string }) => {
-        if (typeof this.onRegister === 'function')
-            this.onRegister(token);
-    }
+    onRegister = (token: { os: string, token: string }) => { }
 
     onRegistrationError = (err: any) => console.log(err);
 }

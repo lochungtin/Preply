@@ -1,3 +1,5 @@
+import { PushNotificationObject } from "react-native-push-notification";
+
 // data types
 export interface TagType {
     color: string,
@@ -6,6 +8,7 @@ export interface TagType {
 }
 
 export interface RepeatType {
+    handlerName: string | undefined,
     key: string,
     name: string,
 }
@@ -22,6 +25,7 @@ export interface TodoType {
     key: string,
     meta: MetaDateType,
     notif: boolean,
+    notifID: string,
     repeatKey: string,
     tagKey: string,
     title: string,

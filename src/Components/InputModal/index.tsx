@@ -22,6 +22,8 @@ import { addTodo, editTodo } from '../../redux/action';
 import { store } from '../../redux/store';
 import { AccountType, RepeatType, TagType, TodoType } from '../../types';
 import { keygen } from '../../utils/keygen';
+import NotifService from '../../notification';
+import { ReceivedNotification } from 'react-native-push-notification';
 
 interface ModalProps {
     onClose: () => void,
@@ -35,12 +37,23 @@ interface ReduxProps {
 
 class InputModal extends React.Component<ReduxProps & ModalProps> {
 
+    notif: NotifService;
+
+    constructor(props: ReduxProps & ModalProps) {
+        super(props);
+
+        this.notif = new NotifService(
+            this.onRegister.bind(this),
+            this.onNotif.bind(this),
+        );
+    }
+
     defaultState = {
         allDay: true,
         content: '',
         date: moment().format('DD-MM-YYYY'),
         edited: false,
-        notif: true,
+        notif: false,
         repeatKey: 'rep:0',
         tagKey: 'tag:0',
         time: '12:00 PM',
@@ -54,6 +67,10 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
         openTagPicker: false,
         openTimePicker: false,
     }
+
+    onNotif = (notification: Omit<ReceivedNotification, "userInfo">) => { }
+
+    onRegister = (token: { os: string, token: string }) => { }
 
     refresh = () => {
         if (this.props.record)
@@ -74,6 +91,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                 modified: '',
             },
             notif: this.state.notif,
+            notifID: '',
             repeatKey: this.state.repeatKey,
             tagKey: this.state.tagKey,
             title: this.state.title || 'untitled',
@@ -81,29 +99,79 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
         };
 
         if (this.props.record) {
+            // apply new meta data
             payload.key = this.props.record.key;
             payload.meta = {
                 creation: this.props.record.meta.creation,
                 modified: now,
             };
-            
+
+            // handle notifications
+            if (payload.notif) {
+                if (payload.notifID)
+                    this.notif.cancelNotif(payload.notifID);
+                payload.notifID = this.scheduleNotifs(payload);
+            }
+
+            if (this.props.record.notif && !payload.notif)
+                this.notif.cancelNotif(this.props.record.notifID);
+
+            // dispatch to local store and firebase
             store.dispatch(editTodo(payload));
             if (this.props.account !== null)
                 firebaseSetTodo(this.props.account.uid, payload);
         }
         else {
+            // create meta data
             payload.key = keygen();
             payload.meta = {
                 creation: now,
                 modified: now,
             };
 
+            // handle notifications
+            if (payload.notif)
+                payload.notifID = this.scheduleNotifs(payload);
+
+            // dispatch to local store and firebase
             store.dispatch(addTodo(payload));
             if (this.props.account !== null)
                 firebaseAddTodo(this.props.account.uid, payload);
         }
 
         this.props.onClose();
+    }
+
+    scheduleNotifs = (payload: TodoType) => {
+        let repeatType: string | undefined = repeats[parseInt(payload.repeatKey.substring(4))].handlerName;
+        let color: string = tags[parseInt(payload.tagKey.substring(4))].color;
+
+        let timestamp: moment.Moment = moment(`${payload.date} ${payload.time}`, 'DD-MM-YYYY LT')
+            .subtract(5, 'minute');
+
+        // add time if on repeat and time set for first notif has passed
+        if (timestamp.isBefore(moment())) {
+            console.log(timestamp.toString());
+            switch (payload.repeatKey) {
+                case 'rep:1':
+                    timestamp.add(1, 'day');
+                    break;
+                case 'rep:2':
+                    timestamp.add(1, 'week');
+                    break;
+                case 'rep:3':
+                    timestamp.add(1, 'month');
+                    break;
+                default:
+                    return '';
+            }
+        }
+
+        return this.notif.scheduleNotif(timestamp.toString(), color, payload.title, repeatType).toString();
+    }
+
+    temp = () => {
+        this.notif.scheduleNotif(moment().add(2, 'second').toString(), '#ffffff', 'test', undefined);
     }
 
     render() {
@@ -129,6 +197,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                             />
                         </TouchableOpacity>
                         <SeparatorLine width={screenWidth * 0.9} />
+
                         <InputRow iconName='blank'>
                             <TextInput
                                 onChangeText={title => this.setState({ title, edited: true })}
@@ -146,6 +215,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                             </TouchableOpacity>
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
+
                         <InputRow iconName='calendar-text'>
                             <DatePicker
                                 onClose={() => this.setState({ openDatePicker: false })}
@@ -208,6 +278,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                             </MultiSelectModal>
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
+
                         <InputRow iconName='bell-outline'>
                             <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                 Notifications
@@ -219,6 +290,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                             />
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
+
                         <InputRow iconName='tag-outline'>
                             <Text style={{ ...RecordInputModalStyles.labelText, color: theme.textC }}>
                                 Tag
@@ -240,6 +312,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
                             </MultiSelectModal>
                         </InputRow>
                         <SeparatorLine width={screenWidth * 0.9} />
+
                         <InputRow iconName='card-text-outline'>
                             <TextInput
                                 multiline

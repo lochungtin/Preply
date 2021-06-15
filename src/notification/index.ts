@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { PushNotificationPermissions } from 'react-native';
 import PushNotification, { PushNotificationObject, PushNotificationScheduledLocalObject, ReceivedNotification } from 'react-native-push-notification';
 
@@ -8,17 +9,16 @@ export default class NotifService {
     lastChannelCounter: number = 0;
 
     constructor(onRegister: any, onNotification: any) {
-        PushNotification.createChannel(
-            {
-                channelId: 'PreplyRepeatNotifs',
-                channelName: 'PreplyRepeatNotifs',
-                channelDescription: "Todo Reminders",
-                soundName: "default",
-                importance: 4,
-                vibrate: true,
-            },
-            (created: boolean) => console.log(`Channel created: '${created}'`)
-        );
+        let channelConfig = {
+            channelId: 'PreplyRepeatNotifs',
+            channelName: 'PreplyRepeatNotifs',
+            channelDescription: "Todo Reminders",
+            soundName: "default",
+            importance: 4,
+            vibrate: true,
+        };
+
+        PushNotification.createChannel(channelConfig, (created: boolean) => { });
 
         Handler.attachRegister(onRegister);
         Handler.attachNotification(onNotification);
@@ -42,7 +42,8 @@ export default class NotifService {
 
     requestPermissions = () => PushNotification.requestPermissions();
 
-    scheduleNotif = (timestamp: string, color: string, message: string, repeatType: PushNotificationObject['repeatType']) => {
+    scheduleNotif = (timestamp: string, color: string, message: string, repeatType: any) => {
+        console.log('scheduled notif for: ' + timestamp);
         PushNotification.localNotificationSchedule({
             color,
             message,
