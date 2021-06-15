@@ -110,7 +110,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
             if (payload.notif) {
                 if (payload.notifID)
                     this.notif.cancelNotif(payload.notifID);
-                payload.notifID = this.scheduleNotifs(payload);
+                payload.notifID = this.notif.scheduleNotif(payload);
             }
 
             if (this.props.record.notif && !payload.notif)
@@ -131,7 +131,7 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
 
             // handle notifications
             if (payload.notif)
-                payload.notifID = this.scheduleNotifs(payload);
+                payload.notifID = this.notif.scheduleNotif(payload);
 
             // dispatch to local store and firebase
             store.dispatch(addTodo(payload));
@@ -140,38 +140,6 @@ class InputModal extends React.Component<ReduxProps & ModalProps> {
         }
 
         this.props.onClose();
-    }
-
-    scheduleNotifs = (payload: TodoType) => {
-        let repeatType: string | undefined = repeats[parseInt(payload.repeatKey.substring(4))].handlerName;
-        let color: string = tags[parseInt(payload.tagKey.substring(4))].color;
-
-        let timestamp: moment.Moment = moment(`${payload.date} ${payload.time}`, 'DD-MM-YYYY LT')
-            .subtract(5, 'minute');
-
-        // add time if on repeat and time set for first notif has passed
-        if (timestamp.isBefore(moment())) {
-            console.log(timestamp.toString());
-            switch (payload.repeatKey) {
-                case 'rep:1':
-                    timestamp.add(1, 'day');
-                    break;
-                case 'rep:2':
-                    timestamp.add(1, 'week');
-                    break;
-                case 'rep:3':
-                    timestamp.add(1, 'month');
-                    break;
-                default:
-                    return '';
-            }
-        }
-
-        return this.notif.scheduleNotif(timestamp.toString(), color, payload.title, repeatType).toString();
-    }
-
-    temp = () => {
-        this.notif.scheduleNotif(moment().add(2, 'second').toString(), '#ffffff', 'test', undefined);
     }
 
     render() {

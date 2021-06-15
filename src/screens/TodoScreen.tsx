@@ -2,6 +2,7 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { ReceivedNotification } from 'react-native-push-notification';
 import { connect } from 'react-redux';
 
 import Calendar from '../components/Calendar';
@@ -21,6 +22,7 @@ import { firebaseAddTodo, firebaseDeleteTodo, firebaseSetTodo } from '../firebas
 import { addTodo, deleteTodo } from '../redux/action';
 import { store } from '../redux/store';
 import { AccountType, TagType, TodoMap, TodoType } from '../types';
+import NotifService from '../notification';
 
 interface NavProps {
 	navigation: DrawerNavigationProp<any, any>,
@@ -32,6 +34,17 @@ interface ReduxProps {
 }
 
 class Screen extends React.Component<NavProps & ReduxProps> {
+
+	notif: NotifService;
+
+    constructor(props: NavProps & ReduxProps) {
+        super(props);
+
+        this.notif = new NotifService(
+            this.onRegister.bind(this),
+            this.onNotif.bind(this),
+        );
+    }
 
 	state = {
 		calendarExpand: false,
@@ -45,12 +58,21 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 	}
 
 	delete = (todo: TodoType) => {
+		// dispatch to local store and firebase
 		store.dispatch(deleteTodo(todo.key));
 		if (this.props.account !== null)
 			firebaseDeleteTodo(this.props.account.uid, todo.key);
 
+		// handle notifications
+		this.notif.cancelNotif(todo.notifID);
+
+		// add to undo stack
 		this.setState({ undoStack: [todo, ...this.state.undoStack] });
 	}
+
+	onNotif = (notification: Omit<ReceivedNotification, "userInfo">) => { }
+
+    onRegister = (token: { os: string, token: string }) => { }
 
 	toggleCalendarSelect = (date: string) => {
 		if (this.state.date === date)
@@ -66,6 +88,9 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 			store.dispatch(addTodo(payload));
 			if (this.props.account !== null)
 				firebaseAddTodo(this.props.account.uid, payload);
+
+			if (payload.notif)
+				this.notif.scheduleNotif(payload);
 
 			this.setState({ undoStack: this.state.undoStack.slice(1) });
 		}

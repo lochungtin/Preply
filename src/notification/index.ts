@@ -2,11 +2,14 @@ import moment from 'moment';
 import { PushNotificationPermissions } from 'react-native';
 import PushNotification, { PushNotificationObject, PushNotificationScheduledLocalObject, ReceivedNotification } from 'react-native-push-notification';
 
+import { repeats } from '../data/repeats';
+import { tags } from '../data/tags';
+import { TodoType } from '../types';
+import { keygen } from '../utils/keygen';
+
 import Handler from './Handler';
 
 export default class NotifService {
-    lastId: number = 0;
-    lastChannelCounter: number = 0;
 
     constructor(onRegister: any, onNotification: any) {
         let channelConfig = {
@@ -18,7 +21,7 @@ export default class NotifService {
             vibrate: true,
         };
 
-        PushNotification.createChannel(channelConfig, (created: boolean) => { });
+        PushNotification.createChannel(channelConfig, (created: boolean) => { console.log('new channel: ' + created) });
 
         Handler.attachRegister(onRegister);
         Handler.attachNotification(onNotification);
@@ -32,6 +35,8 @@ export default class NotifService {
 
     abandonPermissions = () => PushNotification.abandonPermissions();
 
+    cancelAll = () => PushNotification.cancelAllLocalNotifications();
+
     cancelNotif = (id: string) => PushNotification.cancelLocalNotifications({ id });
 
     checkPermission = (callback: (perms: PushNotificationPermissions) => void) =>
@@ -42,17 +47,39 @@ export default class NotifService {
 
     requestPermissions = () => PushNotification.requestPermissions();
 
-    scheduleNotif = (timestamp: string, color: string, message: string, repeatType: any) => {
-        console.log('scheduled notif for: ' + timestamp);
+    scheduleNotif = (payload: TodoType): string => {
+        let repeatType: string | undefined = repeats[parseInt(payload.repeatKey.substring(4))].handlerName;
+        let color: string = tags[parseInt(payload.tagKey.substring(4))].color;
+
+        let timestamp: moment.Moment = moment(`${payload.date} ${payload.time}`, 'DD-MM-YYYY LT')
+            .subtract(5, 'minute');
+
+        // add time if on repeat and time set for first notif has passed
+        if (timestamp.isBefore(moment())) {
+            console.log(timestamp.toString());
+            switch (payload.repeatKey) {
+                case 'rep:1':
+                    timestamp.add(1, 'day');
+                    break;
+                case 'rep:2':
+                    timestamp.add(1, 'week');
+                    break;
+                case 'rep:3':
+                    timestamp.add(1, 'month');
+                    break;
+                default:
+                    return '';
+            }
+        }        
+
+        let id: number = parseInt(keygen(), 16);
         PushNotification.localNotificationSchedule({
             color,
-            message,
+            id,
             repeatType,
-            date: new Date(timestamp),
-            id: this.lastId++,
+            date: new Date(timestamp.toString()),
+            message: payload.title,
             title: 'You have a todo in 5 minutes',
-            playSound: true,
-            soundName: 'default',
 
             // other properties
             channelId: 'PreplyRepeatNotifs',
@@ -64,6 +91,7 @@ export default class NotifService {
             vibration: 300,
             group: 'PreplyGroup',
         });
-        return this.lastId;
+
+        return id.toString();
     }
 }

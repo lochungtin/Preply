@@ -1,6 +1,8 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import React from 'react';
 import { LogBox, TouchableOpacity, Text, View, ScrollView } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
+import { ReceivedNotification } from 'react-native-push-notification';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 
@@ -13,15 +15,15 @@ import MultiSelectModal from '../components/MultiSelectModal';
 import { theme } from '../data/colors';
 import { AccountScreenStyles, ScreenStyles } from './styles';
 
+import { syncOptions } from '../data/dataSync';
 import { changePswd, signOut } from '../firebase/auth';
 import { firebaseDefaultErrorCallback, firebaseFetchAll, firebaseOverwriteUserData } from '../firebase/data';
+import NotifService from '../notification';
 import { overwriteNotes, overwriteTodos, signOutRedux, updateSyncOption } from '../redux/action';
 import { store } from '../redux/store';
 import { AccountType, NoteMap, SyncOptionType, TodoMap } from '../types';
 import { FullSnapshotType, MergeType } from '../types/firebaseTypes';
 import { merge } from '../utils/merger';
-import { syncOptions } from '../data/dataSync';
-import { showMessage } from 'react-native-flash-message';
 
 LogBox.ignoreLogs(['AsyncStorage has been']);
 
@@ -38,6 +40,17 @@ interface ReduxProps {
 
 class Screen extends React.Component<NavProps & ReduxProps> {
 
+	notif: NotifService;
+
+    constructor(props: NavProps & ReduxProps) {
+        super(props);
+
+        this.notif = new NotifService(
+            this.onRegister.bind(this),
+            this.onNotif.bind(this),
+        );
+    }
+
 	defaultState = {
 		curPswd: '',
 		email: '',
@@ -48,6 +61,10 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 	state = { ...this.defaultState }
 
+	onNotif = (notification: Omit<ReceivedNotification, "userInfo">) => { }
+
+    onRegister = (token: { os: string, token: string }) => { }
+
 	overwriteCloudStore = () =>
 		firebaseOverwriteUserData(this.props.account.uid, { notes: this.props.notes, todos: this.props.todos });
 
@@ -57,6 +74,14 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 				if (snapshot) {
 					store.dispatch(overwriteNotes(snapshot.notes || {}));
 					store.dispatch(overwriteTodos(snapshot.todos || {}));
+
+					this.notif.cancelAll();
+					Object.keys(snapshot.todos).forEach((key: string) => {
+						let todo = snapshot.todos[key];
+
+						if (todo.notif)
+							this.notif.scheduleNotif(todo);
+					});
 				}
 			})
 			.catch(firebaseDefaultErrorCallback);
@@ -73,6 +98,14 @@ class Screen extends React.Component<NavProps & ReduxProps> {
 
 					store.dispatch(overwriteNotes(combined.notes));
 					store.dispatch(overwriteTodos(combined.todos));
+
+					this.notif.cancelAll();
+					Object.keys(combined.todos).forEach((key: string) => {
+						let todo = combined.todos[key];
+
+						if (todo.notif)
+							this.notif.scheduleNotif(todo);
+					});
 
 					firebaseOverwriteUserData(this.props.account.uid, combined);
 				}
