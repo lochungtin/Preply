@@ -36,14 +36,14 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 | :--------------------------------------------------: | :-------------------------------------------------: | :--------------------------------------------------------: | :--------------------------------------------------------: |
 | <img src='./img/todos.jpg' width='162' height='351'> | <img src='./img/todo.jpg' width='162' height='351'> | <img src='./img/date_select.jpg' width='162' height='351'> | <img src='./img/time_select.jpg' width='162' height='351'> |
 
-Simple Todo taking mode with features for sorting, filtering, and more.
+Simple todo taking mode with features for sorting, filtering, and more.
 
 #### Features
 
 - Tagging
-  - Allows users to categorize their todos, which can be filtered and sorted
+  - Allows users to categorize their todos, which can be filtered and sorted.
 - Notification Reminders
-  - Ability to schedule notifications to fire before the set time of the task
+  - Ability to schedule notifications to fire before the set time of the task.
 - Recurring Todos
   - Scheduled notifications can be recurring, repeating either daily, weekly, or monthly.
 
@@ -90,7 +90,7 @@ Simple Todo taking mode with features for sorting, filtering, and more.
 | :--------------------------------------------------: | :-------------------------------------------------: | :-------------------------------------------------: |
 | <img src='./img/notes.jpg' width='162' height='351'> | <img src='./img/note.jpg' width='162' height='351'> | <img src='./img/tags.jpg' width='162' height='351'> |
 
-
+Simple note taking mode with the same tagging and sorting features as the todo mode.
 
 ---
 
