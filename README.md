@@ -28,6 +28,8 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 </details>
 
+---
+
 <a href="todos"></a>
 
 ## Todos
