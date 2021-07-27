@@ -43,8 +43,8 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 <table>
     <tr>
-        <td valign='top' halign='center' width='210' height='351'>
-            <img src='./img/todos_sort.jpg' align='center' width='162' height='351'>
+        <td valign='top' width='210' height='351'>
+            <img src='./img/todos_sort.jpg' width='162' height='351'>
         </td>
         <td valign='top'>
             The default order of display is chronological, if sort mode is on, the order of todo records will be sorted to the default tag order, which is arranaged to the color of the tag category. Order of the tags can been seen below at the note section in the tag picker screenshot.
@@ -58,11 +58,11 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 <table>
     <tr>
-        <td valign='top' halign='center' width='210' height='351'>
-            <img src='./img/todos_cal.jpg' align='center' width='162' height='351'>
+        <td valign='top' width='210' height='351'>
+            <img src='./img/todos_cal.jpg' width='162' height='351'>
         </td>
-        <td valign='top' halign='center' width='210' height='351'>
-            <img src='./img/todos_filter.jpg' align='center' width='162' height='351'>
+        <td valign='top' width='210' height='351'>
+            <img src='./img/todos_filter.jpg' width='162' height='351'>
         </td>
         <td valign='top'>
             The default state does not filter any todo records, so all records are display initially. User's that wish the single out todos for a specific date can open the date picker and select the specific date of todos they want to view. The list will automatically filter out todos that do not land on the selected date.
@@ -86,6 +86,8 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 ## Utilities
 
+Apart from the two main functionalities, there are also two utility screens built in into the the app. A calculator and a unit converter to aid the user on their todo taking. On the chance of them needing to do a complex calculation or unit coversion, they can simply switch to these utility apps and compute the desired value.
+
 <a href="cal"></a>
 
 ### Calculator
@@ -99,7 +101,9 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
             <img src='./img/cal_res.jpg' width='162' height='351'>
         </td>
         <td valign='top'>
-            text
+            Simple implementation of a calculator, featuring basic arithmetic and parentheses.
+            <br />
+            Another functionality is result saving. There is one result slot for saving and it automatically overwrites when a new result is computed.
         </td>
     </tr>
 </table>
@@ -117,7 +121,15 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
             <img src='./img/units.jpg' width='162' height='351'>
         </td>
         <td valign='top'>
-            text
+            The unit coverter features three different unit categories
+            <br />
+            > Distance
+            <br />
+            > Mass
+            <br />
+            > Temperature
+            <br />
+            Each of these categories feature a few interchangable units for the user to choose. Simply select two units from the same category, input the value and the coversion will be automatically calculated.
         </td>
     </tr>
 </table>
