@@ -94,14 +94,15 @@ Apart from the two main functionalities, there are also two utility screens buil
 
 <table>
     <tr>
-        <td valign='top'>
+        <td valign='top' width='210' height='351'>
             <img src='./img/cal.jpg' width='162' height='351'>
         </td>
-        <td valign='top'>
+        <td valign='top' width='210' height='351'>
             <img src='./img/cal_res.jpg' width='162' height='351'>
         </td>
-        <td valign='top'>
+        <td valign='top' width='210' height='351'>
             Simple implementation of a calculator, featuring basic arithmetic and parentheses.
+            <br />
             <br />
             Another functionality is result saving. There is one result slot for saving and it automatically overwrites when a new result is computed.
         </td>
@@ -114,20 +115,22 @@ Apart from the two main functionalities, there are also two utility screens buil
 
 <table>
     <tr>
-        <td valign='top'>
+        <td valign='top' width='210' height='351'>
             <img src='./img/unit_conv.jpg' width='162' height='351'>
         </td>
-        <td valign='top'>
+        <td valign='top' width='210' height='351'>
             <img src='./img/units.jpg' width='162' height='351'>
         </td>
-        <td valign='top'>
+        <td valign='top' width='210' height='351'>
             The unit coverter features three different unit categories
+            <br />
             <br />
             > Distance
             <br />
             > Mass
             <br />
             > Temperature
+            <br />
             <br />
             Each of these categories feature a few interchangable units for the user to choose. Simply select two units from the same category, input the value and the coversion will be automatically calculated.
         </td>
