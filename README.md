@@ -33,7 +33,9 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 |                  Todos                   |               Todo Input                |                  Date Picker                   |                  Time Picker                   |
 | :--------------------------------------: | :-------------------------------------: | :--------------------------------------------: | :--------------------------------------------: |
-| <img src='./img/todos.jpg' height='350'> | <img src='./img/todo.jpg' height='350'> | <img src='./img/date_select.jpg' height='350'> | <img src='./img/time_select.jpg' height='350'> |
+| <img src='./img/todos.jpg' width='150'> | <img src='./img/todo.jpg' width='150'> | <img src='./img/date_select.jpg' width='150'> | <img src='./img/time_select.jpg' width='150'> |
+
+
 
 <a href="sorting"></a>
 
@@ -42,10 +44,10 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 <table>
     <tr>
         <td valign='top'>
-            <img src='./img/todos_sort.jpg' height='350'>
+            <img src='./img/todos_sort.jpg' width='150'>
         </td>
         <td valign='top'>
-            text
+            The default order of display is chronological, if sort mode is on, the order of todo records will be sorted to the default tag order, which is arranaged to the color of the tag category.
         </td>
     </tr>
 </table>
@@ -57,10 +59,10 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 <table>
     <tr>
         <td valign='top'>
-            <img src='./img/todos_cal.jpg' height='350'>
+            <img src='./img/todos_cal.jpg' width='150'>
         </td>
         <td valign='top'>
-            <img src='./img/todos_filter.jpg' height='350'>
+            <img src='./img/todos_filter.jpg' width='150'>
         </td>
         <td valign='top'>
             text
@@ -76,7 +78,7 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 |                  Notes                   |                Note Page                |               Tag Picker                |
 | :--------------------------------------: | :-------------------------------------: | :-------------------------------------: |
-| <img src='./img/notes.jpg' height='350'> | <img src='./img/note.jpg' height='350'> | <img src='./img/tags.jpg' height='350'> |
+| <img src='./img/notes.jpg' width='150'> | <img src='./img/note.jpg' width='150'> | <img src='./img/tags.jpg' width='150'> |
 
 ---
 
@@ -91,10 +93,10 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 <table>
     <tr>
         <td valign='top'>
-            <img src='./img/cal.jpg' height='350'>
+            <img src='./img/cal.jpg' width='150'>
         </td>
         <td valign='top'>
-            <img src='./img/cal_res.jpg' height='350'>
+            <img src='./img/cal_res.jpg' width='150'>
         </td>
         <td valign='top'>
             text
@@ -109,10 +111,10 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 <table>
     <tr>
         <td valign='top'>
-            <img src='./img/unit_conv.jpg' height='350'>
+            <img src='./img/unit_conv.jpg' width='150'>
         </td>
         <td valign='top'>
-            <img src='./img/units.jpg' height='350'>
+            <img src='./img/units.jpg' width='150'>
         </td>
         <td valign='top'>
             text
@@ -128,7 +130,7 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 |                  Sign Up                  |                  Sign In                  |                Reset Password                 |               Managment                |
 | :---------------------------------------: | :---------------------------------------: | :-------------------------------------------: | :------------------------------------: |
-| <img src='./img/signin.jpg' height='350'> | <img src='./img/signup.jpg' height='350'> | <img src='./img/reset_pswd.jpg' height='350'> | <img src='./img/acc.jpg' height='350'> |
+| <img src='./img/signin.jpg' width='150'> | <img src='./img/signup.jpg' width='150'> | <img src='./img/reset_pswd.jpg' width='150'> | <img src='./img/acc.jpg' width='150'> |
 
 <a href="merge_op"></a>
 
