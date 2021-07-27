@@ -100,7 +100,7 @@ Apart from the two main functionalities, there are also two utility screens buil
         <td valign='top' width='210' height='351'>
             <img src='./img/cal_res.jpg' width='162' height='351'>
         </td>
-        <td valign='top' width='210' height='351'>
+        <td valign='top'>
             Simple implementation of a calculator, featuring basic arithmetic and parentheses.
             <br />
             <br />
@@ -121,7 +121,7 @@ Apart from the two main functionalities, there are also two utility screens buil
         <td valign='top' width='210' height='351'>
             <img src='./img/units.jpg' width='162' height='351'>
         </td>
-        <td valign='top' width='210' height='351'>
+        <td valign='top'>
             The unit coverter features three different unit categories
             <br />
             <br />
