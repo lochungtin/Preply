@@ -43,7 +43,7 @@ Lightweight Todolist + Note-Taking App build with React Native, backend powered 
 
 <table>
     <tr>
-        <td valign='top'>
+        <td valign='top' width='180' height='351'>
             <img src='./img/todos_sort.jpg' width='162' height='351'>
         </td>
         <td valign='top'>
