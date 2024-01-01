@@ -39,8 +39,6 @@ Simple note taking mode with the same tagging and sorting features as the todo m
 
 Apart from the two main functionalities, there are also two utility screens built in into the the app. A calculator and a unit converter to aid the user on their todo taking. On the chance of them needing to do a complex calculation or unit coversion, they can simply switch to these utility apps and compute the desired value.
 
-<a href="cal"></a>
-
 ### Calculator
 
 <table>
