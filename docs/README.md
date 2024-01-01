@@ -4,7 +4,7 @@
 
 </div>
 
-# Preply
+# Preply [(Github)](https://github.com/lochungtin/Preply)
 
 Lightweight Todolist + Note-Taking App build with React Native, backend powered by Google Firebase (Realtime Database). With features such as tag sorting system, data syncing, and other useful utilities built in into the app.
 
